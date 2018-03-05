@@ -1,0 +1,54 @@
+package Classes;
+import java.sql.*;
+
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import com.mysql.*;
+
+public class RestConnectDatabase {
+
+	public static void main(String args[]){  
+		try{  
+			
+			
+		Class.forName("com.mysql.jdbc.Driver");  
+		Connection con=DriverManager.getConnection(  
+		"jdbc:mysql://localhost:3306/Fast_Food","root","password");  
+		
+		
+		//here sonoo is database name, root is username and password  
+		Statement stmt=con.createStatement(); 
+		
+		
+		try {
+			
+		stmt.executeUpdate("INSERT INTO product " + "VALUES (67, 'hello', 2.00, null, 'main')");
+		
+		}catch(MySQLIntegrityConstraintViolationException e) {
+			
+			System.out.print("PRODUCT ALREADY EXIST");
+			
+		}
+		
+		ResultSet rs=stmt.executeQuery("select * from product");  
+		
+		
+		while(rs.next())  
+		System.out.println("  "+rs.getString(2)+"\t\t "+rs.getString(3)+"  "+rs.getString(4)+"\t\t  "+rs.getString(5));  
+		con.close();  
+		}catch(Exception e){ System.out.println(e);}  
+		
+	}  
+		
+}  
+//String SQL = "insert Into product" + "(Product_Code, name, description, price) VALUES" +"23, 'veg', 'ddd', 56";
+		//stmt.executeUpdate(sql);
+		
+		
+		//stmt.executeUpdate("DELETE FROM product where name = 'burger' and Product_code = 37");
+
+		
+		//stmt.executeUpdate("DELETE FROM product where name = 'tastev'");
+		
+		//ResultSet rs=stmt.executeQuery("select * from product WHERE Section = 'Main' "); 
+		// insert the data
+
