@@ -1,0 +1,186 @@
+CREATE DATABASE  IF NOT EXISTS `fast_food` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `fast_food`;
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: fast_food
+-- ------------------------------------------------------
+-- Server version	5.7.17-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `category`
+--
+
+DROP TABLE IF EXISTS `category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `category` (
+  `Section_Name` varchar(45) NOT NULL,
+  `Main` varchar(45) DEFAULT NULL,
+  `Side` varchar(45) DEFAULT NULL,
+  `Drink` varchar(45) DEFAULT NULL,
+  `Dessert` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`Section_Name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `category`
+--
+
+LOCK TABLES `category` WRITE;
+/*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES ('Dessert',NULL,NULL,NULL,NULL),('Drink',NULL,NULL,NULL,NULL),('Main',NULL,NULL,NULL,NULL),('Side',NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `manager`
+--
+
+DROP TABLE IF EXISTS `manager`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `manager` (
+  `Employee_ID` varchar(45) NOT NULL,
+  `Email` varchar(45) DEFAULT NULL,
+  `Password` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`Employee_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `manager`
+--
+
+LOCK TABLES `manager` WRITE;
+/*!40000 ALTER TABLE `manager` DISABLE KEYS */;
+/*!40000 ALTER TABLE `manager` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order`
+--
+
+DROP TABLE IF EXISTS `order`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `order` (
+  `Order_Number` int(11) NOT NULL,
+  `Table_Number` int(11) DEFAULT NULL,
+  `Status` tinyint(4) DEFAULT NULL,
+  `Date/Time` datetime DEFAULT NULL,
+  PRIMARY KEY (`Order_Number`),
+  CONSTRAINT `order_fk` FOREIGN KEY (`Order_Number`) REFERENCES `order_item` (`Product_Code`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `order_table_fk` FOREIGN KEY (`Order_Number`) REFERENCES `table` (`Table Number`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order`
+--
+
+LOCK TABLES `order` WRITE;
+/*!40000 ALTER TABLE `order` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order_item`
+--
+
+DROP TABLE IF EXISTS `order_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `order_item` (
+  `Product_Code` int(11) NOT NULL,
+  `Quanity` int(11) DEFAULT NULL,
+  `Total_Price` double DEFAULT NULL,
+  `Order_Number` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Product_Code`),
+  CONSTRAINT `product_code_item` FOREIGN KEY (`Product_Code`) REFERENCES `product` (`Product_Code`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_item`
+--
+
+LOCK TABLES `order_item` WRITE;
+/*!40000 ALTER TABLE `order_item` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `product`
+--
+
+DROP TABLE IF EXISTS `product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product` (
+  `Product_Code` int(11) NOT NULL,
+  `Name` varchar(45) DEFAULT NULL,
+  `Price` decimal(5,2) DEFAULT NULL,
+  `Description` varchar(150) DEFAULT NULL,
+  `Section` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`Product_Code`),
+  KEY `category_FK_idx` (`Section`),
+  CONSTRAINT `Category_FK` FOREIGN KEY (`Section`) REFERENCES `category` (`Section_Name`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product`
+--
+
+LOCK TABLES `product` WRITE;
+/*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (10,'Water',1.00,'','Drink'),(11,'Coke',2.00,NULL,'Drink'),(12,'7-UP',2.00,NULL,'Drink'),(13,'Fanta',2.00,NULL,'Drink'),(14,'Starwberry Milkskake',2.80,NULL,'Drink'),(15,'Vanillia Milkshake ',2.80,NULL,'Drink'),(16,'Chocolate Milkshake',2.80,NULL,'Drink'),(17,'1/2 Pounder Burger ',4.00,'1/2 Pounder Burger with Lettuce, Onion and Cheese','Main'),(18,'1/4 Pounder Burger',3.50,'1/4 Pounder Burger with Lettuce, Tomatoes, Onion and Cheese','Main'),(19,'Veggie Burger',3.00,'Veggie Burger with Lettuce, Tomatoes, Oninion and Cheese','Main'),(20,'Chicken Burger ',3.00,'Chicken Burger with Lettuce, Oninon and Mayonnaise','Main'),(21,'Chicken Fillet Burger ',4.50,'Chicken Fillet Burger with lettuce and Mayonnaise ','Main'),(22,'Chicken Wrap',3.50,'Chicken Wrap with Lettuce, Mayonnaise and Peppers','Main'),(23,'Chicken Nuggets',3.00,'6 Chicken Nuggets','Main'),(24,'Hot Dog ',2.00,'6 Inch Hot Dog with Mustard and Tomato Sauce ','Main'),(25,'Small Chip',1.20,'A Small Portion of Chips','Side'),(26,'Large Chip',1.40,'A Large Portion of Chips ','Side'),(27,'Curly Fries',2.00,'A Portion of Curly Fries ','Side'),(28,'Curry Chip ',3.00,'A Portion of Chips with Curry Chips ','Side'),(29,'Corn',1.00,'Freshly Cooked Corn on the Cob','Side'),(30,'Beans',0.60,'A Portion of Beans','Side'),(31,'Cookie',1.10,'A Chocolate Chip Cookie ','Dessert'),(32,'Ice Cream',1.50,'Medium Tub of Neopoltion Ice Cream ','Dessert'),(33,'Apple Pie',2.00,'Slice of Freashly made Apple Pie ','Dessert'),(34,'Donuts',1.20,'Fresh Chocoloate Donut with Chocolate Sprinkles ','Dessert'),(35,'Muffin',1.60,'Blueberry Muffin','Dessert'),(37,'taste',2.00,NULL,'main'),(67,'hello',2.00,NULL,'main');
+/*!40000 ALTER TABLE `product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `table`
+--
+
+DROP TABLE IF EXISTS `table`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `table` (
+  `Table Number` int(11) NOT NULL,
+  `OrderNumber` int(11) NOT NULL,
+  `Status` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`Table Number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `table`
+--
+
+LOCK TABLES `table` WRITE;
+/*!40000 ALTER TABLE `table` DISABLE KEYS */;
+/*!40000 ALTER TABLE `table` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-03-03 12:04:22
