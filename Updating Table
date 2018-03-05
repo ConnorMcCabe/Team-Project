@@ -1,0 +1,13 @@
+		//Code For Updating a table
+		try {
+		//Successfully Update a product
+		java.sql.PreparedStatement stmt=con.prepareStatement("update product set name=? where Product_Code=?");  
+		stmt.setString(2, "Shop");
+		stmt.setInt(1, 37);  
+		int i=stmt.executeUpdate();  
+		System.out.println(i+" product(s) updated");  
+		//Closes Connection 
+		con.close();  
+	}catch(MySQLIntegrityConstraintViolationException e) {	
+		System.out.print("PRODUCT ALREADY updated");	
+	}
