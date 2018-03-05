@@ -15,8 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import classes.Stock;
-
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -29,25 +27,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class FinalMenu extends JFrame {
-	
-	public void updateTable(int addIn) 
-	{
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
-
-			Statement stmt = conn.createStatement();
-			String sqlString = "select ProductID, ProductName, Price from product where ProductID = " + addIn;
-			stmt.executeQuery(sqlString);
-		}
-			
-		catch(Exception x)
-		{
-			x.printStackTrace();
-		}
-		
-		
-		}
 	
 	
 
