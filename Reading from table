@@ -1,0 +1,9 @@
+//code to read from database, specifically selecting ALL from Product
+		PreparedStatement stmt=con.prepareStatement("select * from product");  
+		ResultSet rs=stmt.executeQuery();  
+		while(rs.next()){  
+			//Displays Product Code and Name
+		System.out.println(rs.getInt(1)+" "+rs.getString(2));  
+		}  
+		con.close();  
+		}catch(Exception e){ System.out.println(e);}  
