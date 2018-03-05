@@ -1,0 +1,6 @@
+		PreparedStatement RemStmt=con.prepareStatement("delete from product where Product_Code=?");  
+		RemStmt.setInt(1,37);  
+		  
+		int i=RemStmt.executeUpdate();  
+		System.out.println(i+" records deleted"); 
+		
