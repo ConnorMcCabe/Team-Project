@@ -57,5 +57,22 @@ public class WelcomeMenu {
 		JButton btnNewButton = new JButton("Menu");
 		btnNewButton.setBounds(217, 180, 179, 78);
 		panel.add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				FinalMenu fm = new FinalMenu();
+				fm.Menu();
+				
+				//CloseWindow upon button press
+				JComponent comp = (JComponent) arg0.getSource();
+		         Window win = SwingUtilities.getWindowAncestor(comp);
+		         win.dispose();
+				
+				
+				
+			}
+		});
+		
+				
 	}
 }
