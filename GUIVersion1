@@ -1,0 +1,219 @@
+package Resturaunt;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+
+public class FinalMenu extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FinalMenu frame = new FinalMenu();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public FinalMenu() {
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 778, 578);
+		
+		getContentPane().setLayout(null);
+		
+		JLabel lblOrderSummary = new JLabel("ORDER SUMMARY:");
+		lblOrderSummary.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblOrderSummary.setBounds(490, 41, 220, 27);
+		getContentPane().add(lblOrderSummary);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(10, 11, 470, 516);
+		getContentPane().add(tabbedPane);
+		
+		JPanel panel = new JPanel();
+		tabbedPane.addTab("Drinks", null, panel, null);
+		panel.setLayout(null);
+		
+		JButton btnNewButton = new JButton("Water");
+		btnNewButton.setBounds(10, 11, 444, 50);
+		panel.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Coke");
+		btnNewButton_1.setBounds(10, 61, 444, 50);
+		panel.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("7-UP");
+		btnNewButton_2.setBounds(10, 111, 444, 50);
+		panel.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("Fanta");
+		btnNewButton_3.setBounds(10, 161, 444, 50);
+		panel.add(btnNewButton_3);
+		
+		JButton btnNewButton_4 = new JButton("Strawberry Milkshake");
+		btnNewButton_4.setBounds(10, 211, 444, 50);
+		panel.add(btnNewButton_4);
+		
+		JButton btnNewButton_5 = new JButton("Vanilla Milkshake");
+		btnNewButton_5.setBounds(10, 262, 444, 50);
+		panel.add(btnNewButton_5);
+		
+		JButton btnNewButton_6 = new JButton("Chocolate Milkshake");
+		btnNewButton_6.setBounds(10, 313, 444, 50);
+		panel.add(btnNewButton_6);
+		
+		JPanel panel_1 = new JPanel();
+		tabbedPane.addTab("Mains", null, panel_1, null);
+		panel_1.setLayout(null);
+		
+		JButton btnNewButton_7 = new JButton("1/2 Pounder Burger");
+		btnNewButton_7.setToolTipText("h");
+		btnNewButton_7.setBounds(10, 11, 444, 50);
+		panel_1.add(btnNewButton_7);
+		
+		JButton btnNewButton_8 = new JButton("1/4 Pounder Burger");
+		btnNewButton_8.setToolTipText("h");
+		btnNewButton_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_8.setBounds(10, 62, 444, 50);
+		panel_1.add(btnNewButton_8);
+		
+		JButton btnNewButton_9 = new JButton("Veggie Burger");
+		btnNewButton_9.setToolTipText("h");
+		btnNewButton_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnNewButton_9.setBounds(10, 113, 444, 50);
+		panel_1.add(btnNewButton_9);
+		
+		JButton btnNewButton_10 = new JButton("Chicken Burger");
+		btnNewButton_10.setToolTipText("h");
+		btnNewButton_10.setBounds(10, 164, 444, 50);
+		panel_1.add(btnNewButton_10);
+		
+		JButton btnNewButton_11 = new JButton("Chicken Fillet Burger");
+		btnNewButton_11.setToolTipText("h");
+		btnNewButton_11.setBounds(10, 215, 444, 50);
+		panel_1.add(btnNewButton_11);
+		
+		JButton btnNewButton_12 = new JButton("Chicken Wrap");
+		btnNewButton_12.setToolTipText("h");
+		btnNewButton_12.setBounds(10, 266, 444, 50);
+		panel_1.add(btnNewButton_12);
+		
+		JButton btnNewButton_13 = new JButton("Chicken Nuggets");
+		btnNewButton_13.setToolTipText("h");
+		btnNewButton_13.setBounds(10, 316, 444, 50);
+		panel_1.add(btnNewButton_13);
+		
+		JButton btnNewButton_14 = new JButton("Hot Dog");
+		btnNewButton_14.setToolTipText("h");
+		btnNewButton_14.setBounds(10, 367, 444, 50);
+		panel_1.add(btnNewButton_14);
+		
+		JPanel panel_2 = new JPanel();
+		tabbedPane.addTab("Sides", null, panel_2, null);
+		panel_2.setLayout(null);
+		
+		JButton btnNewButton_15 = new JButton("Small Chip");
+		btnNewButton_15.setToolTipText("h");
+		btnNewButton_15.setBounds(10, 11, 444, 50);
+		panel_2.add(btnNewButton_15);
+		
+		JButton btnNewButton_16 = new JButton("Large Chip");
+		btnNewButton_16.setToolTipText("h");
+		btnNewButton_16.setBounds(10, 61, 444, 50);
+		panel_2.add(btnNewButton_16);
+		
+		JButton btnNewButton_17 = new JButton("Curly Fries");
+		btnNewButton_17.setToolTipText("h");
+		btnNewButton_17.setBounds(10, 110, 444, 50);
+		panel_2.add(btnNewButton_17);
+		
+		JButton btnNewButton_18 = new JButton("Curry Fries");
+		btnNewButton_18.setToolTipText("h");
+		btnNewButton_18.setBounds(10, 159, 444, 50);
+		panel_2.add(btnNewButton_18);
+		
+		JButton btnNewButton_19 = new JButton("Corn");
+		btnNewButton_19.setToolTipText("h");
+		btnNewButton_19.setBounds(10, 209, 444, 50);
+		panel_2.add(btnNewButton_19);
+		
+		JButton btnNewButton_20 = new JButton("Beans");
+		btnNewButton_20.setToolTipText("h");
+		btnNewButton_20.setBounds(10, 259, 444, 50);
+		panel_2.add(btnNewButton_20);
+		
+		JPanel panel_3 = new JPanel();
+		tabbedPane.addTab("Desserts", null, panel_3, null);
+		panel_3.setLayout(null);
+		
+		JButton btnNewButton_21 = new JButton("Cookie");
+		btnNewButton_21.setToolTipText("h");
+		btnNewButton_21.setBounds(10, 11, 444, 50);
+		panel_3.add(btnNewButton_21);
+		
+		JButton btnNewButton_22 = new JButton("Ice Cream");
+		btnNewButton_22.setToolTipText("h");
+		btnNewButton_22.setBounds(10, 62, 444, 50);
+		panel_3.add(btnNewButton_22);
+		
+		JButton btnNewButton_23 = new JButton("Apple Pie");
+		btnNewButton_23.setToolTipText("h");
+		btnNewButton_23.setBounds(10, 112, 444, 50);
+		panel_3.add(btnNewButton_23);
+		
+		JButton btnNewButton_24 = new JButton("Donuts");
+		btnNewButton_24.setToolTipText("h");
+		btnNewButton_24.setBounds(10, 162, 444, 50);
+		panel_3.add(btnNewButton_24);
+		
+		JButton btnNewButton_25 = new JButton("Muffin");
+		btnNewButton_25.setToolTipText("h");
+		btnNewButton_25.setBounds(10, 212, 444, 50);
+		panel_3.add(btnNewButton_25);
+		
+		JTextPane textPane = new JTextPane();
+		textPane.setEditable(false);
+		textPane.setBounds(490, 66, 262, 402);
+		getContentPane().add(textPane);
+		
+		JButton btnNewButton_26 = new JButton("Confirm Order");
+		btnNewButton_26.setBounds(635, 479, 117, 49);
+		getContentPane().add(btnNewButton_26);
+		
+		JButton btnNewButton_27 = new JButton("Cancel Order");
+		btnNewButton_27.setBounds(490, 479, 117, 48);
+		getContentPane().add(btnNewButton_27);
+
+
+}
+}
