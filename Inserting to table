@@ -1,0 +1,14 @@
+		try {
+			//Successfully insert a new product
+			java.sql.PreparedStatement InsertStmt=con.prepareStatement("insert into product values (?,?,?,?,?)");
+			InsertStmt.setInt(1, 39);
+			InsertStmt.setString(2, "Connor");
+			InsertStmt.setDouble(3,2.00);
+			InsertStmt.setString(4, null);
+			InsertStmt.setString(5, "drink");
+			  
+			int i=InsertStmt.executeUpdate();  
+			System.out.println(i+" Product(s) inserted");  	 
+			
+			con.close();  
+			}catch(MySQLIntegrityConstraintViolationException e){ System.out.println("Product already exists");}
