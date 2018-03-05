@@ -3,26 +3,62 @@ package Resturaunt;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import classes.Stock;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class FinalMenu extends JFrame {
+	
+	public void updateTable(int addIn) 
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+
+			Statement stmt = conn.createStatement();
+			String sqlString = "select ProductID, ProductName, Price from product where ProductID = " + addIn;
+			stmt.executeQuery(sqlString);
+		}
+			
+		catch(Exception x)
+		{
+			x.printStackTrace();
+		}
+		
+		
+		}
+	
+	
+
 
 	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void Menu() 
+	{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -39,6 +75,16 @@ public class FinalMenu extends JFrame {
 	 * Create the frame.
 	 */
 	public FinalMenu() {
+		
+		Connection connection = null;
+		try {
+		
+			connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+		} catch (SQLException x1) 
+		{	
+			x1.printStackTrace();
+		}
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 778, 578);
@@ -61,30 +107,62 @@ public class FinalMenu extends JFrame {
 		JButton btnNewButton = new JButton("Water");
 		btnNewButton.setBounds(10, 11, 444, 50);
 		panel.add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+			
 		
 		JButton btnNewButton_1 = new JButton("Coke");
 		btnNewButton_1.setBounds(10, 61, 444, 50);
 		panel.add(btnNewButton_1);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		
 		JButton btnNewButton_2 = new JButton("7-UP");
 		btnNewButton_2.setBounds(10, 111, 444, 50);
 		panel.add(btnNewButton_2);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		
 		JButton btnNewButton_3 = new JButton("Fanta");
 		btnNewButton_3.setBounds(10, 161, 444, 50);
 		panel.add(btnNewButton_3);
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_4 = new JButton("Strawberry Milkshake");
 		btnNewButton_4.setBounds(10, 211, 444, 50);
 		panel.add(btnNewButton_4);
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_5 = new JButton("Vanilla Milkshake");
 		btnNewButton_5.setBounds(10, 262, 444, 50);
 		panel.add(btnNewButton_5);
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_6 = new JButton("Chocolate Milkshake");
 		btnNewButton_6.setBounds(10, 313, 444, 50);
 		panel.add(btnNewButton_6);
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Mains", null, panel_1, null);
@@ -94,15 +172,19 @@ public class FinalMenu extends JFrame {
 		btnNewButton_7.setToolTipText("h");
 		btnNewButton_7.setBounds(10, 11, 444, 50);
 		panel_1.add(btnNewButton_7);
+		btnNewButton_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_8 = new JButton("1/4 Pounder Burger");
 		btnNewButton_8.setToolTipText("h");
-		btnNewButton_8.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnNewButton_8.setBounds(10, 62, 444, 50);
 		panel_1.add(btnNewButton_8);
+		btnNewButton_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_9 = new JButton("Veggie Burger");
 		btnNewButton_9.setToolTipText("h");
@@ -117,26 +199,46 @@ public class FinalMenu extends JFrame {
 		btnNewButton_10.setToolTipText("h");
 		btnNewButton_10.setBounds(10, 164, 444, 50);
 		panel_1.add(btnNewButton_10);
+		btnNewButton_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_11 = new JButton("Chicken Fillet Burger");
 		btnNewButton_11.setToolTipText("h");
 		btnNewButton_11.setBounds(10, 215, 444, 50);
 		panel_1.add(btnNewButton_11);
+		btnNewButton_11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_12 = new JButton("Chicken Wrap");
 		btnNewButton_12.setToolTipText("h");
 		btnNewButton_12.setBounds(10, 266, 444, 50);
 		panel_1.add(btnNewButton_12);
+		btnNewButton_12.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_13 = new JButton("Chicken Nuggets");
 		btnNewButton_13.setToolTipText("h");
 		btnNewButton_13.setBounds(10, 316, 444, 50);
 		panel_1.add(btnNewButton_13);
+		btnNewButton_13.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_14 = new JButton("Hot Dog");
 		btnNewButton_14.setToolTipText("h");
 		btnNewButton_14.setBounds(10, 367, 444, 50);
 		panel_1.add(btnNewButton_14);
+		btnNewButton_14.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Sides", null, panel_2, null);
@@ -146,73 +248,138 @@ public class FinalMenu extends JFrame {
 		btnNewButton_15.setToolTipText("h");
 		btnNewButton_15.setBounds(10, 11, 444, 50);
 		panel_2.add(btnNewButton_15);
+		btnNewButton_15.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_16 = new JButton("Large Chip");
 		btnNewButton_16.setToolTipText("h");
 		btnNewButton_16.setBounds(10, 61, 444, 50);
 		panel_2.add(btnNewButton_16);
+		btnNewButton_16.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_17 = new JButton("Curly Fries");
 		btnNewButton_17.setToolTipText("h");
 		btnNewButton_17.setBounds(10, 110, 444, 50);
 		panel_2.add(btnNewButton_17);
+		btnNewButton_17.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_18 = new JButton("Curry Fries");
 		btnNewButton_18.setToolTipText("h");
 		btnNewButton_18.setBounds(10, 159, 444, 50);
 		panel_2.add(btnNewButton_18);
+		btnNewButton_18.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_19 = new JButton("Corn");
 		btnNewButton_19.setToolTipText("h");
 		btnNewButton_19.setBounds(10, 209, 444, 50);
 		panel_2.add(btnNewButton_19);
+		btnNewButton_19.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_20 = new JButton("Beans");
 		btnNewButton_20.setToolTipText("h");
 		btnNewButton_20.setBounds(10, 259, 444, 50);
 		panel_2.add(btnNewButton_20);
+		btnNewButton_20.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Desserts", null, panel_3, null);
 		panel_3.setLayout(null);
 		
+		
 		JButton btnNewButton_21 = new JButton("Cookie");
 		btnNewButton_21.setToolTipText("h");
 		btnNewButton_21.setBounds(10, 11, 444, 50);
 		panel_3.add(btnNewButton_21);
+		btnNewButton_21.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_22 = new JButton("Ice Cream");
 		btnNewButton_22.setToolTipText("h");
 		btnNewButton_22.setBounds(10, 62, 444, 50);
 		panel_3.add(btnNewButton_22);
+		btnNewButton_22.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_23 = new JButton("Apple Pie");
 		btnNewButton_23.setToolTipText("h");
 		btnNewButton_23.setBounds(10, 112, 444, 50);
 		panel_3.add(btnNewButton_23);
+		btnNewButton_23.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_24 = new JButton("Donuts");
 		btnNewButton_24.setToolTipText("h");
 		btnNewButton_24.setBounds(10, 162, 444, 50);
 		panel_3.add(btnNewButton_24);
+		btnNewButton_24.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JButton btnNewButton_25 = new JButton("Muffin");
 		btnNewButton_25.setToolTipText("h");
 		btnNewButton_25.setBounds(10, 212, 444, 50);
 		panel_3.add(btnNewButton_25);
+		btnNewButton_25.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
 		JTextPane textPane = new JTextPane();
 		textPane.setEditable(false);
 		textPane.setBounds(490, 66, 262, 402);
 		getContentPane().add(textPane);
 		
+		
 		JButton btnNewButton_26 = new JButton("Confirm Order");
 		btnNewButton_26.setBounds(635, 479, 117, 49);
 		getContentPane().add(btnNewButton_26);
+		btnNewButton_26.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		
 		
 		JButton btnNewButton_27 = new JButton("Cancel Order");
 		btnNewButton_27.setBounds(490, 479, 117, 48);
 		getContentPane().add(btnNewButton_27);
+		btnNewButton_27.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				WelcomeMenu wm = new WelcomeMenu();
+				wm.main(null);
+				
+				//CloseWindow upon button press
+				JComponent comp = (JComponent) arg0.getSource();
+		         Window win = SwingUtilities.getWindowAncestor(comp);
+		         win.dispose();
+				
+				
+				
+			}
+		});
 
 
 }
