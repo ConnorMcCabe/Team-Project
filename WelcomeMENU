@@ -1,0 +1,61 @@
+package Resturaunt;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JButton;
+
+public class WelcomeMenu {
+
+	private JFrame frmWelcome;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					WelcomeMenu window = new WelcomeMenu();
+					window.frmWelcome.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public WelcomeMenu() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmWelcome = new JFrame();
+		frmWelcome.setTitle("Welcome");
+		frmWelcome.setBounds(100, 100, 639, 475);
+		frmWelcome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JPanel panel = new JPanel();
+		frmWelcome.getContentPane().add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		JLabel lblWelcome = new JLabel("Welcome to TheChippy");
+		lblWelcome.setFont(new Font("Tahoma", Font.PLAIN, 50));
+		lblWelcome.setBounds(57, 11, 514, 73);
+		panel.add(lblWelcome);
+		
+		JButton btnNewButton = new JButton("Menu");
+		btnNewButton.setBounds(217, 180, 179, 78);
+		panel.add(btnNewButton);
+	}
+}
