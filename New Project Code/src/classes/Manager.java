@@ -19,11 +19,7 @@ import java.sql.*;
 
 public class Manager extends JFrame  {
 	
-		
-	
-	/**
-	 * 
-	 */
+	//VARIABLES FOR GUI
 	private static final long serialVersionUID = 1L;
 	private JPanel p1, p2, p3;
 	private JLabel password, email, title;
@@ -31,6 +27,16 @@ public class Manager extends JFrame  {
 	private JPasswordField enterPassword; 
 	private JButton logIn;
 	
+	//VARIABLES FOR DATABSE CONNECTION
+	private String url = "jdbc:mysql://localhost:3306/";
+	private String dbName = "fast_food?autoReconnect=true&useSSL=false";
+	private String driver = "com.mysql.jdbc.Driver";
+	private String userName = "root";
+	private String passwordDB = "password";
+	private Statement statement = null;   
+    private ResultSet resultSet = null;
+    
+    //CODE TO GENERATE THE GUI
 	public Manager()
 	{
 		p1 = new JPanel();
@@ -106,40 +112,71 @@ public class Manager extends JFrame  {
 		{
 			try {
 				
-				Class.forName("com.mysql.jdbc.Driver");  
-				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/fast_food?autoReconnect=true&useSSL=false");  
-				//here sonoo is database name, root is username and password
-				Statement stmt=con.createStatement(); 
-				
+				 Class.forName("com.mysql.jdbc.Driver");
+		         Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
+		         statement=conn.createStatement(); 
+		 		//resultSet =statement.executeQuery("select * from product");  
 
-			String email = enterEmail.getText();
-			String Password = enterPassword.getText();
+ 
+		         String email = enterEmail.getText();
+		         String Password = enterPassword.getText();
 			
-			 // IF NO DATA ENTERERD TO JTEXTFIELD WILL POP UP ERROR
-	         if(e.getSource() == logIn && email.equals("") || password.equals(""))
-	         {
-	            JOptionPane.showMessageDialog(null, "Cannot be left blank, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
-	         }
+				 // IF NO DATA ENTERERD TO JTEXTFIELD WILL POP UP ERROR
+				 if(e.getSource() == logIn && email.equals("") || password.equals(""))
+				 {
+
+					 JOptionPane.showMessageDialog(null, "Cannot be left blank, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+				 }
 	         
 	          // IF EMAIL DOES NOT CONTAIN @ OR .com WILL POP UP BOX INVALID EMIAL ADDRESS
-	         else if(e.getSource() == logIn && !email.contains(".com") || !email.contains("@"))
-	         {
-	            JOptionPane.showMessageDialog(null, "invalid email, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
-	         }
+				 else if(e.getSource() == logIn && !email.contains(".com") || !email.contains("@"))
+				 {
+					 JOptionPane.showMessageDialog(null, "invalid email, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+				 }
+				 
+				 String sql = "select Email, Password from manager where Email = ? AND Password = ?";
+				 PreparedStatement ps = conn.prepareStatement(sql);
+				 ps.setString(1,  email);
+				 ps.setString(2, Password);
+				 ps.executeQuery();
+				 resultSet = ps.executeQuery();
+				 
+				 while(resultSet.next()) {
+					 
+				 
+				 String checkUser = resultSet.getString(1);
+				 String checkPassword = resultSet.getString(2);
+				 
+				 if((checkUser.equals(email)) && (checkPassword.equals(Password)))
+			        {
+		        		JOptionPane.showMessageDialog(null, "Correct password, logIn","Signed In", JOptionPane.ERROR_MESSAGE);
+			        }
+			        else
+			        {
+		        		 JOptionPane.showMessageDialog(null, "Incorrect Password or Email, logIn","Please Try again", JOptionPane.ERROR_MESSAGE);
+			        }
+				 }
+			        conn.close();
+				 
+				 
+	         /*
 	         
-	         
-	     	String pass = enterPassword.getText();
-        	String email1 = enterEmail.getText();
+				String pass = enterPassword.getText();
+	     		String email1 = enterEmail.getText();
         	
-        	String sql = "Select Email, Password from manager where Email='" + enterEmail.getText() + "' and Password='" + enterPassword.getText() + "'";
-			stmt=con.prepareStatement(sql);
-			ResultSet rs=stmt.executeQuery(sql);
-			
-			while(rs.next()) {
+	     		String sql = "select Email,Password from manager where Email = '"+enterEmail+"'and Password = '"+enterPassword+"'";
+	     		resultSet = statement.executeQuery(sql);
+	     		//statement=conn.prepareStatement(sql);
+	     		//ResultSet rs=statement.executeQuery(sql);
+			//int count =0;
+			while(resultSet.next()) {
 				
-				email = rs.getString("Email");
-				Password = rs.getString("Password");
-				
+
+				//String pass = enterPassword.getText();
+	     		//String email1 = enterEmail.getText();
+				//email = rs.getString("Email");
+				//Password = rs.getString("Password");
+				 
 				if(email.equals(email1) && Password.equals(pass))
 				{
 	        		JOptionPane.showMessageDialog(null, "Correct password, logIn","Signed In", JOptionPane.ERROR_MESSAGE);
@@ -152,6 +189,13 @@ public class Manager extends JFrame  {
 
 				}
 			}
+			*/
+			  conn.close();  
+			}catch(Exception e1)
+			{ 
+				System.out.println(e1);
+			}  	
+		  }
 	         
 			/*
 			 if(pass.equals(rs.getString("password")))
@@ -190,12 +234,7 @@ public class Manager extends JFrame  {
 	        	
 	          }
 	         */
-	         con.close();  
-			}catch(Exception e1)
-			{ 
-				System.out.println(e1);
-			}  	
-		  }
+	      
 
 		@Override
 		public void focusGained(FocusEvent e) {
