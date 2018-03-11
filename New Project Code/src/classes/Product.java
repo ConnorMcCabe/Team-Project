@@ -58,7 +58,7 @@ public class Product {
 	
 	public int deleteProduct(int productCodeIn) {
 	     int status=0;  
-	     String sqlString= "delete from fastfood.product where snumber=" + productCodeIn;     
+	     String sqlString= "delete from fastfood.product where productcode=" + productCodeIn;     
 	     
 	     status = dbUpdate(sqlString);                                        
 	     return status;
