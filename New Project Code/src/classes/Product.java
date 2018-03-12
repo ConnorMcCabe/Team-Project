@@ -1,9 +1,6 @@
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
-/*
-import java.util.ArrayList;
-*/
+
 public class Product {
 	//instance variables
 	private double pPrice;
@@ -76,7 +73,7 @@ public class Product {
 	                 
 	         while (resultSet.next()) {
 	        	 foundProduct = new Product(resultSet.getInt("productcode"), resultSet.getDouble("pprice"),
-                         resultSet.getString("pname"), resultSet.getDate("skilldate").toString() );                
+                         resultSet.getString("pname"), resultSet.getString("pdesc"));                
 	         }
 	         conn.close();
 	      } 
@@ -96,7 +93,7 @@ public class Product {
 	         
 	         while ( resultSet.next() )    {
 	            Product nextProduct = new Product(resultSet.getInt("productcode"), resultSet.getDouble("pprice"),
-	                                         resultSet.getString("pname"), resultSet.getDate("skilldate").toString() );                
+	                                         resultSet.getString("pname"), resultSet.getString("pdesc"));                
 	            AllProducts.add(nextProduct);
 	         }
 	         conn.close();
