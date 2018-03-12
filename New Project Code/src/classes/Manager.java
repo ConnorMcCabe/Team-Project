@@ -10,10 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.*;
 import java.awt.event.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.*;
 
 
@@ -76,6 +72,26 @@ public class Manager extends JFrame  {
 		
 		add(p3,  BorderLayout.NORTH);
 		
+
+		JPanel p4;
+	    JButton addItem, removeItem, updateItem;
+	 	
+		p4 = new JPanel();
+		p4.setLayout(new GridLayout(1,3));
+		p4.add(addItem = new JButton("Add New Item"));
+		p4.add(removeItem = new JButton("Remove Item"));
+		p4.add(updateItem = new JButton("Edit Item"));
+		p4.setBorder(new LineBorder(Color.BLACK, 1));
+		p4.setBackground(Color.WHITE);
+
+		add(p4, BorderLayout.CENTER);
+		
+		p4.setVisible(false);
+
+		
+		
+		
+		
 	
 	
 		ListenerClass listener = new ListenerClass(); 
@@ -86,6 +102,8 @@ public class Manager extends JFrame  {
 		logIn.addActionListener(listener);
 	
 	}
+	
+	
 
 	
 	public static void main(String[] args)
@@ -108,6 +126,98 @@ public class Manager extends JFrame  {
 	class ListenerClass implements FocusListener, ActionListener
 	{
 		
+		@Override
+		public void actionPerformed(ActionEvent e) 
+		{
+			try 
+			{		
+				 // CODE THAT WILL DISPLAY JTEXTBOX IF THE PASSWORDS OR EMAIL ARE NOT ENTERED CORRECTLY 
+				 String email = enterEmail.getText();
+		         String Password = enterPassword.getText();
+			
+				 // IF NO DATA ENTERERD TO JTEXTFIELD WILL POP UP ERROR
+				 if(e.getSource() == logIn && email.equals("") || password.equals(""))
+				 {
+
+					 JOptionPane.showMessageDialog(null, "Cannot be left blank, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+				 }
+	         
+	             // IF EMAIL DOES NOT CONTAIN @ OR .com WILL POP UP BOX INVALID EMIAL ADDRESS
+				 else if(e.getSource() == logIn && !email.contains(".com") || !email.contains("@"))
+				 {
+					 JOptionPane.showMessageDialog(null, "invalid email, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+				 }
+					
+				//CODE TO VERFIY THE EMAIL ADDRESS AND PASSWORD FROM THE DATABASE 
+				Class.forName("com.mysql.jdbc.Driver");
+		        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
+		        statement=conn.createStatement(); 
+		        
+		        String emailAd = enterEmail.getText();
+		        char[] passwd = enterPassword.getPassword();
+		        String password1 = new String(passwd);
+		        
+		        if(passwd != null)
+		        {
+		        	String pass = new String(passwd);
+		        	String query1 ="SELECT Email,Password FROM manager where Email=? and Password=?";
+		        	
+		        	PreparedStatement ps = conn.prepareStatement(query1);
+		        	ps.setString(1, emailAd);
+		        	ps.setString(2, password1);
+		        	
+		        	ResultSet rs;
+		        	 rs = ps.executeQuery();
+		        	 
+		        	 
+		        	 if(rs.next())
+		        	 {
+
+		        		 JOptionPane.showMessageDialog(null, "Correct password, logIn","Signed In", JOptionPane.ERROR_MESSAGE);
+
+		        	 }
+		        	 
+		        	 else
+		        	 {
+		        		 JOptionPane.showMessageDialog(null, "Incorrect Password or Email, logIn","Please Try again", JOptionPane.ERROR_MESSAGE);
+
+		        	 }
+		        	 
+		        	 ps.close();
+		        	 rs.close();
+		        	 conn.close();
+		        }
+			}catch(Exception ee) 
+			{
+				System.out.println(ee);
+
+			}
+			
+		}  
+		
+		
+		@Override
+		public void focusGained(FocusEvent e) 
+		{
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void focusLost(FocusEvent e) 
+		{
+			// TODO Auto-generated method stub
+			
+		}
+
+	         
+		 }	
+		
+	}
+
+	
+	
+		/*
 		public void actionPerformed(ActionEvent e)
 		{
 			try {
@@ -190,13 +300,14 @@ public class Manager extends JFrame  {
 				}
 			}
 			*/
+		/*
 			  conn.close();  
 			}catch(Exception e1)
 			{ 
 				System.out.println(e1);
 			}  	
 		  }
-	         
+	        */
 			/*
 			 if(pass.equals(rs.getString("password")))
 			 {
@@ -236,22 +347,4 @@ public class Manager extends JFrame  {
 	         */
 	      
 
-		@Override
-		public void focusGained(FocusEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void focusLost(FocusEvent e) {
-			// TODO Auto-generated method stub
-			
-		}  
-	         
-		 }
-
-
-		
-		
-	}
 
