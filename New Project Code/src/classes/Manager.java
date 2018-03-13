@@ -18,10 +18,18 @@ public class Manager extends JFrame  {
 	//VARIABLES FOR GUI
 	private static final long serialVersionUID = 1L;
 	private JPanel p1, p2, p3;
-	private JLabel password, email, title;
+	private JLabel password, email, title, select;
 	private JTextField enterEmail;
 	private JPasswordField enterPassword; 
 	private JButton logIn;
+	
+	private JPanel p4;
+	private JButton add, delete, update;
+	
+	private JPanel p5;
+	private JTextField enterID, enterName, enterPrice, enterDescription, enterSection;
+	private JLabel id, name, price, description, section;
+	private JButton confirm;
 	
 	//VARIABLES FOR DATABSE CONNECTION
 	private String url = "jdbc:mysql://localhost:3306/";
@@ -72,44 +80,67 @@ public class Manager extends JFrame  {
 		
 		add(p3,  BorderLayout.NORTH);
 		
-
-		JPanel p4;
-	    JButton addItem, removeItem, updateItem;
-	 	
 		p4 = new JPanel();
-		p4.setLayout(new GridLayout(1,3));
-		p4.add(addItem = new JButton("Add New Item"));
-		p4.add(removeItem = new JButton("Remove Item"));
-		p4.add(updateItem = new JButton("Edit Item"));
+	    p4.setLayout(new GridLayout(4,0));
+	    
+		p4.add(select = new JLabel("Please Select"));
+		select.setHorizontalAlignment(JLabel.CENTER);
+		
+	    p4.add(add = new JButton("Add New Item"));
+		p4.add(delete = new JButton("Remove Item"));
+		p4.add(update = new JButton("Edit Item"));
 		p4.setBorder(new LineBorder(Color.BLACK, 1));
 		p4.setBackground(Color.WHITE);
-
+		
+	
 		add(p4, BorderLayout.CENTER);
-		
+			
 		p4.setVisible(false);
-
 		
+		p5 = new JPanel();
+		p5.setLayout(new GridLayout(2,6));
 		
+		p5.add(enterID = new JTextField());
+		p5.add(id = new JLabel("Product Code:"));
+		p5.add(enterName = new JTextField());
+		p5.add(name = new JLabel("Name:"));
+		p5.add(enterPrice = new JTextField());
+		p5.add(price = new JLabel("Price:"));
+		p5.add(enterDescription = new JTextField());
+		p5.add(description = new JLabel("Description:"));
+		p5.add(enterSection = new JTextField());
+		p5.add(section = new JLabel("Section:"));
+		p5.add(confirm = new JButton("Conform"));
 		
+		p5.setBorder(new LineBorder(Color.BLACK, 1));
+		p5.setBackground(Color.WHITE);
 		
 	
-	
+		add(p5, BorderLayout.CENTER);
+			
+		p5.setVisible(false);
+		
+		
 		ListenerClass listener = new ListenerClass(); 
 	
 		enterEmail.addFocusListener(listener);
 		enterPassword.addFocusListener(listener);
-	
 		logIn.addActionListener(listener);
+		
+		add.addActionListener(listener);
+		delete.addActionListener(listener);
+		update.addActionListener(listener);
+
+		
 	
 	}
 	
 	
-
 	
 	public static void main(String[] args)
 	{
 		Manager frame = new Manager();
-		
+
 		frame.setTitle("CHANGE MENU");
 		
 		frame.pack();
@@ -120,8 +151,9 @@ public class Manager extends JFrame  {
 		frame.setVisible(true);
 		
 	}
-	JFrame newFrame = new JFrame("Please Choose An Option");
 	
+
+
 	
 	class ListenerClass implements FocusListener, ActionListener
 	{
@@ -157,6 +189,7 @@ public class Manager extends JFrame  {
 		        char[] passwd = enterPassword.getPassword();
 		        String password1 = new String(passwd);
 		        
+		        
 		        if(passwd != null)
 		        {
 		        	String pass = new String(passwd);
@@ -169,15 +202,15 @@ public class Manager extends JFrame  {
 		        	ResultSet rs;
 		        	 rs = ps.executeQuery();
 		        	 
-		        	 
 		        	 if(rs.next())
-		        	 {
-		        		// JFrame newFrame = new JFrame("Please Choose An Option");
-		        		 newFrame.setVisible(true);
-		        			
+		        	 {  
+		        		    p1.setVisible(false);
+		        		    p2.setVisible(false);
+		        		    p3.setVisible(false);
+		        		    p5.setVisible(false);
 
-		        		 //JOptionPane.showMessageDialog(null, "Correct password, logIn","Signed In", JOptionPane.ERROR_MESSAGE);
-		        		 
+		        		    p4.setVisible(true);
+ 
 		        	 }
 		        	 
 		        	 else
@@ -190,6 +223,16 @@ public class Manager extends JFrame  {
 		        	 rs.close();
 		        	 conn.close();
 		        }
+		        
+		        String add1 = add.getText();
+		        String delete1 = delete.getText();
+		        String update1 = update.getText();
+		        
+		        if(e.getSource() == add)
+		        {
+		        	p5.setVisible(true);
+		        }
+		        
 			}catch(Exception ee) 
 			{
 				System.out.println(ee);
