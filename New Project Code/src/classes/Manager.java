@@ -120,7 +120,7 @@ public class Manager extends JFrame  {
 		frame.setVisible(true);
 		
 	}
-	
+	JFrame newFrame = new JFrame("Please Choose An Option");
 	
 	
 	class ListenerClass implements FocusListener, ActionListener
@@ -172,9 +172,12 @@ public class Manager extends JFrame  {
 		        	 
 		        	 if(rs.next())
 		        	 {
+		        		// JFrame newFrame = new JFrame("Please Choose An Option");
+		        		 newFrame.setVisible(true);
+		        			
 
-		        		 JOptionPane.showMessageDialog(null, "Correct password, logIn","Signed In", JOptionPane.ERROR_MESSAGE);
-
+		        		 //JOptionPane.showMessageDialog(null, "Correct password, logIn","Signed In", JOptionPane.ERROR_MESSAGE);
+		        		 
 		        	 }
 		        	 
 		        	 else
