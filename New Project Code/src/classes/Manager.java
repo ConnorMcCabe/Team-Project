@@ -51,6 +51,8 @@ public class Manager {
 		private JTextField add_sectionIn;
 		private JTextField add_descripIn;
 		private JTextField add_alergyIn;		
+		private JTextField remove_codeIn;
+		private JTextField remove_nameIn;
 
 	/**
 	 * Launch the application.
@@ -102,6 +104,12 @@ public class Manager {
 		frame.getContentPane().add(panel_Add, "name_10478840946849");
 		panel_Add.setLayout(null);
 		panel_Add.setVisible(false);
+		
+		JPanel panel_remove = new JPanel();
+		frame.getContentPane().add(panel_remove, "name_44676578512252");
+		panel_remove.setLayout(null);
+		panel_remove.setVisible(false);
+
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -201,21 +209,27 @@ public class Manager {
 			        	//ResultSet rs;
 			        	ps.execute();
 			        	
-			        	 
-			        	// if(ps.next())
-			        	// {  
-			           //      JOptionPane.showMessageDialog(null, "New Product Was Added to Menu","Product Added", JOptionPane.INFORMATION_MESSAGE);
+			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM product where Product_Code = ?"))
+			        			{
+			        				stmt.setString(1, code1);
+			        				ResultSet rs =stmt.executeQuery();
+			        				
+			        				if(rs.next())
+			        				{
+			     			           JOptionPane.showMessageDialog(null, "New Product Was Added to Menu","Product Added", JOptionPane.INFORMATION_MESSAGE);
+			     			           panel_Add.setVisible(false);
+			     			           panelChoose.setVisible(true);
+			     			           
+			        				}
+			        				
+			        				else
+			        				{
+			    			        	 JOptionPane.showMessageDialog(null, "Incorrect Password or Email, logIn","Please Try again", JOptionPane.ERROR_MESSAGE);
 
-			        	// }
-			        	 
-			        	 //else
-			        	// {
-			        	//	 JOptionPane.showMessageDialog(null, "Incorrect Password or Email, logIn","Please Try again", JOptionPane.ERROR_MESSAGE);
+			        				}
+			        			}
 
-			        	// }
-			        	 
-			        	 //ps.close();
-			        	// rs.close();
+			        	
 			        	 conn.close();
 			        }
 				}catch(Exception ee) 
@@ -374,6 +388,9 @@ public class Manager {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
+				panelChoose.setVisible(false);
+				panel_remove.setVisible(true);
+
 				
 			}
 			
@@ -399,6 +416,47 @@ public class Manager {
 		lblPleaseSelectAn.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblPleaseSelectAn.setBounds(55, 13, 331, 51);
 		panelChoose.add(lblPleaseSelectAn);
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		//PANEL REMOVE PANEL
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		JLabel remove_code = new JLabel("Product Code:");
+		remove_code.setBounds(100, 86, 87, 16);
+		panel_remove.add(remove_code);
+		
+		JLabel remove_name = new JLabel("Name:");
+		remove_name.setBounds(100, 132, 56, 16);
+		panel_remove.add(remove_name);
+		
+		remove_codeIn = new JTextField();
+		remove_codeIn.setBounds(199, 83, 116, 22);
+		panel_remove.add(remove_codeIn);
+		remove_codeIn.setColumns(10);
+		
+		remove_nameIn = new JTextField();
+		remove_nameIn.setBounds(199, 129, 116, 22);
+		panel_remove.add(remove_nameIn);
+		remove_nameIn.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setBounds(30, 86, 174, -60);
+		panel_remove.add(lblNewLabel_1);
+		
+		JLabel lblEnterDetailsTo = new JLabel("Enter Details to remove a Product");
+		lblEnterDetailsTo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblEnterDetailsTo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEnterDetailsTo.setBounds(82, 27, 279, 27);
+		panel_remove.add(lblEnterDetailsTo);
+		
+		JButton remove_OK = new JButton("OK");
+		remove_OK.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		remove_OK.setBounds(156, 185, 97, 25);
+		panel_remove.add(remove_OK);
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
