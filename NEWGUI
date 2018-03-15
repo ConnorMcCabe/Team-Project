@@ -1,11 +1,16 @@
+package Resturaunt;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Window;
+
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -18,7 +23,7 @@ public class GUI {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void Menu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -126,13 +131,7 @@ public class GUI {
 		DeleteBtn.setBounds(816, 479, 223, 32);
 		frmMenu.getContentPane().add(DeleteBtn);
 		
-		JButton CancelBtn = new JButton("Cancel Order");
-		CancelBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		CancelBtn.setBounds(780, 516, 127, 34);
-		frmMenu.getContentPane().add(CancelBtn);
+		
 		
 		JButton ConfirmBtn = new JButton("Confirm Order");
 		ConfirmBtn.addActionListener(new ActionListener() {
@@ -163,5 +162,23 @@ public class GUI {
 		PriceBox.setEditable(false);
 		PriceBox.setBounds(402, 484, 341, 20);
 		frmMenu.getContentPane().add(PriceBox);
-	}
+	
+	
+	JButton CancelBtn = new JButton("Cancel Order");
+	CancelBtn.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			WelcomeMenu wm = new WelcomeMenu();
+			wm.main(null);
+			
+			//CloseWindow upon button press
+			JComponent comp = (JComponent) arg0.getSource();
+	         Window win = SwingUtilities.getWindowAncestor(comp);
+	         win.dispose();
+		}
+		}
+	);
+	CancelBtn.setBounds(780, 516, 127, 34);
+	frmMenu.getContentPane().add(CancelBtn);
+	
+}
 }
