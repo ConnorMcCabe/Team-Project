@@ -2,21 +2,27 @@ package Resturaunt;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
+import javax.swing.JComponent;
 
 public class WelcomeMenu {
-
+	
 	private JFrame frmWelcome;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -60,7 +66,7 @@ public class WelcomeMenu {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				FinalMenu fm = new FinalMenu();
+				GUI fm = new GUI();
 				fm.Menu();
 				
 				//CloseWindow upon button press
@@ -72,7 +78,10 @@ public class WelcomeMenu {
 				
 			}
 		});
-		
-				
 	}
+	
+
+	
+
+	
 }
