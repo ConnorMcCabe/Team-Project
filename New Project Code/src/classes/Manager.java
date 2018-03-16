@@ -53,6 +53,12 @@ public class Manager {
 		private JTextField add_alergyIn;		
 		private JTextField remove_codeIn;
 		private JTextField remove_nameIn;
+		private JTextField update_codeIn;
+		private JTextField update_nameIn;
+		private JTextField update_priceIn;
+		private JTextField update_sectionIn;
+		private JTextField update_descripIn;
+		private JTextField update_alergyIn;
 
 	/**
 	 * Launch the application.
@@ -86,7 +92,7 @@ public class Manager {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 497, 326);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
@@ -109,11 +115,16 @@ public class Manager {
 		frame.getContentPane().add(panel_remove, "name_44676578512252");
 		panel_remove.setLayout(null);
 		panel_remove.setVisible(false);
+		
+		JPanel panel_update = new JPanel();
+		frame.getContentPane().add(panel_update, "name_21178903507949");
+		panel_update.setLayout(null);
+		panel_update.setVisible(false);
 
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		//PANEL ADD CODE
+	    //PANEL ADD CODE
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -248,7 +259,7 @@ public class Manager {
 		JLabel lblPleaseEnterProduct = new JLabel("Please Enter Product Detilas");
 		lblPleaseEnterProduct.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblPleaseEnterProduct.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPleaseEnterProduct.setBounds(50, 13, 319, 16);
+		lblPleaseEnterProduct.setBounds(65, 13, 319, 16);
 		panel_Add.add(lblPleaseEnterProduct);
 		panel_Add.setVisible(false);
 		
@@ -264,24 +275,24 @@ public class Manager {
 		panelMenu.add(lblNewLabel);
 		
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(27, 92, 56, 16);
+		lblEmail.setBounds(129, 92, 56, 16);
 		panelMenu.add(lblEmail);
 		
 	    JTextField enterEmail = new JTextField();
-		enterEmail.setBounds(116, 89, 116, 22);
+		enterEmail.setBounds(212, 89, 116, 22);
 		panelMenu.add(enterEmail);
 		enterEmail.setColumns(10);
 		
 		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(27, 144, 68, 16);
+		lblPassword.setBounds(129, 127, 68, 16);
 		panelMenu.add(lblPassword);
 		
 		enterPassword = new JPasswordField();
-		enterPassword.setBounds(116, 141, 116, 22);
+		enterPassword.setBounds(212, 124, 116, 22);
 		panelMenu.add(enterPassword);
 		
 		JButton btnLogin = new JButton("Login");
-		btnLogin.setBounds(135, 189, 97, 25);
+		btnLogin.setBounds(167, 189, 97, 25);
 		panelMenu.add(btnLogin);
 		
 		//AL
@@ -404,7 +415,9 @@ public class Manager {
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				
+				panelChoose.setVisible(false);
+				panel_update.setVisible(true);
+
 			}
 			
 		});
@@ -451,12 +464,206 @@ public class Manager {
 		panel_remove.add(lblEnterDetailsTo);
 		
 		JButton remove_OK = new JButton("OK");
-		remove_OK.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		remove_OK.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				try 
+				{		
+					 String code2 = remove_codeIn.getText();
+					 String name2 = remove_nameIn.getText();
+						
+					//CODE TO VERFIY THE EMAIL ADDRESS AND PASSWORD FROM THE DATABASE 
+					Class.forName("com.mysql.jdbc.Driver");
+			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
+			        statement=conn.createStatement(); 
+			       	        
+			        if(code2 != null)
+			        {
+			        	
+			        	String code3 = new String(code2);
+			        	
+			        	String query1 ="DELETE FROM Product WHERE Product_Code = ? AND Name = ?";
+			        	
+			        	PreparedStatement ps = conn.prepareStatement(query1);
+			        	ps.setString(1, code2);
+			        	ps.setString(2, name2);
+			     
+			        	//ResultSet rs;
+			        	ps.execute();
+			        	
+			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM product where Product_Code = ?"))
+			        			{
+			        				stmt.setString(1, code3);
+			        				ResultSet rs =stmt.executeQuery();
+			        				
+			        				if(rs.next())
+			        				{
+			    			        	 JOptionPane.showMessageDialog(null, "Product was not deleted","Please Try again", JOptionPane.ERROR_MESSAGE);
+
+			        				}
+			        				
+			        				else
+			        				{
+			    			        	   JOptionPane.showMessageDialog(null, "Product Deleted from Menu","Product Deleted", JOptionPane.INFORMATION_MESSAGE);
+				     			           panel_remove.setVisible(false);
+				     			           panelChoose.setVisible(true);
+				     			           
+			        				}
+			        			}
+
+			        	
+			        	 conn.close();
+			        }
+				}catch(Exception ee) 
+				{
+					System.out.println(ee);
+
+				}
+				
+				
 			}
 		});
 		remove_OK.setBounds(156, 185, 97, 25);
 		panel_remove.add(remove_OK);
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		//PANEL_UPDATE CODE
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		
+		JLabel lblEnterInformationTo = new JLabel("Enter Information to Update Product");
+		lblEnterInformationTo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEnterInformationTo.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblEnterInformationTo.setBounds(86, 13, 321, 26);
+		panel_update.add(lblEnterInformationTo);
+		
+		JLabel update_code = new JLabel("Product Code:");
+		update_code.setBounds(12, 60, 91, 16);
+		panel_update.add(update_code);
+		
+		JLabel update_name = new JLabel("Name:");
+		update_name.setBounds(12, 89, 56, 16);
+		panel_update.add(update_name);
+		
+		JLabel lblPrice = new JLabel("Price:");
+		lblPrice.setBounds(12, 118, 56, 16);
+		panel_update.add(lblPrice);
+		
+		JLabel lblSection = new JLabel("Section:");
+		lblSection.setBounds(12, 147, 56, 16);
+		panel_update.add(lblSection);
+		
+		JLabel update_descrip = new JLabel("Description:");
+		update_descrip.setBounds(235, 60, 78, 16);
+		panel_update.add(update_descrip);
+		
+		update_codeIn = new JTextField();
+		update_codeIn.setBounds(96, 57, 116, 22);
+		panel_update.add(update_codeIn);
+		update_codeIn.setColumns(10);
+		
+		update_nameIn = new JTextField();
+		update_nameIn.setBounds(96, 86, 116, 22);
+		panel_update.add(update_nameIn);
+		update_nameIn.setColumns(10);
+		
+		update_priceIn = new JTextField();
+		update_priceIn.setBounds(96, 115, 116, 22);
+		panel_update.add(update_priceIn);
+		update_priceIn.setColumns(10);
+		
+		update_sectionIn = new JTextField();
+		update_sectionIn.setBounds(96, 144, 116, 22);
+		panel_update.add(update_sectionIn);
+		update_sectionIn.setColumns(10);
+		
+		update_descripIn = new JTextField();
+		update_descripIn.setBounds(235, 77, 154, 60);
+		panel_update.add(update_descripIn);
+		update_descripIn.setColumns(10);
+		
+		JLabel lblAlergy = new JLabel("Alergy:");
+		lblAlergy.setBounds(234, 147, 56, 16);
+		panel_update.add(lblAlergy);
+		
+		update_alergyIn = new JTextField();
+		update_alergyIn.setBounds(235, 164, 154, 60);
+		panel_update.add(update_alergyIn);
+		update_alergyIn.setColumns(10);
+		
+		JButton update_OK = new JButton("Update");
+		update_OK.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+
+				try 
+				{		
+					 String code3 = update_codeIn.getText();
+					 String name3 = update_nameIn.getText();
+					 String price3 = update_priceIn.getText();
+					 String descrip3 = update_descripIn.getText();
+					 String section3 = update_sectionIn.getText();
+					 String alergy3 = update_alergyIn.getText();
+						
+					//CODE TO VERFIY THE EMAIL ADDRESS AND PASSWORD FROM THE DATABASE 
+					Class.forName("com.mysql.jdbc.Driver");
+			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
+			        statement=conn.createStatement(); 
+			       	        
+			        if(code3 != null)
+			        {
+			        	
+			        	String code = new String(code3);
+			        	String query1 ="UPDATE Product SET Product_Code=?, Name=?, Price=?, Description=?, Section=?, Alergy=? WHERE Product_Code= ?";
+			        	
+			        	PreparedStatement ps = conn.prepareStatement(query1);
+			        	ps.setString(1, code3);
+			        	ps.setString(2, name3);
+			        	ps.setString(3, price3);
+			        	ps.setString(4, descrip3);
+			        	ps.setString(5, section3);
+			        	ps.setString(6, alergy3);
+			        	ps.setString(7, code3);
+
+
+			        	//ResultSet rs;
+			        	ps.execute();
+			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM product where Product_Code = ?"))
+			        			{
+			        				stmt.setString(1, code3);
+			        				ResultSet rs =stmt.executeQuery();
+			        				
+			        				if(rs.next())
+			        				{
+			     			           JOptionPane.showMessageDialog(null, "Product was Updated","Product Updated", JOptionPane.INFORMATION_MESSAGE);
+			     			           panel_update.setVisible(false);
+			     			           panelChoose.setVisible(true);
+			     			           
+			        				}
+			        				
+			        				else
+			        				{
+				     			           JOptionPane.showMessageDialog(null, "Product Not Updated","Product Not Updated", JOptionPane.ERROR_MESSAGE);
+
+			        				}
+			        			}
+
+			        	
+			        	 conn.close();
+			        }
+				}catch(Exception ee) 
+				{
+					System.out.println(ee);
+
+				}
+				
+			}
+		});
+		update_OK.setBounds(265, 237, 97, 25);
+		panel_update.add(update_OK);
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
