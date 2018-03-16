@@ -1,9 +1,11 @@
-package classes;
+package Resturaunt;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 
 import java.awt.Font;
 import java.awt.Window;
@@ -13,6 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.ResultSet;
@@ -20,7 +23,11 @@ import com.mysql.jdbc.Statement;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 
@@ -61,6 +68,36 @@ public class GUI {
 		frmMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenu.getContentPane().setLayout(null);
 		
+		JLabel ImageLabel = new JLabel("");
+		ImageLabel.setBounds(311, 42, 432, 364);
+		frmMenu.getContentPane().add(ImageLabel);
+		
+		JTextArea PriceBox = new JTextArea();
+		PriceBox.setText("");
+		PriceBox.setEditable(false);
+		PriceBox.setBounds(402, 484, 341, 20);
+		frmMenu.getContentPane().add(PriceBox);
+		
+		JTextArea DescriptionBox = new JTextArea();
+		DescriptionBox.setText("");
+		DescriptionBox.setEditable(false);
+		DescriptionBox.setBounds(402, 424, 341, 20);
+		frmMenu.getContentPane().add(DescriptionBox);
+		
+		JTextArea AllergenBox = new JTextArea();
+		AllergenBox.setText("");
+		AllergenBox.setEditable(false);
+		AllergenBox.setBounds(402, 452, 341, 20);
+		frmMenu.getContentPane().add(AllergenBox);
+		
+		JTable OrderSummary = new JTable();
+		String columns[] = new String[] {"Product", "Price", "Quanity"};
+		DefaultTableModel dtm = new DefaultTableModel(columns, 0);
+		OrderSummary.setModel(dtm);
+		
+		OrderSummary.setBounds(780, 46, 294, 426);
+		frmMenu.getContentPane().add(OrderSummary);
+		
 		JLabel lblNewLabel = new JLabel("Main's");
 		lblNewLabel.setFont(new Font("Trebuchet MS", Font.PLAIN, 30));
 		lblNewLabel.setBounds(10, 42, 92, 34);
@@ -88,6 +125,34 @@ public class GUI {
 				System.out.print(x2);
 				JOptionPane.showMessageDialog(null, "Error");
 			}
+		MainCB.addActionListener(new ActionListener()
+		{
+		    public void actionPerformed(ActionEvent arg0) {
+		    	try {
+		    	Class.forName("com.mysql.jdbc.Driver");
+				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","pass");
+		        	String s = "Select * from fast_food.product WHERE Section = 'Main' and Name = ?";
+		        	PreparedStatement pst = conn.prepareStatement(s);
+		        	pst.setString(1, (String)MainCB.getSelectedItem());
+		        	java.sql.ResultSet rs=pst.executeQuery();
+		        	
+		        
+		        	while(rs.next()) 
+		        	{
+		        		PriceBox.setText(rs.getString("Price"));
+		        		DescriptionBox.setText(rs.getString("Description"));
+		        		//AlergenBox.setText(rs.getString("Allergies"));
+		        	}
+		        	pst.close();
+					} catch (SQLException | ClassNotFoundException e1) 
+		    	{
+						
+						System.out.print(e1);
+					}
+					
+		        }
+
+		    });
 			
 		frmMenu.getContentPane().add(MainCB);
 		
@@ -118,6 +183,34 @@ public class GUI {
 				System.out.print(x2);
 				JOptionPane.showMessageDialog(null, "Error");
 			}
+		SideCB.addActionListener(new ActionListener()
+		{
+		    public void actionPerformed(ActionEvent arg0) {
+		    	try {
+		    	Class.forName("com.mysql.jdbc.Driver");
+				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","pass");
+		        	String s = "Select * from fast_food.product WHERE Section = 'Side' and Name = ?";
+		        	PreparedStatement pst = conn.prepareStatement(s);
+		        	pst.setString(1, (String)SideCB.getSelectedItem());
+		        	java.sql.ResultSet rs=pst.executeQuery();
+		        
+		        
+		        	while(rs.next()) 
+		        	{
+		        		PriceBox.setText(rs.getString("Price"));
+		        		DescriptionBox.setText(rs.getString("Description"));
+		        		//AlergenBox.setText(rs.getString("Allergies"));
+		        	}
+		        	pst.close();
+					} catch (SQLException | ClassNotFoundException e1) 
+		    	{
+						
+						System.out.print(e1);
+					}
+					
+		        }
+
+		    });
 		frmMenu.getContentPane().add(SideCB);
 		
 		JLabel lblDesserts = new JLabel("Dessert's");
@@ -147,6 +240,34 @@ public class GUI {
 				System.out.print(x2);
 				JOptionPane.showMessageDialog(null, "Error");
 			}
+		DessertCB.addActionListener(new ActionListener()
+		{
+		    public void actionPerformed(ActionEvent arg0) {
+		    	try {
+		    	Class.forName("com.mysql.jdbc.Driver");
+				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","pass");
+		        	String s = "Select * from fast_food.product WHERE Section = 'Dessert' and Name = ?";
+		        	PreparedStatement pst = conn.prepareStatement(s);
+		        	pst.setString(1, (String)DessertCB.getSelectedItem());
+		        	java.sql.ResultSet rs=pst.executeQuery();
+		        	
+		        
+		        	while(rs.next()) 
+		        	{
+		        		PriceBox.setText(rs.getString("Price"));
+		        		DescriptionBox.setText(rs.getString("Description"));
+		        		//AlergenBox.setText(rs.getString("Allergies"));
+		        	}
+		        	pst.close();
+					} catch (SQLException | ClassNotFoundException e1) 
+		    	{
+						
+						System.out.print(e1);
+					}
+					
+		        }
+
+		    });
 		frmMenu.getContentPane().add(DessertCB);
 		
 		JLabel lblDrinks = new JLabel("Drink's");
@@ -176,6 +297,35 @@ public class GUI {
 				System.out.print(x2);
 				JOptionPane.showMessageDialog(null, "Error");
 			}
+		
+		DrinkCB.addActionListener(new ActionListener()
+		{
+		    public void actionPerformed(ActionEvent arg0) {
+		    	try {
+		    	Class.forName("com.mysql.jdbc.Driver");
+				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","pass");
+		        	String s = "Select * from fast_food.product WHERE Section = 'Drink' and Name = ?";
+		        	PreparedStatement pst = conn.prepareStatement(s);
+		        	pst.setString(1, (String)DrinkCB.getSelectedItem());
+		        	java.sql.ResultSet rs=pst.executeQuery();
+		        	
+		        
+		        	while(rs.next()) 
+		        	{
+		        		PriceBox.setText(rs.getString("Price"));
+		        		DescriptionBox.setText(rs.getString("Description"));
+		        		//AlergenBox.setText(rs.getString("Allergies"));
+		        	}
+		        	pst.close();
+					} catch (SQLException | ClassNotFoundException e1) 
+		    	{
+						
+						System.out.print(e1);
+					}
+					
+		        }
+
+		    });
 		frmMenu.getContentPane().add(DrinkCB);
 		
 		JLabel lblDescription = new JLabel("Description:");
@@ -183,9 +333,7 @@ public class GUI {
 		lblDescription.setBounds(300, 417, 98, 27);
 		frmMenu.getContentPane().add(lblDescription);
 		
-		JLabel ImageLabel = new JLabel("");
-		ImageLabel.setBounds(311, 42, 432, 364);
-		frmMenu.getContentPane().add(ImageLabel);
+		
 		
 		JLabel lblAllergens = new JLabel("Allergens:");
 		lblAllergens.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
@@ -196,12 +344,6 @@ public class GUI {
 		lblPrice.setFont(new Font("Trebuchet MS", Font.PLAIN, 18));
 		lblPrice.setBounds(350, 478, 114, 27);
 		frmMenu.getContentPane().add(lblPrice);
-		
-		JTextPane OrderSummary = new JTextPane();
-		OrderSummary.setText("h");
-		OrderSummary.setEditable(false);
-		OrderSummary.setBounds(780, 46, 294, 426);
-		frmMenu.getContentPane().add(OrderSummary);
 		
 		JLabel lblOrderSummary = new JLabel("Order Summary:");
 		lblOrderSummary.setFont(new Font("Trebuchet MS", Font.PLAIN, 30));
@@ -229,24 +371,26 @@ public class GUI {
 		JButton addBtn = new JButton("Add To Order");
 		addBtn.setBounds(461, 516, 142, 34);
 		frmMenu.getContentPane().add(addBtn);
-		
-		JTextPane DescriptionBox = new JTextPane();
-		DescriptionBox.setText("h");
-		DescriptionBox.setEditable(false);
-		DescriptionBox.setBounds(402, 424, 341, 20);
-		frmMenu.getContentPane().add(DescriptionBox);
-		
-		JTextPane AllergenBox = new JTextPane();
-		AllergenBox.setText("h");
-		AllergenBox.setEditable(false);
-		AllergenBox.setBounds(402, 452, 341, 20);
-		frmMenu.getContentPane().add(AllergenBox);
-		
-		JTextPane PriceBox = new JTextPane();
-		PriceBox.setText("h");
-		PriceBox.setEditable(false);
-		PriceBox.setBounds(402, 484, 341, 20);
-		frmMenu.getContentPane().add(PriceBox);
+		addBtn.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				
+				
+				try {
+			    	Class.forName("com.mysql.jdbc.Driver");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","pass");
+			        	String s = "INSERT INTO fast_food.Order_Item(Quantity, Total_Price) VALUES(?, ?) where ID = ?;";
+			        	PreparedStatement stmt = conn.prepareStatement(s);
+			        	
+			        	
+				
+				}catch(Exception e2)
+				{
+					System.out.print(e2);
+				}
+			}
+		});
 	
 	
 	JButton CancelBtn = new JButton("Cancel Order");
