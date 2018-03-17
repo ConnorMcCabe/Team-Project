@@ -27,6 +27,12 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+import java.awt.Color;
+import javax.swing.UIManager;
+
+import org.jcp.xml.dsig.internal.dom.DOMUtils;
+
+import javax.swing.JTable;
 
 public class Manager {
 
@@ -59,6 +65,8 @@ public class Manager {
 		private JTextField update_sectionIn;
 		private JTextField update_descripIn;
 		private JTextField update_alergyIn;
+		private JTextField user_emailIn;
+		private JTextField user_passIn;
 
 	/**
 	 * Launch the application.
@@ -88,15 +96,17 @@ public class Manager {
 	 */
 	private void initialize() {
 		
-		//JRAME CREATION AND JPANEL CODE
+		//JRAME CREATION AND ALL SEPERATE JPANEL CODE
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 497, 326);
+		frame.setBounds(100, 100, 439, 353);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
 		final JPanel panelMenu = new JPanel();
+		panelMenu.setBackground(UIManager.getColor("Button.background"));
+		panelMenu.setForeground(Color.BLACK);
 		frame.getContentPane().add(panelMenu, "name_10475017053377");
 		panelMenu.setLayout(null);
 		panelMenu.setVisible(true);
@@ -121,7 +131,11 @@ public class Manager {
 		panel_update.setLayout(null);
 		panel_update.setVisible(false);
 
-		
+		JPanel panel_user = new JPanel();
+		frame.getContentPane().add(panel_user, "name_1167324204295");
+		panel_user.setLayout(null);
+		panel_user.setVisible(false);
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	    //PANEL ADD CODE
@@ -261,6 +275,18 @@ public class Manager {
 		lblPleaseEnterProduct.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPleaseEnterProduct.setBounds(65, 13, 319, 16);
 		panel_Add.add(lblPleaseEnterProduct);
+		
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				panel_Add.setVisible(false);
+				panelChoose.setVisible(true);
+			}
+		});
+		btnCancel.setBounds(272, 263, 97, 25);
+		panel_Add.add(btnCancel);
 		panel_Add.setVisible(false);
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -430,6 +456,32 @@ public class Manager {
 		lblPleaseSelectAn.setBounds(55, 13, 331, 51);
 		panelChoose.add(lblPleaseSelectAn);
 		
+		//CODE TO CREATE NEW USER 
+		JButton btnCreateUser = new JButton("Create User");
+		btnCreateUser.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				panelChoose.setVisible(false);
+				panel_user.setVisible(true);
+
+			}
+		});
+		btnCreateUser.setBounds(12, 245, 101, 25);
+		panelChoose.add(btnCreateUser);
+		
+		JButton btnSignOut = new JButton("Sign Out");
+		btnSignOut.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				panelChoose.setVisible(false);
+				panelMenu.setVisible(true);
+			}
+		});
+		btnSignOut.setBounds(300, 245, 97, 25);
+		panelChoose.add(btnSignOut);
+		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		//PANEL REMOVE PANEL
@@ -526,6 +578,18 @@ public class Manager {
 		});
 		remove_OK.setBounds(156, 185, 97, 25);
 		panel_remove.add(remove_OK);
+		
+		JButton btnCancel_1 = new JButton("Cancel");
+		btnCancel_1.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				panel_remove.setVisible(false);
+				panelChoose.setVisible(true);
+			}
+		});
+		btnCancel_1.setBounds(156, 226, 97, 25);
+		panel_remove.add(btnCancel_1);
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -662,10 +726,150 @@ public class Manager {
 				
 			}
 		});
-		update_OK.setBounds(265, 237, 97, 25);
+		update_OK.setBounds(265, 231, 97, 25);
 		panel_update.add(update_OK);
 		
+		JButton btnNewButton = new JButton("Cancel");
+		btnNewButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				panel_update.setVisible(false);
+				panelChoose.setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(265, 269, 97, 25);
+		panel_update.add(btnNewButton);
+		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		
+		//PANEL ADD USER
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		
+		JLabel user_email = new JLabel("Email:");
+		user_email.setBounds(106, 100, 56, 16);
+		panel_user.add(user_email);
+		
+		JLabel user_pass = new JLabel("Password:");
+		user_pass.setBounds(106, 139, 67, 16);
+		panel_user.add(user_pass);
+		
+		user_emailIn = new JTextField();
+		user_emailIn.setBounds(197, 97, 116, 22);
+		panel_user.add(user_emailIn);
+		user_emailIn.setColumns(10);
+		
+		user_passIn = new JTextField();
+		user_passIn.setBounds(197, 136, 116, 22);
+		panel_user.add(user_passIn);
+		user_passIn.setColumns(10);
+		
+		JButton user_OK = new JButton("Create User");
+		user_OK.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				try 
+				{		
+					 // CODE THAT WILL DISPLAY JTEXTBOX IF THE PASSWORDS OR EMAIL ARE NOT ENTERED CORRECTLY 
+					 String email = user_emailIn.getText();
+			         String password = user_passIn.getText();
+				
+					 // IF NO DATA ENTERERD TO JTEXTFIELD WILL POP UP ERROR
+					 if(e.getSource() == btnLogin && email.equals("") || password.equals(""))
+					 {
+
+						 JOptionPane.showMessageDialog(null, "Cannot be left blank, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+					 }
+		         
+		             // IF EMAIL DOES NOT CONTAIN @ OR .com WILL POP UP BOX INVALID EMIAL ADDRESS
+					 else if(e.getSource() == btnLogin && !email.contains(".com") || !email.contains("@"))
+					 {
+						 JOptionPane.showMessageDialog(null, "invalid email, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+					 }
+						
+					//CODE TO VERFIY THE EMAIL ADDRESS AND PASSWORD FROM THE DATABASE 
+					Class.forName("com.mysql.jdbc.Driver");
+			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
+			        statement=conn.createStatement(); 
+			        
+			        //String emailAd = enterEmail.getText();
+			       // char[] passwd = enterPassword.getPassword();
+			       // String password1 = new String(passwd);
+			        
+			        
+			        if(email != null)
+			        {
+			        	//String pass = new String(passwd);
+			        	String query1 ="INSERT INTO manager(Email, Password) values(?,?)";
+			        	
+			        	PreparedStatement ps = conn.prepareStatement(query1);
+			        	ps.setString(1, email);
+			        	ps.setString(2, password);
+			        	
+			        	ps.execute();
+
+
+			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM manager where Email = ? and Password = ?"))
+			        			{
+			        				stmt.setString(1, email);
+			        				stmt.setString(2, password);
+
+			        				ResultSet rs =stmt.executeQuery();
+			        				
+			        				if(rs.next())
+			        				{
+			     			           JOptionPane.showMessageDialog(null, "User was Registered as Admin","User Added", JOptionPane.INFORMATION_MESSAGE);
+			     			           panel_user.setVisible(false);
+			     			           panelChoose.setVisible(true);
+			     			           
+			        				}
+			        				
+			        				else
+			        				{
+			    			        	 JOptionPane.showMessageDialog(null, "User was not created","Please Try again", JOptionPane.ERROR_MESSAGE);
+
+			        				}
+			        			}
+			        	 
+			        	 ps.close();
+			        	 conn.close();
+			        }
+				}catch(Exception ee) 
+				{
+					System.out.println(ee);
+
+				}
+				
+				
+			}
+		});
+		user_OK.setFont(new Font("Tahoma", Font.BOLD, 13));
+		user_OK.setBounds(155, 171, 116, 38);
+		panel_user.add(user_OK);
+		
+		JLabel lblInsertNewUser = new JLabel("Insert New User Details");
+		lblInsertNewUser.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblInsertNewUser.setHorizontalAlignment(SwingConstants.CENTER);
+		lblInsertNewUser.setBounds(88, 35, 261, 16);
+		panel_user.add(lblInsertNewUser);
+		
+		JButton btnCancel_2 = new JButton("Cancel");
+		btnCancel_2.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				panel_update.setVisible(false);
+				panelChoose.setVisible(true);
+			}
+		});
+		btnCancel_2.setBounds(165, 218, 97, 25);
+		panel_user.add(btnCancel_2);
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 		
 	}
