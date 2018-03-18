@@ -25,6 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import java.awt.Color;
@@ -33,6 +35,8 @@ import javax.swing.UIManager;
 import org.jcp.xml.dsig.internal.dom.DOMUtils;
 
 import javax.swing.JTable;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class Manager {
 
@@ -54,7 +58,6 @@ public class Manager {
 		private JTextField add_codeIn;
 		private JTextField add_nameIn;
 		private JTextField add_priceIn;
-		private JTextField add_sectionIn;
 		private JTextField add_descripIn;
 		private JTextField add_alergyIn;		
 		private JTextField remove_codeIn;
@@ -62,7 +65,6 @@ public class Manager {
 		private JTextField update_codeIn;
 		private JTextField update_nameIn;
 		private JTextField update_priceIn;
-		private JTextField update_sectionIn;
 		private JTextField update_descripIn;
 		private JTextField update_alergyIn;
 		private JTextField user_emailIn;
@@ -158,8 +160,8 @@ public class Manager {
 		add_descrip.setBounds(238, 46, 94, 16);
 		panel_Add.add(add_descrip);
 		
-		JLabel add_section = new JLabel("Section");
-		add_section.setBounds(12, 133, 56, 16);
+		JLabel add_section = new JLabel("Section:");
+		add_section.setBounds(12, 136, 56, 16);
 		panel_Add.add(add_section);
 		
 		JLabel add_alergy = new JLabel("Alergy:");
@@ -181,11 +183,6 @@ public class Manager {
 		panel_Add.add(add_priceIn);
 		add_priceIn.setColumns(10);
 		
-		add_sectionIn = new JTextField();
-		add_sectionIn.setBounds(110, 130, 116, 22);
-		panel_Add.add(add_sectionIn);
-		add_sectionIn.setColumns(10);
-		
 		add_descripIn = new JTextField();
 		add_descripIn.setBounds(238, 63, 170, 62);
 		panel_Add.add(add_descripIn);
@@ -195,6 +192,11 @@ public class Manager {
 		add_alergyIn.setBounds(238, 150, 170, 62);
 		panel_Add.add(add_alergyIn);
 		add_alergyIn.setColumns(10);
+		
+		JComboBox add_sectionIn = new JComboBox();
+		add_sectionIn.setModel(new DefaultComboBoxModel(new String[] {"", "Drink", "Main", "Side", "Dessert"}));
+		add_sectionIn.setBounds(110, 133, 116, 22);
+		panel_Add.add(add_sectionIn);
 		
 		//AL
 		//
@@ -209,13 +211,16 @@ public class Manager {
 					 String name1 = add_nameIn.getText();
 					 String price1 = add_priceIn.getText();
 					 String descrip1 = add_descripIn.getText();
-					 String section1 = add_sectionIn.getText();
+					// String section1 = add_sectionIn.getText();
 					 String alergy1 = add_alergyIn.getText();
 						
 					//CODE TO VERFIY THE EMAIL ADDRESS AND PASSWORD FROM THE DATABASE 
 					Class.forName("com.mysql.jdbc.Driver");
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement(); 
+			       
+			        
+			        String text = (String)add_sectionIn.getSelectedItem();
 			       	        
 			        if(code1 != null)
 			        {
@@ -228,7 +233,7 @@ public class Manager {
 			        	ps.setString(2, name1);
 			        	ps.setString(3, price1);
 			        	ps.setString(4, descrip1);
-			        	ps.setString(5, section1);
+			        	ps.setString(5, text);
 			        	ps.setString(6, alergy1);
 
 			        	//ResultSet rs;
@@ -287,6 +292,8 @@ public class Manager {
 		});
 		btnCancel.setBounds(272, 263, 97, 25);
 		panel_Add.add(btnCancel);
+		
+		
 		panel_Add.setVisible(false);
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -638,11 +645,6 @@ public class Manager {
 		panel_update.add(update_priceIn);
 		update_priceIn.setColumns(10);
 		
-		update_sectionIn = new JTextField();
-		update_sectionIn.setBounds(96, 144, 116, 22);
-		panel_update.add(update_sectionIn);
-		update_sectionIn.setColumns(10);
-		
 		update_descripIn = new JTextField();
 		update_descripIn.setBounds(235, 77, 154, 60);
 		panel_update.add(update_descripIn);
@@ -657,6 +659,11 @@ public class Manager {
 		panel_update.add(update_alergyIn);
 		update_alergyIn.setColumns(10);
 		
+		JComboBox update_sectionIn = new JComboBox();
+		update_sectionIn.setModel(new DefaultComboBoxModel(new String[] {"", "Drink", "Main", "Side", "Dessert"}));
+		update_sectionIn.setBounds(96, 144, 116, 22);
+		panel_update.add(update_sectionIn);
+		
 		JButton update_OK = new JButton("Update");
 		update_OK.addActionListener(new ActionListener() 
 		{
@@ -669,9 +676,11 @@ public class Manager {
 					 String name3 = update_nameIn.getText();
 					 String price3 = update_priceIn.getText();
 					 String descrip3 = update_descripIn.getText();
-					 String section3 = update_sectionIn.getText();
+					 //String section3 = update_sectionIn.getText();
 					 String alergy3 = update_alergyIn.getText();
-						
+					 
+				     String text = (String)update_sectionIn.getSelectedItem();
+
 					//CODE TO VERFIY THE EMAIL ADDRESS AND PASSWORD FROM THE DATABASE 
 					Class.forName("com.mysql.jdbc.Driver");
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
@@ -688,7 +697,7 @@ public class Manager {
 			        	ps.setString(2, name3);
 			        	ps.setString(3, price3);
 			        	ps.setString(4, descrip3);
-			        	ps.setString(5, section3);
+			        	ps.setString(5, text);
 			        	ps.setString(6, alergy3);
 			        	ps.setString(7, code3);
 
@@ -740,6 +749,8 @@ public class Manager {
 		});
 		btnNewButton.setBounds(265, 269, 97, 25);
 		panel_update.add(btnNewButton);
+		
+		
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
