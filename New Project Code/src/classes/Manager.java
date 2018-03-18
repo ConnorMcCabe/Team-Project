@@ -34,9 +34,13 @@ import javax.swing.UIManager;
 
 import org.jcp.xml.dsig.internal.dom.DOMUtils;
 
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 public class Manager {
 
@@ -68,7 +72,8 @@ public class Manager {
 		private JTextField update_descripIn;
 		private JTextField update_alergyIn;
 		private JTextField user_emailIn;
-		private JTextField user_passIn;
+		private JPasswordField user_passwordIn;
+		private JTable view_table;
 
 	/**
 	 * Launch the application.
@@ -102,7 +107,7 @@ public class Manager {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 439, 353);
+		frame.setBounds(100, 100, 477, 372);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
@@ -137,6 +142,12 @@ public class Manager {
 		frame.getContentPane().add(panel_user, "name_1167324204295");
 		panel_user.setLayout(null);
 		panel_user.setVisible(false);
+		
+		JPanel panel_view = new JPanel();
+		frame.getContentPane().add(panel_view, "name_21001245389360");
+		panel_view.setLayout(null);
+		panel_view.setVisible(false);
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -206,7 +217,8 @@ public class Manager {
 			public void actionPerformed(ActionEvent e) 
 			{
 				try 
-				{		
+				{
+
 					 String code1 = add_codeIn.getText();
 					 String name1 = add_nameIn.getText();
 					 String price1 = add_priceIn.getText();
@@ -238,6 +250,8 @@ public class Manager {
 
 			        	//ResultSet rs;
 			        	ps.execute();
+			        
+				
 			        	
 			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM product where Product_Code = ?"))
 			        			{
@@ -264,6 +278,8 @@ public class Manager {
 			        }
 				}catch(Exception ee) 
 				{
+					 JOptionPane.showMessageDialog(null, "Cannot be left blank, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+
 					System.out.println(ee);
 
 				}
@@ -489,6 +505,18 @@ public class Manager {
 		btnSignOut.setBounds(300, 245, 97, 25);
 		panelChoose.add(btnSignOut);
 		
+		JButton btnViewProducts = new JButton("View Products");
+		btnViewProducts.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				panelChoose.setVisible(false);
+				panel_view.setVisible(true);
+			}
+		});
+		btnViewProducts.setBounds(164, 245, 97, 25);
+		panelChoose.add(btnViewProducts);
+		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		//PANEL REMOVE PANEL
@@ -536,7 +564,13 @@ public class Manager {
 					Class.forName("com.mysql.jdbc.Driver");
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement(); 
-			       	        
+			       	
+			        if(e.getSource()== remove_OK && remove_codeIn.equals("") || remove_nameIn.equals(""))
+			        {
+						 JOptionPane.showMessageDialog(null, "Cannot be left blank, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+
+			        }
+			        
 			        if(code2 != null)
 			        {
 			        	
@@ -558,16 +592,17 @@ public class Manager {
 			        				
 			        				if(rs.next())
 			        				{
-			    			        	 JOptionPane.showMessageDialog(null, "Product was not deleted","Please Try again", JOptionPane.ERROR_MESSAGE);
+			        				
+			    			        	  JOptionPane.showMessageDialog(null, "Product was not deleted","Please Try again", JOptionPane.ERROR_MESSAGE);
 
 			        				}
 			        				
 			        				else
 			        				{
-			    			        	   JOptionPane.showMessageDialog(null, "Product Deleted from Menu","Product Deleted", JOptionPane.INFORMATION_MESSAGE);
-				     			           panel_remove.setVisible(false);
-				     			           panelChoose.setVisible(true);
-				     			           
+			    			        	    JOptionPane.showMessageDialog(null, "Product Deleted from Menu","Product Deleted", JOptionPane.INFORMATION_MESSAGE);
+				     			            panel_remove.setVisible(false);
+				     			            panelChoose.setVisible(true);
+
 			        				}
 			        			}
 
@@ -576,6 +611,7 @@ public class Manager {
 			        }
 				}catch(Exception ee) 
 				{
+
 					System.out.println(ee);
 
 				}
@@ -729,6 +765,8 @@ public class Manager {
 			        }
 				}catch(Exception ee) 
 				{
+					 JOptionPane.showMessageDialog(null, "Cannot be left blank, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+
 					System.out.println(ee);
 
 				}
@@ -772,10 +810,9 @@ public class Manager {
 		panel_user.add(user_emailIn);
 		user_emailIn.setColumns(10);
 		
-		user_passIn = new JTextField();
-		user_passIn.setBounds(197, 136, 116, 22);
-		panel_user.add(user_passIn);
-		user_passIn.setColumns(10);
+		user_passwordIn = new JPasswordField();
+		user_passwordIn.setBounds(197, 136, 116, 22);
+		panel_user.add(user_passwordIn);
 		
 		JButton user_OK = new JButton("Create User");
 		user_OK.addActionListener(new ActionListener()
@@ -786,7 +823,7 @@ public class Manager {
 				{		
 					 // CODE THAT WILL DISPLAY JTEXTBOX IF THE PASSWORDS OR EMAIL ARE NOT ENTERED CORRECTLY 
 					 String email = user_emailIn.getText();
-			         String password = user_passIn.getText();
+			         String password = user_passwordIn.getText();
 				
 					 // IF NO DATA ENTERERD TO JTEXTFIELD WILL POP UP ERROR
 					 if(e.getSource() == btnLogin && email.equals("") || password.equals(""))
@@ -807,8 +844,8 @@ public class Manager {
 			        statement=conn.createStatement(); 
 			        
 			        //String emailAd = enterEmail.getText();
-			       // char[] passwd = enterPassword.getPassword();
-			       // String password1 = new String(passwd);
+			        char[] passwd = user_passwordIn.getPassword();
+			        String password1 = new String(passwd);
 			        
 			        
 			        if(email != null)
@@ -818,7 +855,7 @@ public class Manager {
 			        	
 			        	PreparedStatement ps = conn.prepareStatement(query1);
 			        	ps.setString(1, email);
-			        	ps.setString(2, password);
+			        	ps.setString(2, password1);
 			        	
 			        	ps.execute();
 
@@ -826,7 +863,7 @@ public class Manager {
 			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM manager where Email = ? and Password = ?"))
 			        			{
 			        				stmt.setString(1, email);
-			        				stmt.setString(2, password);
+			        				stmt.setString(2, password1);
 
 			        				ResultSet rs =stmt.executeQuery();
 			        				
@@ -850,10 +887,10 @@ public class Manager {
 			        }
 				}catch(Exception ee) 
 				{
+
 					System.out.println(ee);
 
 				}
-				
 				
 			}
 		});
@@ -878,6 +915,61 @@ public class Manager {
 		});
 		btnCancel_2.setBounds(165, 218, 97, 25);
 		panel_user.add(btnCancel_2);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 13, 435, 264);
+		panel_view.add(scrollPane);
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	
+		view_table = new JTable();
+		scrollPane.setViewportView(view_table);
+		
+		JButton view_Ok = new JButton("Done");
+		view_Ok.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				view_table.setVisible(false);
+				panelChoose.setVisible(true);
+				
+			}
+		});
+		view_Ok.setBounds(336, 287, 97, 25);
+		panel_view.add(view_Ok);
+		
+		JButton btnViewProducts_1 = new JButton("View Products");
+		btnViewProducts_1.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				try 
+				{
+					Class.forName("com.mysql.jdbc.Driver");
+			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
+			        statement=conn.createStatement();
+			        
+			        String sql="SELECT * FROM product";
+			        PreparedStatement stmt = conn.prepareStatement(sql);
+			        ResultSet rs = stmt.executeQuery(sql);
+			        
+			        view_table.setModel(DbUtils.resultSetToTableModel(rs));
+			        
+				}
+				catch(Exception e1)
+				{
+					
+				}
+				
+			}
+		});
+		btnViewProducts_1.setBounds(24, 287, 113, 25);
+		panel_view.add(btnViewProducts_1);
+		
+	
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
