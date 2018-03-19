@@ -557,6 +557,7 @@ public class Manager extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
+				
 				try 
 				{		
 					 String code2 = remove_codeIn.getText();
@@ -567,13 +568,13 @@ public class Manager extends JFrame {
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement(); 
 			       	
-			        if(e.getSource()== remove_OK && remove_codeIn.equals("") || remove_nameIn.equals(""))
+			        if(e.getSource()== remove_OK && code2.equals("") || name2.equals(""))
 			        {
 						 JOptionPane.showMessageDialog(null, "Cannot be left blank, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
 
 			        }
 			        
-			        if(code2 != null)
+			        else if(code2 != null)
 			        {
 			        	
 			        	String code3 = new String(code2);
@@ -587,23 +588,29 @@ public class Manager extends JFrame {
 			        	//ResultSet rs;
 			        	ps.execute();
 			        	
-			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM product where Product_Code = ?"))
+			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM product where Product_Code = ? AND Name=?"))
 			        			{
 			        				stmt.setString(1, code3);
-			        				ResultSet rs =stmt.executeQuery();
+			        				stmt.setString(2, name2);
+
+			        			   ResultSet rs =stmt.executeQuery();
 			        				
 			        				if(rs.next())
 			        				{
 			        				
 			    			        	  JOptionPane.showMessageDialog(null, "Product was not deleted","Please Try again", JOptionPane.ERROR_MESSAGE);
-
+			    			        	  //JOptionPane.showMessageDialog(null, "Product Deleted from Menu","Product Deleted", JOptionPane.INFORMATION_MESSAGE);
+				     			          //  panel_remove.setVisible(false);
+				     			          //  panelChoose.setVisible(true);
 			        				}
 			        				
 			        				else
 			        				{
+			    			        	  //JOptionPane.showMessageDialog(null, "Product was not deleted","Please Try again", JOptionPane.ERROR_MESSAGE);
+
 			    			        	    JOptionPane.showMessageDialog(null, "Product Deleted from Menu","Product Deleted", JOptionPane.INFORMATION_MESSAGE);
-				     			            panel_remove.setVisible(false);
-				     			            panelChoose.setVisible(true);
+				     			        panel_remove.setVisible(false);
+				     			           panelChoose.setVisible(true);
 
 			        				}
 			        			}
@@ -828,14 +835,14 @@ public class Manager extends JFrame {
 			         String password = user_passwordIn.getText();
 				
 					 // IF NO DATA ENTERERD TO JTEXTFIELD WILL POP UP ERROR
-					 if(e.getSource() == btnLogin && email.equals("") || password.equals(""))
+					 if(e.getSource() == user_OK && email.equals("") || password.equals(""))
 					 {
 
 						 JOptionPane.showMessageDialog(null, "Cannot be left blank, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
 					 }
 		         
 		             // IF EMAIL DOES NOT CONTAIN @ OR .com WILL POP UP BOX INVALID EMIAL ADDRESS
-					 else if(e.getSource() == btnLogin && !email.contains(".com") || !email.contains("@"))
+					 else if(e.getSource() == user_OK && !email.contains(".com") || !email.contains("@"))
 					 {
 						 JOptionPane.showMessageDialog(null, "invalid email, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
 					 }
@@ -850,14 +857,15 @@ public class Manager extends JFrame {
 			        String password1 = new String(passwd);
 			        
 			        
-			        if(email != null)
+			        if(passwd != null)
 			        {
-			        	//String pass = new String(passwd);
+			        	String pass = new String(passwd);
 			        	String query1 ="INSERT INTO manager(Email, Password) values(?,?)";
 			        	
 			        	PreparedStatement ps = conn.prepareStatement(query1);
 			        	ps.setString(1, email);
 			        	ps.setString(2, password1);
+			        	
 			        	
 			        	ps.execute();
 
