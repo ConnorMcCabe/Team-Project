@@ -63,6 +63,18 @@ public class WelcomeMenu {
 		JButton btnNewButton = new JButton("Menu");
 		btnNewButton.setBounds(217, 180, 179, 78);
 		panel.add(btnNewButton);
+		
+		JButton btnAdmin = new JButton("Admin");
+		btnAdmin.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				Manager manager = new Manager();
+				manager.main(null);
+			}
+		});
+		btnAdmin.setBounds(12, 390, 97, 25);
+		panel.add(btnAdmin);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
