@@ -42,7 +42,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
-public class Manager {
+public class Manager extends JFrame {
 
 	private JFrame frame;
 
@@ -73,7 +73,6 @@ public class Manager {
 		private JTextField update_alergyIn;
 		private JTextField user_emailIn;
 		private JPasswordField user_passwordIn;
-		private JTable view_table;
 
 	/**
 	 * Launch the application.
@@ -107,7 +106,7 @@ public class Manager {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 477, 372);
+		frame.setBounds(100, 100, 477, 357);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
@@ -142,11 +141,6 @@ public class Manager {
 		frame.getContentPane().add(panel_user, "name_1167324204295");
 		panel_user.setLayout(null);
 		panel_user.setVisible(false);
-		
-		JPanel panel_view = new JPanel();
-		frame.getContentPane().add(panel_view, "name_21001245389360");
-		panel_view.setLayout(null);
-		panel_view.setVisible(false);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -440,7 +434,7 @@ public class Manager {
 		});
 		//
 		
-		add.setBounds(154, 80, 115, 33);
+		add.setBounds(75, 91, 115, 33);
 		panelChoose.add(add);
 		
 		JButton remove = new JButton("Remove Item");
@@ -456,7 +450,7 @@ public class Manager {
 			
 		});
 		
-		remove.setBounds(154, 137, 115, 33);
+		remove.setBounds(75, 164, 115, 33);
 		panelChoose.add(remove);
 		
 		JButton update = new JButton("Update Item ");
@@ -470,7 +464,7 @@ public class Manager {
 			}
 			
 		});
-		update.setBounds(154, 194, 115, 33);
+		update.setBounds(254, 91, 115, 33);
 		panelChoose.add(update);
 		
 		JLabel lblPleaseSelectAn = new JLabel("Please Select An Option");
@@ -490,7 +484,7 @@ public class Manager {
 
 			}
 		});
-		btnCreateUser.setBounds(12, 245, 101, 25);
+		btnCreateUser.setBounds(253, 164, 116, 33);
 		panelChoose.add(btnCreateUser);
 		
 		JButton btnSignOut = new JButton("Sign Out");
@@ -502,19 +496,27 @@ public class Manager {
 				panelMenu.setVisible(true);
 			}
 		});
-		btnSignOut.setBounds(300, 245, 97, 25);
+		btnSignOut.setBounds(12, 248, 100, 29);
 		panelChoose.add(btnSignOut);
 		
 		JButton btnViewProducts = new JButton("View Products");
+		btnViewProducts.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnViewProducts.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				panelChoose.setVisible(false);
-				panel_view.setVisible(true);
+				panelChoose.setVisible(true);
+				View_Products products = new View_Products();
+				products.main(null);
+				//panelChoose.setVisible(true);
+
+				//getClass().panelChoose.setVisible(false);
+				//products.setVisible(true);
+				//panelChoose.setVisible(false);
+				//panel_view.setVisible(true);
 			}
 		});
-		btnViewProducts.setBounds(164, 245, 97, 25);
+		btnViewProducts.setBounds(309, 250, 138, 29);
 		panelChoose.add(btnViewProducts);
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -895,7 +897,7 @@ public class Manager {
 			}
 		});
 		user_OK.setFont(new Font("Tahoma", Font.BOLD, 13));
-		user_OK.setBounds(155, 171, 116, 38);
+		user_OK.setBounds(157, 180, 116, 25);
 		panel_user.add(user_OK);
 		
 		JLabel lblInsertNewUser = new JLabel("Insert New User Details");
@@ -916,58 +918,18 @@ public class Manager {
 		btnCancel_2.setBounds(165, 218, 97, 25);
 		panel_user.add(btnCancel_2);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 13, 435, 264);
-		panel_view.add(scrollPane);
-		
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	
-		view_table = new JTable();
-		scrollPane.setViewportView(view_table);
-		
-		JButton view_Ok = new JButton("Done");
-		view_Ok.addActionListener(new ActionListener() 
+		JButton btnViewUsers = new JButton("View Users");
+		btnViewUsers.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				view_table.setVisible(false);
-				panelChoose.setVisible(true);
-				
+				panel_user.setVisible(true);
+				View_Users view = new View_Users();
+				view.main(null);
 			}
 		});
-		view_Ok.setBounds(336, 287, 97, 25);
-		panel_view.add(view_Ok);
-		
-		JButton btnViewProducts_1 = new JButton("View Products");
-		btnViewProducts_1.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-				try 
-				{
-					Class.forName("com.mysql.jdbc.Driver");
-			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
-			        statement=conn.createStatement();
-			        
-			        String sql="SELECT * FROM product";
-			        PreparedStatement stmt = conn.prepareStatement(sql);
-			        ResultSet rs = stmt.executeQuery(sql);
-			        
-			        view_table.setModel(DbUtils.resultSetToTableModel(rs));
-			        
-				}
-				catch(Exception e1)
-				{
-					
-				}
-				
-			}
-		});
-		btnViewProducts_1.setBounds(24, 287, 113, 25);
-		panel_view.add(btnViewProducts_1);
+		btnViewUsers.setBounds(319, 256, 97, 25);
+		panel_user.add(btnViewUsers);
 		
 	
 		
