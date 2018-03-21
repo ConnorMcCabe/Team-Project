@@ -77,25 +77,43 @@ public class KitchenStaff {
 				{null, null, null, null, null},
 				{null, null, null, null, null},
 				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
 			},
 			new String[] {
 				"Product Code", "Name", "Price", "Description", "Section"
 			}
 		));
-		JComboBox OrderNum = new JComboBox();
 		
-		JComboBox OrderStatus = new JComboBox();
-		OrderStatus.setModel(new DefaultComboBoxModel(new String[] {"", "1", "2", "3", "4", "5"}));
+		
+		JComboBox OrderNum = new JComboBox();
+		OrderNum.setModel(new DefaultComboBoxModel(new String[] {"", "1", "2", "3", "4", "5"}));
 		
 		JLabel NumberLabel = new JLabel("Order Number");
 		
 		JLabel StatusLabel = new JLabel("Order Status");
 		
-		JButton btnNewButton = new JButton("New button");
+		JButton btnNewButton = new JButton("Viewing");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					String sql = "Select * from fast_food.product WHERE Section = 'Drink'";
+					String sql = "Select * from fast_food.product";
 					pst = conn.prepareStatement(sql);
 					rs = pst.executeQuery();
 					table.setModel(DbUtils.resultSetToTableModel(rs));
@@ -104,46 +122,98 @@ public class KitchenStaff {
 				}
 			}
 		});
+		
+		JButton btnNewButton_1 = new JButton("Hiding the true or drinks");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					String sql = "Select * from fast_food.product where section <> 'drink' ";
+					pst = conn.prepareStatement(sql);
+					rs = pst.executeQuery();
+					table.setModel(DbUtils.resultSetToTableModel(rs));
+				}catch(Exception e) {
+					JOptionPane.showMessageDialog(null, e);
+				}
+			}
+		});
+		
+		JComboBox<String> OrderStatus = new JComboBox<String>();
+		OrderStatus.setModel(new DefaultComboBoxModel(new String[] {"", "Drink", "True", "False"}));
+		OrderStatus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					String sql = "Select * from fast_food.product where Section NOT ?";
+					PreparedStatement pst = conn.prepareStatement(sql);
+					pst.setString(1, (String)OrderStatus.getSelectedItem());
+		        	java.sql.ResultSet rs=pst.executeQuery();
+					pst = conn.prepareStatement(sql);
+					rs = pst.executeQuery();
+					pst.close();
+				}catch(Exception e) {
+					JOptionPane.showMessageDialog(null, e);
+				}
+			}
+		});
+		
+		JButton button = new JButton("New button");
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap(35, Short.MAX_VALUE)
-							.addComponent(NumberLabel)
-							.addPreferredGap(ComponentPlacement.RELATED))
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addContainerGap(35, Short.MAX_VALUE)
+									.addComponent(NumberLabel)
+									.addPreferredGap(ComponentPlacement.RELATED))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(btnNewButton)
+									.addPreferredGap(ComponentPlacement.RELATED)))
+							.addGroup(groupLayout.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(btnNewButton)
-							.addPreferredGap(ComponentPlacement.RELATED)))
+							.addComponent(button)
+							.addGap(18)))
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(82)
-							.addComponent(StatusLabel)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(table, GroupLayout.PREFERRED_SIZE, 282, GroupLayout.PREFERRED_SIZE))
 					.addGap(45))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(337, Short.MAX_VALUE)
+					.addComponent(StatusLabel)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(31, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(button)
+							.addGap(18)
+							.addComponent(btnNewButton_1)
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnNewButton)
 							.addGap(51))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addComponent(table, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(table, GroupLayout.PREFERRED_SIZE, 224, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(NumberLabel)
-						.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(StatusLabel))
-					.addContainerGap(55, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(NumberLabel))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(StatusLabel)))))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 	}
