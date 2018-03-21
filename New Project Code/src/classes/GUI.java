@@ -51,7 +51,7 @@ public class GUI {
 		});
 	}
 
-	/**
+	/** 
 	 * Create the application.
 	 */
 	public GUI() {
@@ -68,9 +68,12 @@ public class GUI {
 		frmMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenu.getContentPane().setLayout(null);
 		
+		JLabel name = new JLabel("");
+		
 		JLabel ImageLabel = new JLabel("");
 		ImageLabel.setBounds(311, 42, 432, 364);
 		frmMenu.getContentPane().add(ImageLabel);
+
 		
 		JTextArea PriceBox = new JTextArea();
 		PriceBox.setText("");
@@ -91,11 +94,12 @@ public class GUI {
 		frmMenu.getContentPane().add(AllergenBox);
 		
 		JTable OrderSummary = new JTable();
-		String columns[] = new String[] {"Product", "Price", "Quanity"};
+		String columns[] = new String[] {"Product", "Quantity", "Price"};
 		DefaultTableModel dtm = new DefaultTableModel(columns, 0);
 		OrderSummary.setModel(dtm);
 		
-		OrderSummary.setBounds(780, 46, 294, 426);
+		
+		OrderSummary.setBounds(780, 46, 294, 387);
 		frmMenu.getContentPane().add(OrderSummary);
 		
 		JLabel lblNewLabel = new JLabel("Main's");
@@ -111,7 +115,7 @@ public class GUI {
 			java.sql.ResultSet rs;
 			java.sql.Statement st;
 			Class.forName("com.mysql.jdbc.Driver");
-			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","pass");
+			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 			st = conn.createStatement();
 			String s = "Select Name from fast_food.product WHERE Section = 'Main';";
 			rs = st.executeQuery(s);
@@ -130,7 +134,7 @@ public class GUI {
 		    public void actionPerformed(ActionEvent arg0) {
 		    	try {
 		    	Class.forName("com.mysql.jdbc.Driver");
-				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","pass");
+				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 		        	String s = "Select * from fast_food.product WHERE Section = 'Main' and Name = ?";
 		        	PreparedStatement pst = conn.prepareStatement(s);
 		        	pst.setString(1, (String)MainCB.getSelectedItem());
@@ -141,7 +145,8 @@ public class GUI {
 		        	{
 		        		PriceBox.setText(rs.getString("Price"));
 		        		DescriptionBox.setText(rs.getString("Description"));
-		        		//AlergenBox.setText(rs.getString("Allergies"));
+		        		AllergenBox.setText(rs.getString("Alergy"));
+		        		name.setText(rs.getString("Name"));
 		        	}
 		        	pst.close();
 					} catch (SQLException | ClassNotFoundException e1) 
@@ -169,7 +174,7 @@ public class GUI {
 			java.sql.ResultSet rs;
 			java.sql.Statement st;
 			Class.forName("com.mysql.jdbc.Driver");
-			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","pass");
+			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 			st = conn.createStatement();
 			String s = "Select Name from fast_food.product WHERE Section = 'Side';";
 			rs = st.executeQuery(s);
@@ -188,7 +193,7 @@ public class GUI {
 		    public void actionPerformed(ActionEvent arg0) {
 		    	try {
 		    	Class.forName("com.mysql.jdbc.Driver");
-				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","pass");
+				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 		        	String s = "Select * from fast_food.product WHERE Section = 'Side' and Name = ?";
 		        	PreparedStatement pst = conn.prepareStatement(s);
 		        	pst.setString(1, (String)SideCB.getSelectedItem());
@@ -199,7 +204,9 @@ public class GUI {
 		        	{
 		        		PriceBox.setText(rs.getString("Price"));
 		        		DescriptionBox.setText(rs.getString("Description"));
-		        		//AlergenBox.setText(rs.getString("Allergies"));
+		        		AllergenBox.setText(rs.getString("Alergy"));
+		        		name.setText(rs.getString("Name"));
+		        		
 		        	}
 		        	pst.close();
 					} catch (SQLException | ClassNotFoundException e1) 
@@ -226,7 +233,7 @@ public class GUI {
 			java.sql.ResultSet rs;
 			java.sql.Statement st;
 			Class.forName("com.mysql.jdbc.Driver");
-			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","pass");
+			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 			st = conn.createStatement();
 			String s = "Select Name from fast_food.product WHERE Section = 'Dessert';";
 			rs = st.executeQuery(s);
@@ -245,7 +252,7 @@ public class GUI {
 		    public void actionPerformed(ActionEvent arg0) {
 		    	try {
 		    	Class.forName("com.mysql.jdbc.Driver");
-				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","pass");
+				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 		        	String s = "Select * from fast_food.product WHERE Section = 'Dessert' and Name = ?";
 		        	PreparedStatement pst = conn.prepareStatement(s);
 		        	pst.setString(1, (String)DessertCB.getSelectedItem());
@@ -256,7 +263,8 @@ public class GUI {
 		        	{
 		        		PriceBox.setText(rs.getString("Price"));
 		        		DescriptionBox.setText(rs.getString("Description"));
-		        		//AlergenBox.setText(rs.getString("Allergies"));
+		        		AllergenBox.setText(rs.getString("Alergy"));
+		        		name.setText(rs.getString("Name"));
 		        	}
 		        	pst.close();
 					} catch (SQLException | ClassNotFoundException e1) 
@@ -283,7 +291,7 @@ public class GUI {
 			java.sql.ResultSet rs;
 			java.sql.Statement st;
 			Class.forName("com.mysql.jdbc.Driver");
-			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","pass");
+			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 			st = conn.createStatement();
 			String s = "Select Name from fast_food.product WHERE Section = 'Drink';";
 			rs = st.executeQuery(s);
@@ -303,7 +311,7 @@ public class GUI {
 		    public void actionPerformed(ActionEvent arg0) {
 		    	try {
 		    	Class.forName("com.mysql.jdbc.Driver");
-				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","pass");
+				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 		        	String s = "Select * from fast_food.product WHERE Section = 'Drink' and Name = ?";
 		        	PreparedStatement pst = conn.prepareStatement(s);
 		        	pst.setString(1, (String)DrinkCB.getSelectedItem());
@@ -314,7 +322,8 @@ public class GUI {
 		        	{
 		        		PriceBox.setText(rs.getString("Price"));
 		        		DescriptionBox.setText(rs.getString("Description"));
-		        		//AlergenBox.setText(rs.getString("Allergies"));
+		        		AllergenBox.setText(rs.getString("Alergy"));
+		        		name.setText(rs.getString("Name"));
 		        	}
 		        	pst.close();
 					} catch (SQLException | ClassNotFoundException e1) 
@@ -355,7 +364,7 @@ public class GUI {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		DeleteBtn.setBounds(816, 479, 223, 32);
+		DeleteBtn.setBounds(780, 480, 294, 32);
 		frmMenu.getContentPane().add(DeleteBtn);
 		
 		
@@ -377,18 +386,85 @@ public class GUI {
 			{
 				
 				
-				try {
-			    	Class.forName("com.mysql.jdbc.Driver");
-					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","pass");
-			        	String s = "INSERT INTO fast_food.Order_Item(Quantity, Total_Price) VALUES(?, ?) where ID = ?;";
-			        	PreparedStatement stmt = conn.prepareStatement(s);
-			        	
-			        	
+				Double fprice = Double.parseDouble(PriceBox.getText());
+				String fname = name.getText();
 				
-				}catch(Exception e2)
-				{
-					System.out.print(e2);
-				}
+				
+				DefaultTableModel dtm = (DefaultTableModel) OrderSummary.getModel();
+				dtm.addRow(new Object[]{fname, 1, fprice});
+				
+				
+//				int rows = OrderSummary.getRowCount();
+//				double total = 0;
+//				
+//				for(int i =0; i<rows; i++)
+//				{
+//					total=total+Integer.parseInt((String) OrderSummary.getValueAt(i, 2));
+//				}
+//			        
+//			        
+//			        System.out.println(total);
+			    
+			    JLabel FinalPrice = new JLabel();
+		    	FinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		    	FinalPrice.setBounds(857, 448, 127, 27);
+		    	frmMenu.getContentPane().add(FinalPrice);
+				
+				
+//				try 
+//				{
+//			    	Class.forName("com.mysql.jdbc.Driver");
+//					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+//			        java.sql.ResultSet rs;
+//				
+//			        String choice = DescriptionBox.getText();
+//			        	
+//			        String pd = "SELECT Product_Code From fast_food.Product where Description ='" +choice
+//			        		+"'";
+//			        PreparedStatement stmt = conn.prepareStatement(pd);
+//			        rs = stmt.executeQuery();
+//			        
+//			        while(rs.next())
+//			        {
+//			        	
+//			        // double price = (rs.getDouble("Price"));
+//			         String name = (rs.getString(2));
+//			        
+//			        // PreparedStatement putIn;
+//			         String putIn = "Insert into fast_food.OrderItem" 
+//			         +"(Product_Name)"
+//			         +"(?)";
+//			         PreparedStatement preparedStatement = conn.prepareStatement(putIn);
+//			         preparedStatement.setString(5, name);
+//			         preparedStatement.executeUpdate();
+//			         
+//			        }
+//			        	
+//					stmt.close();
+//			        	
+//				}catch(Exception e2)
+//				{
+//					System.out.print(e2);
+//				}
+				
+//				 try {
+//					 	Class.forName("com.mysql.jdbc.Driver");
+//						java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+//				        PreparedStatement pst;
+//			            pst = conn.prepareStatement("select Product_Name, Quantity from fast_food.Order_Item");
+//			            java.sql.ResultSet rs = pst.executeQuery();
+//			            int i = 0;
+//			            if (rs.next()) {
+//			                String pname = rs.getString("Name");
+//			                int quan = rs.getInt("Quantity");
+//			                //OrderSummary.addRow(new Object[]{Product_Name, Quantity});
+//			                i++;
+//			            }
+//				 }
+//				 catch(Exception e3)
+//			            {
+//			            	System.out.print(e3);
+//			            }
 			}
 		});
 	
@@ -408,6 +484,12 @@ public class GUI {
 	);
 	CancelBtn.setBounds(780, 516, 127, 34);
 	frmMenu.getContentPane().add(CancelBtn);
+	
+	JLabel lblTotal = new JLabel("Total:");
+	lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 20));
+	lblTotal.setBounds(795, 444, 72, 27);
+	frmMenu.getContentPane().add(lblTotal);
+	
 	
 }
 }
