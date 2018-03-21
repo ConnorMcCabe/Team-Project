@@ -25,7 +25,8 @@ import net.proteanit.sql.DbUtils;
 
 import javax.swing.JLabel;
 import java.sql.*;
-//import net.proteanit.sql.DBUtils;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultComboBoxModel;
 
 public class KitchenStaff {
 	Connection conn = null;
@@ -45,9 +46,7 @@ public class KitchenStaff {
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
-				 
-				   
+				}	   
 			}
 		});
 	}
@@ -69,56 +68,83 @@ public class KitchenStaff {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		table = new JTable();
-		
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+			},
+			new String[] {
+				"Product Code", "Name", "Price", "Description", "Section"
+			}
+		));
 		JComboBox OrderNum = new JComboBox();
 		
 		JComboBox OrderStatus = new JComboBox();
+		OrderStatus.setModel(new DefaultComboBoxModel(new String[] {"", "1", "2", "3", "4", "5"}));
 		
 		JLabel NumberLabel = new JLabel("Order Number");
 		
 		JLabel StatusLabel = new JLabel("Order Status");
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					String sql = "Select * from fast_food.product WHERE Section = 'Drink'";
+					pst = conn.prepareStatement(sql);
+					rs = pst.executeQuery();
+					table.setModel(DbUtils.resultSetToTableModel(rs));
+				}catch(Exception e) {
+					JOptionPane.showMessageDialog(null, e);
+				}
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(109)
-					.addComponent(table, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(131, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(73, Short.MAX_VALUE)
-					.addComponent(NumberLabel)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(82)
-					.addComponent(StatusLabel)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(123))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap(35, Short.MAX_VALUE)
+							.addComponent(NumberLabel)
+							.addPreferredGap(ComponentPlacement.RELATED))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnNewButton)
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(82)
+							.addComponent(StatusLabel)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(table, GroupLayout.PREFERRED_SIZE, 282, GroupLayout.PREFERRED_SIZE))
+					.addGap(45))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(table, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
+					.addContainerGap(31, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(btnNewButton)
+							.addGap(51))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(table, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(NumberLabel)
 						.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(StatusLabel))
-					.addContainerGap(63, Short.MAX_VALUE))
+					.addContainerGap(55, Short.MAX_VALUE))
 		);
 		frame.getContentPane().setLayout(groupLayout);
-		
-		public void loadTable() {
-			try {
-				String sql = "select * from product";
-				pst = conn.prepareStatement(sql);
-				rs = pst.executeQuery();
-				table.setModel(DbUtils.resultSetToTableModel(rs));
-			}catch(Exception e) {
-				JOptionPane.showMessageDialog(null, e);
-			}
-		}
 	}
 }
