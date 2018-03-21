@@ -818,24 +818,26 @@ public class Manager extends JFrame {
 		user_emailIn.setBounds(197, 97, 116, 22);
 		panel_user.add(user_emailIn);
 		user_emailIn.setColumns(10);
+		user_emailIn.setText(null);
 		
 		user_passwordIn = new JPasswordField();
 		user_passwordIn.setBounds(197, 136, 116, 22);
 		panel_user.add(user_passwordIn);
-		
+		user_passwordIn.setText(null);
+
 		JButton user_OK = new JButton("Create User");
 		user_OK.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				try 
-				{		
+				 try {
+
 					 // CODE THAT WILL DISPLAY JTEXTBOX IF THE PASSWORDS OR EMAIL ARE NOT ENTERED CORRECTLY 
 					 String email = user_emailIn.getText();
 			         String password = user_passwordIn.getText();
 				
 					 // IF NO DATA ENTERERD TO JTEXTFIELD WILL POP UP ERROR
-					 if(e.getSource() == user_OK && email.equals("") || password.equals(""))
+					 if(e.getSource() == user_OK && email == "" || password == "")
 					 {
 
 						 JOptionPane.showMessageDialog(null, "Cannot be left blank, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
@@ -846,31 +848,34 @@ public class Manager extends JFrame {
 					 {
 						 JOptionPane.showMessageDialog(null, "invalid email, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
 					 }
-						
+					 
+					// try {
+					 else {
 					//CODE TO VERFIY THE EMAIL ADDRESS AND PASSWORD FROM THE DATABASE 
 					Class.forName("com.mysql.jdbc.Driver");
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement(); 
 			        
-			        //String emailAd = enterEmail.getText();
+			        String emailAd = user_emailIn.getText();
 			        char[] passwd = user_passwordIn.getPassword();
 			        String password1 = new String(passwd);
 			        
 			        
-			        if(passwd != null)
-			        {
-			        	String pass = new String(passwd);
-			        	String query1 ="INSERT INTO manager(Email, Password) values(?,?)";
+			       // if(passwd != null && emailAd != null)
+			      //  {
+			        	//String pass = new String(passwd);
+			        	String query5 ="INSERT INTO manager values(?,?)";
 			        	
-			        	PreparedStatement ps = conn.prepareStatement(query1);
-			        	ps.setString(1, email);
-			        	ps.setString(2, password1);
+			        	PreparedStatement ps = conn.prepareStatement(query5);
+			        	ps.setString(1, user_emailIn.getText());
+			        	ps.setString(2, user_passwordIn.getText());
 			        	
 			        	
 			        	ps.execute();
-
-
-			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM manager where Email = ? and Password = ?"))
+  			            JOptionPane.showMessageDialog(null, "User was Registered as Admin","User Added", JOptionPane.INFORMATION_MESSAGE);
+				
+			        		/*
+			        //	try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM manager where Email = ? and Password = ?"))
 			        			{
 			        				stmt.setString(1, email);
 			        				stmt.setString(2, password1);
@@ -891,10 +896,12 @@ public class Manager extends JFrame {
 
 			        				}
 			        			}
-			        	 
+			        	 */
 			        	 ps.close();
 			        	 conn.close();
-			        }
+			        	// rs.close();
+			     // 
+					 }
 				}catch(Exception ee) 
 				{
 
