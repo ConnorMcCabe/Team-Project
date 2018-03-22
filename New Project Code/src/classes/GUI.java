@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
@@ -97,10 +98,13 @@ public class GUI {
 		String columns[] = new String[] {"Product", "Quantity", "Price"};
 		DefaultTableModel dtm = new DefaultTableModel(columns, 0);
 		OrderSummary.setModel(dtm);
-		
-		
+		JScrollPane sp = new JScrollPane();
+		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		sp.add(OrderSummary);
 		OrderSummary.setBounds(780, 46, 294, 387);
 		frmMenu.getContentPane().add(OrderSummary);
+		dtm.addRow(new Object[]{"--Product--", "--Quantity--", "--Price--"});
+		
 		
 		JLabel lblNewLabel = new JLabel("Main's");
 		lblNewLabel.setFont(new Font("Trebuchet MS", Font.PLAIN, 30));
@@ -386,29 +390,28 @@ public class GUI {
 			{
 				
 				
-				Double fprice = Double.parseDouble(PriceBox.getText());
-				String fname = name.getText();
-				
-				
-				DefaultTableModel dtm = (DefaultTableModel) OrderSummary.getModel();
-				dtm.addRow(new Object[]{fname, 1, fprice});
-				
-				
+//				Double fprice = Double.parseDouble(( PriceBox).getText());
+//				String fname = name.getText();
+//				
+//				
+//				DefaultTableModel dtm = (DefaultTableModel) OrderSummary.getModel();
+//				dtm.addRow(new Object[]{fname, 1, fprice});
+//				
+//				
 //				int rows = OrderSummary.getRowCount();
 //				double total = 0;
 //				
 //				for(int i =0; i<rows; i++)
 //				{
-//					total=total+Integer.parseInt((String) OrderSummary.getValueAt(i, 2));
+//					total=total+Double.parseDouble(OrderSummary.getValueAt(i, 3)+"");
 //				}
 //			        
-//			        
 //			        System.out.println(total);
-			    
-			    JLabel FinalPrice = new JLabel();
-		    	FinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		    	FinalPrice.setBounds(857, 448, 127, 27);
-		    	frmMenu.getContentPane().add(FinalPrice);
+//			    
+//			    JLabel FinalPrice = new JLabel();
+//		    	FinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
+//		    	FinalPrice.setBounds(857, 448, 127, 27);
+//		    	frmMenu.getContentPane().add(FinalPrice);
 				
 				
 //				try 
@@ -468,7 +471,13 @@ public class GUI {
 			}
 		});
 	
-	
+		
+	    
+	    JLabel FinalPrice = new JLabel();
+    	FinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
+    	FinalPrice.setBounds(857, 448, 127, 27);
+    	frmMenu.getContentPane().add(FinalPrice);
+    	
 	JButton CancelBtn = new JButton("Cancel Order");
 	CancelBtn.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
