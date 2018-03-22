@@ -105,9 +105,9 @@ public class KitchenStaff {
 		JComboBox OrderNum = new JComboBox();
 		OrderNum.setModel(new DefaultComboBoxModel(new String[] {"", "1", "2", "3", "4", "5"}));
 		
-		JLabel NumberLabel = new JLabel("Order Number");
+		JLabel NumberLabel = new JLabel("Order Status");
 		
-		JLabel StatusLabel = new JLabel("Order Status");
+		JLabel StatusLabel = new JLabel("Order Number");
 		
 		JButton btnNewButton = new JButton("Viewing");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -123,7 +123,7 @@ public class KitchenStaff {
 			}
 		});
 		
-		JButton btnNewButton_1 = new JButton("Hiding the true or drinks");
+		JButton btnNewButton_1 = new JButton("Hiding");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -138,54 +138,91 @@ public class KitchenStaff {
 		});
 		
 		JComboBox<String> OrderStatus = new JComboBox<String>();
-		OrderStatus.setModel(new DefaultComboBoxModel(new String[] {"", "Drink", "True", "False"}));
-		OrderStatus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					String sql = "Select * from fast_food.product where Section NOT ?";
-					PreparedStatement pst = conn.prepareStatement(sql);
-					pst.setString(1, (String)OrderStatus.getSelectedItem());
-		        	java.sql.ResultSet rs=pst.executeQuery();
-					pst = conn.prepareStatement(sql);
-					rs = pst.executeQuery();
-					pst.close();
-				}catch(Exception e) {
-					JOptionPane.showMessageDialog(null, e);
-				}
+		//OrderStatus.setModel(new DefaultComboBoxModel(new String[] {"", "Drink", "True", "False"}));
+
+		OrderStatus.setModel(new DefaultComboBoxModel(new String[] {"Select Type"}));
+		try
+		{
+			java.sql.ResultSet rs;
+			java.sql.Statement st;
+			Class.forName("com.mysql.jdbc.Driver");
+			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+			st = conn.createStatement();
+			String s = "Select Name from fast_food.product WHERE Section = 'Drink';";
+			rs = st.executeQuery(s);
+			while(rs.next())
+			{
+				OrderStatus.addItem(rs.getString(1));
 			}
-		});
+		}
+			catch (Exception x2)
+			{
+				System.out.print(x2);
+				JOptionPane.showMessageDialog(null, "Error");
+			}
 		
-		JButton button = new JButton("New button");
+		JButton btnNonFunction = new JButton("Non Function");
+		OrderStatus.addActionListener(new ActionListener()
+		{
+		    public void actionPerformed(ActionEvent arg0) {
+		    	try {
+		    	Class.forName("com.mysql.jdbc.Driver");
+				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+		        	String s = "Select * from fast_food.product WHERE Section = 'Drink' and Name <> ?";
+		        	PreparedStatement pst = conn.prepareStatement(s);
+		        	pst.setString(1, (String)OrderStatus.getSelectedItem());
+		        	java.sql.ResultSet rs=pst.executeQuery();
+		        	table.setModel(DbUtils.resultSetToTableModel(rs));
+		        
+		        	pst.close();
+					} catch (SQLException | ClassNotFoundException e1) 
+		    	{						
+						System.out.print(e1);
+					}					
+		        }
+		    });
+//		btnNonFunction.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				try {
+//					String sql = "Select * from fast_food.product where Section NOT = ?";
+//					PreparedStatement pst = conn.prepareStatement(sql);
+//					pst.setString(1, (String)OrderStatus.getSelectedItem());
+//		        	java.sql.ResultSet rs=pst.executeQuery();
+//					pst = conn.prepareStatement(sql);
+//					rs = pst.executeQuery();
+//					pst.close();
+//				}catch(Exception e) {
+//					JOptionPane.showMessageDialog(null, e);
+//				}
+//			}
+//		});
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addContainerGap(35, Short.MAX_VALUE)
-									.addComponent(NumberLabel)
-									.addPreferredGap(ComponentPlacement.RELATED))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addContainerGap()
-									.addComponent(btnNewButton)
-									.addPreferredGap(ComponentPlacement.RELATED)))
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+							.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+								.addContainerGap(51, Short.MAX_VALUE)
+								.addComponent(NumberLabel)
+								.addPreferredGap(ComponentPlacement.RELATED))
 							.addGroup(groupLayout.createSequentialGroup()
 								.addContainerGap()
-								.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+									.addComponent(btnNewButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+									.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
 								.addPreferredGap(ComponentPlacement.RELATED)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(button)
-							.addGap(18)))
+							.addComponent(btnNonFunction)
+							.addPreferredGap(ComponentPlacement.UNRELATED)))
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(table, GroupLayout.PREFERRED_SIZE, 282, GroupLayout.PREFERRED_SIZE))
 					.addGap(45))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(337, Short.MAX_VALUE)
+					.addContainerGap(341, Short.MAX_VALUE)
 					.addComponent(StatusLabel)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -196,8 +233,8 @@ public class KitchenStaff {
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(button)
-							.addGap(18)
+							.addComponent(btnNonFunction)
+							.addGap(45)
 							.addComponent(btnNewButton_1)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnNewButton)
