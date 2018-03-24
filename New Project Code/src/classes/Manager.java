@@ -41,6 +41,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JLayeredPane;
 
 public class Manager extends JFrame {
 
@@ -106,7 +107,7 @@ public class Manager extends JFrame {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 477, 357);
+		frame.setBounds(100, 100, 802, 508);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
@@ -150,62 +151,69 @@ public class Manager extends JFrame {
 
 
 		JLabel add_code = new JLabel("Product Code:");
-		add_code.setBounds(12, 46, 94, 16);
+		add_code.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		add_code.setBounds(27, 153, 141, 28);
 		panel_Add.add(add_code);
 		
 		JLabel add_name = new JLabel("Name:");
-		add_name.setBounds(12, 75, 56, 16);
+		add_name.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		add_name.setBounds(27, 211, 94, 28);
 		panel_Add.add(add_name);
 		
 		JLabel add_price = new JLabel("Price:");
-		add_price.setBounds(12, 104, 56, 16);
+		add_price.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		add_price.setBounds(27, 263, 79, 35);
 		panel_Add.add(add_price);
 		
 		JLabel add_descrip = new JLabel("Description:");
-		add_descrip.setBounds(238, 46, 94, 16);
+		add_descrip.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		add_descrip.setBounds(447, 13, 146, 35);
 		panel_Add.add(add_descrip);
 		
 		JLabel add_section = new JLabel("Section:");
-		add_section.setBounds(12, 136, 56, 16);
+		add_section.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		add_section.setBounds(27, 311, 94, 35);
 		panel_Add.add(add_section);
 		
 		JLabel add_alergy = new JLabel("Alergy:");
-		add_alergy.setBounds(238, 133, 56, 16);
+		add_alergy.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		add_alergy.setBounds(448, 208, 94, 35);
 		panel_Add.add(add_alergy);
 		
 		add_codeIn = new JTextField();
-		add_codeIn.setBounds(110, 43, 116, 22);
+		add_codeIn.setBounds(175, 153, 165, 35);
 		panel_Add.add(add_codeIn);
 		add_codeIn.setColumns(10);
 		
 		add_nameIn = new JTextField();
-		add_nameIn.setBounds(110, 72, 116, 22);
+		add_nameIn.setBounds(175, 211, 165, 35);
 		panel_Add.add(add_nameIn);
 		add_nameIn.setColumns(10);
 		
 		add_priceIn = new JTextField();
-		add_priceIn.setBounds(110, 101, 116, 22);
+		add_priceIn.setBounds(175, 266, 165, 35);
 		panel_Add.add(add_priceIn);
 		add_priceIn.setColumns(10);
 		
 		add_descripIn = new JTextField();
-		add_descripIn.setBounds(238, 63, 170, 62);
+		add_descripIn.setBounds(448, 46, 284, 136);
 		panel_Add.add(add_descripIn);
 		add_descripIn.setColumns(10);
 		
 		add_alergyIn = new JTextField();
-		add_alergyIn.setBounds(238, 150, 170, 62);
+		add_alergyIn.setBounds(448, 244, 284, 136);
 		panel_Add.add(add_alergyIn);
 		add_alergyIn.setColumns(10);
 		
 		JComboBox add_sectionIn = new JComboBox();
 		add_sectionIn.setModel(new DefaultComboBoxModel(new String[] {"", "Drink", "Main", "Side", "Dessert"}));
-		add_sectionIn.setBounds(110, 133, 116, 22);
+		add_sectionIn.setBounds(175, 314, 165, 35);
 		panel_Add.add(add_sectionIn);
 		
 		//AL
 		//
 		JButton add_OK = new JButton("OK");
+		add_OK.setFont(new Font("Open Sans", Font.BOLD, 20));
 		add_OK.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -282,16 +290,18 @@ public class Manager extends JFrame {
 		});
 		//
 		
-		add_OK.setBounds(272, 225, 97, 25);
+		add_OK.setBounds(223, 405, 129, 43);
 		panel_Add.add(add_OK);
 		
-		JLabel lblPleaseEnterProduct = new JLabel("Please Enter Product Detilas");
-		lblPleaseEnterProduct.setFont(new Font("Tahoma", Font.BOLD, 15));
+		JLabel lblPleaseEnterProduct = new JLabel("Please Enter Product Details");
+		lblPleaseEnterProduct.setForeground(new Color(255, 0, 0));
+		lblPleaseEnterProduct.setFont(new Font("Open Sans", Font.BOLD, 25));
 		lblPleaseEnterProduct.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPleaseEnterProduct.setBounds(65, 13, 319, 16);
+		lblPleaseEnterProduct.setBounds(12, 13, 402, 82);
 		panel_Add.add(lblPleaseEnterProduct);
 		
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setFont(new Font("Open Sans", Font.BOLD, 20));
 		btnCancel.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -300,7 +310,7 @@ public class Manager extends JFrame {
 				panelChoose.setVisible(true);
 			}
 		});
-		btnCancel.setBounds(272, 263, 97, 25);
+		btnCancel.setBounds(363, 405, 129, 43);
 		panel_Add.add(btnCancel);
 		
 		
@@ -311,31 +321,36 @@ public class Manager extends JFrame {
 		//PANEL MENU CODE
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		JLabel lblNewLabel = new JLabel("Mr Chippy");
+		JLabel lblNewLabel = new JLabel("The Chippy");
+		lblNewLabel.setForeground(new Color(255, 0, 0));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel.setBounds(12, 13, 408, 51);
+		lblNewLabel.setFont(new Font("Open Sans", Font.BOLD, 50));
+		lblNewLabel.setBounds(190, 71, 413, 69);
 		panelMenu.add(lblNewLabel);
 		
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(129, 92, 56, 16);
+		lblEmail.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		lblEmail.setBackground(UIManager.getColor("Button.background"));
+		lblEmail.setBounds(164, 276, 126, 35);
 		panelMenu.add(lblEmail);
 		
 	    JTextField enterEmail = new JTextField();
-		enterEmail.setBounds(212, 89, 116, 22);
+		enterEmail.setBounds(338, 195, 172, 35);
 		panelMenu.add(enterEmail);
 		enterEmail.setColumns(10);
 		
 		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(129, 127, 68, 16);
+		lblPassword.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		lblPassword.setBounds(164, 195, 141, 35);
 		panelMenu.add(lblPassword);
 		
 		enterPassword = new JPasswordField();
-		enterPassword.setBounds(212, 124, 116, 22);
+		enterPassword.setBounds(338, 267, 172, 35);
 		panelMenu.add(enterPassword);
 		
 		JButton btnLogin = new JButton("Login");
-		btnLogin.setBounds(167, 189, 97, 25);
+		btnLogin.setFont(new Font("Open Sans", Font.BOLD, 20));
+		btnLogin.setBounds(338, 337, 172, 51);
 		panelMenu.add(btnLogin);
 		
 		//AL
@@ -423,6 +438,7 @@ public class Manager extends JFrame {
 		//
 		// AL
 		JButton add = new JButton("Add Item");
+		add.setFont(new Font("Open Sans", Font.PLAIN, 20));
 		add.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -434,10 +450,11 @@ public class Manager extends JFrame {
 		});
 		//
 		
-		add.setBounds(75, 91, 115, 33);
+		add.setBounds(170, 141, 166, 60);
 		panelChoose.add(add);
 		
 		JButton remove = new JButton("Remove Item");
+		remove.setFont(new Font("Open Sans", Font.PLAIN, 20));
 		remove.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -450,10 +467,11 @@ public class Manager extends JFrame {
 			
 		});
 		
-		remove.setBounds(75, 164, 115, 33);
+		remove.setBounds(170, 274, 166, 60);
 		panelChoose.add(remove);
 		
 		JButton update = new JButton("Update Item ");
+		update.setFont(new Font("Open Sans", Font.PLAIN, 20));
 		update.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e)
@@ -464,17 +482,19 @@ public class Manager extends JFrame {
 			}
 			
 		});
-		update.setBounds(254, 91, 115, 33);
+		update.setBounds(415, 141, 166, 60);
 		panelChoose.add(update);
 		
 		JLabel lblPleaseSelectAn = new JLabel("Please Select An Option");
+		lblPleaseSelectAn.setForeground(new Color(255, 0, 0));
 		lblPleaseSelectAn.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPleaseSelectAn.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblPleaseSelectAn.setBounds(55, 13, 331, 51);
+		lblPleaseSelectAn.setFont(new Font("Open Sans", Font.BOLD, 30));
+		lblPleaseSelectAn.setBounds(75, 27, 640, 51);
 		panelChoose.add(lblPleaseSelectAn);
 		
 		//CODE TO CREATE NEW USER 
 		JButton btnCreateUser = new JButton("Create User");
+		btnCreateUser.setFont(new Font("Open Sans", Font.PLAIN, 20));
 		btnCreateUser.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -484,10 +504,11 @@ public class Manager extends JFrame {
 
 			}
 		});
-		btnCreateUser.setBounds(253, 164, 116, 33);
+		btnCreateUser.setBounds(415, 274, 166, 60);
 		panelChoose.add(btnCreateUser);
 		
 		JButton btnSignOut = new JButton("Sign Out");
+		btnSignOut.setFont(new Font("Open Sans", Font.BOLD, 20));
 		btnSignOut.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -496,11 +517,11 @@ public class Manager extends JFrame {
 				panelMenu.setVisible(true);
 			}
 		});
-		btnSignOut.setBounds(12, 248, 100, 29);
+		btnSignOut.setBounds(12, 370, 187, 60);
 		panelChoose.add(btnSignOut);
 		
 		JButton btnViewProducts = new JButton("View Products");
-		btnViewProducts.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnViewProducts.setFont(new Font("Open Sans", Font.BOLD, 20));
 		btnViewProducts.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -516,7 +537,7 @@ public class Manager extends JFrame {
 				//panel_view.setVisible(true);
 			}
 		});
-		btnViewProducts.setBounds(309, 250, 138, 29);
+		btnViewProducts.setBounds(585, 370, 187, 60);
 		panelChoose.add(btnViewProducts);
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -525,20 +546,22 @@ public class Manager extends JFrame {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		JLabel remove_code = new JLabel("Product Code:");
-		remove_code.setBounds(100, 86, 87, 16);
+		remove_code.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		remove_code.setBounds(175, 167, 140, 30);
 		panel_remove.add(remove_code);
 		
 		JLabel remove_name = new JLabel("Name:");
-		remove_name.setBounds(100, 132, 56, 16);
+		remove_name.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		remove_name.setBounds(175, 237, 104, 30);
 		panel_remove.add(remove_name);
 		
 		remove_codeIn = new JTextField();
-		remove_codeIn.setBounds(199, 83, 116, 22);
+		remove_codeIn.setBounds(346, 170, 140, 30);
 		panel_remove.add(remove_codeIn);
 		remove_codeIn.setColumns(10);
 		
 		remove_nameIn = new JTextField();
-		remove_nameIn.setBounds(199, 129, 116, 22);
+		remove_nameIn.setBounds(346, 240, 140, 30);
 		panel_remove.add(remove_nameIn);
 		remove_nameIn.setColumns(10);
 		
@@ -547,12 +570,14 @@ public class Manager extends JFrame {
 		panel_remove.add(lblNewLabel_1);
 		
 		JLabel lblEnterDetailsTo = new JLabel("Enter Details to remove a Product");
-		lblEnterDetailsTo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblEnterDetailsTo.setForeground(new Color(255, 0, 0));
+		lblEnterDetailsTo.setFont(new Font("Open Sans", Font.BOLD, 30));
 		lblEnterDetailsTo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEnterDetailsTo.setBounds(82, 27, 279, 27);
+		lblEnterDetailsTo.setBounds(62, 26, 626, 92);
 		panel_remove.add(lblEnterDetailsTo);
 		
 		JButton remove_OK = new JButton("OK");
+		remove_OK.setFont(new Font("Open Sans", Font.BOLD, 20));
 		remove_OK.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -628,10 +653,11 @@ public class Manager extends JFrame {
 				
 			}
 		});
-		remove_OK.setBounds(156, 185, 97, 25);
+		remove_OK.setBounds(327, 301, 110, 37);
 		panel_remove.add(remove_OK);
 		
 		JButton btnCancel_1 = new JButton("Cancel");
+		btnCancel_1.setFont(new Font("Open Sans", Font.BOLD, 20));
 		btnCancel_1.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -640,7 +666,7 @@ public class Manager extends JFrame {
 				panelChoose.setVisible(true);
 			}
 		});
-		btnCancel_1.setBounds(156, 226, 97, 25);
+		btnCancel_1.setBounds(327, 363, 110, 37);
 		panel_remove.add(btnCancel_1);
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -650,66 +676,74 @@ public class Manager extends JFrame {
 
 		
 		JLabel lblEnterInformationTo = new JLabel("Enter Information to Update Product");
+		lblEnterInformationTo.setForeground(new Color(255, 0, 0));
 		lblEnterInformationTo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEnterInformationTo.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblEnterInformationTo.setBounds(86, 13, 321, 26);
+		lblEnterInformationTo.setFont(new Font("Open Sans", Font.BOLD, 25));
+		lblEnterInformationTo.setBounds(158, 13, 489, 36);
 		panel_update.add(lblEnterInformationTo);
 		
 		JLabel update_code = new JLabel("Product Code:");
-		update_code.setBounds(12, 60, 91, 16);
+		update_code.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		update_code.setBounds(175, 72, 145, 16);
 		panel_update.add(update_code);
 		
 		JLabel update_name = new JLabel("Name:");
-		update_name.setBounds(12, 89, 56, 16);
+		update_name.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		update_name.setBounds(175, 118, 98, 16);
 		panel_update.add(update_name);
 		
 		JLabel lblPrice = new JLabel("Price:");
-		lblPrice.setBounds(12, 118, 56, 16);
+		lblPrice.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		lblPrice.setBounds(175, 168, 78, 16);
 		panel_update.add(lblPrice);
 		
 		JLabel lblSection = new JLabel("Section:");
-		lblSection.setBounds(12, 147, 56, 16);
+		lblSection.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		lblSection.setBounds(175, 214, 98, 16);
 		panel_update.add(lblSection);
 		
 		JLabel update_descrip = new JLabel("Description:");
-		update_descrip.setBounds(235, 60, 78, 16);
+		update_descrip.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		update_descrip.setBounds(521, 62, 116, 26);
 		panel_update.add(update_descrip);
 		
 		update_codeIn = new JTextField();
-		update_codeIn.setBounds(96, 57, 116, 22);
+		update_codeIn.setBounds(332, 70, 137, 26);
 		panel_update.add(update_codeIn);
 		update_codeIn.setColumns(10);
 		
 		update_nameIn = new JTextField();
-		update_nameIn.setBounds(96, 86, 116, 22);
+		update_nameIn.setBounds(332, 115, 137, 29);
 		panel_update.add(update_nameIn);
 		update_nameIn.setColumns(10);
 		
 		update_priceIn = new JTextField();
-		update_priceIn.setBounds(96, 115, 116, 22);
+		update_priceIn.setBounds(332, 166, 137, 26);
 		panel_update.add(update_priceIn);
 		update_priceIn.setColumns(10);
 		
 		update_descripIn = new JTextField();
-		update_descripIn.setBounds(235, 77, 154, 60);
+		update_descripIn.setBounds(521, 99, 229, 112);
 		panel_update.add(update_descripIn);
 		update_descripIn.setColumns(10);
 		
 		JLabel lblAlergy = new JLabel("Alergy:");
-		lblAlergy.setBounds(234, 147, 56, 16);
+		lblAlergy.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		lblAlergy.setBounds(521, 224, 91, 26);
 		panel_update.add(lblAlergy);
 		
 		update_alergyIn = new JTextField();
-		update_alergyIn.setBounds(235, 164, 154, 60);
+		update_alergyIn.setBounds(522, 252, 229, 112);
 		panel_update.add(update_alergyIn);
 		update_alergyIn.setColumns(10);
 		
 		JComboBox update_sectionIn = new JComboBox();
 		update_sectionIn.setModel(new DefaultComboBoxModel(new String[] {"", "Drink", "Main", "Side", "Dessert"}));
-		update_sectionIn.setBounds(96, 144, 116, 22);
+		update_sectionIn.setBounds(332, 212, 137, 26);
 		panel_update.add(update_sectionIn);
 		
 		JButton update_OK = new JButton("Update");
+		update_OK.setFont(new Font("Open Sans", Font.BOLD, 20));
 		update_OK.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -782,10 +816,11 @@ public class Manager extends JFrame {
 				
 			}
 		});
-		update_OK.setBounds(265, 231, 97, 25);
+		update_OK.setBounds(507, 395, 116, 36);
 		panel_update.add(update_OK);
 		
 		JButton btnNewButton = new JButton("Cancel");
+		btnNewButton.setFont(new Font("Open Sans", Font.BOLD, 20));
 		btnNewButton.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -794,8 +829,44 @@ public class Manager extends JFrame {
 				panelChoose.setVisible(true);
 			}
 		});
-		btnNewButton.setBounds(265, 269, 97, 25);
+		btnNewButton.setBounds(635, 395, 116, 36);
 		panel_update.add(btnNewButton);
+		
+		JLabel lblMain = new JLabel("Main:");
+		lblMain.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		lblMain.setBounds(12, 72, 68, 21);
+		panel_update.add(lblMain);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(12, 99, 137, 26);
+		panel_update.add(comboBox);
+		
+		JLabel lblNewLabel_2 = new JLabel("Side:");
+		lblNewLabel_2.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		lblNewLabel_2.setBounds(12, 147, 56, 16);
+		panel_update.add(lblNewLabel_2);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(12, 168, 137, 26);
+		panel_update.add(comboBox_1);
+		
+		JLabel lblNewLabel_3 = new JLabel("Dessert:");
+		lblNewLabel_3.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		lblNewLabel_3.setBounds(12, 209, 91, 26);
+		panel_update.add(lblNewLabel_3);
+		
+		JComboBox comboBox_2 = new JComboBox();
+		comboBox_2.setBounds(12, 241, 137, 26);
+		panel_update.add(comboBox_2);
+		
+		JLabel lblDrink = new JLabel("Drink:");
+		lblDrink.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		lblDrink.setBounds(12, 280, 68, 16);
+		panel_update.add(lblDrink);
+		
+		JComboBox comboBox_3 = new JComboBox();
+		comboBox_3.setBounds(12, 305, 137, 26);
+		panel_update.add(comboBox_3);
 		
 		
 		
@@ -807,21 +878,23 @@ public class Manager extends JFrame {
 
 		
 		JLabel user_email = new JLabel("Email:");
-		user_email.setBounds(106, 100, 56, 16);
+		user_email.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		user_email.setBounds(174, 169, 105, 26);
 		panel_user.add(user_email);
 		
 		JLabel user_pass = new JLabel("Password:");
-		user_pass.setBounds(106, 139, 67, 16);
+		user_pass.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		user_pass.setBounds(174, 244, 105, 28);
 		panel_user.add(user_pass);
 		
 		user_emailIn = new JTextField();
-		user_emailIn.setBounds(197, 97, 116, 22);
+		user_emailIn.setBounds(317, 168, 159, 35);
 		panel_user.add(user_emailIn);
 		user_emailIn.setColumns(10);
 		user_emailIn.setText(null);
 		
 		user_passwordIn = new JPasswordField();
-		user_passwordIn.setBounds(197, 136, 116, 22);
+		user_passwordIn.setBounds(317, 244, 159, 35);
 		panel_user.add(user_passwordIn);
 		user_passwordIn.setText(null);
 
@@ -911,17 +984,19 @@ public class Manager extends JFrame {
 				
 			}
 		});
-		user_OK.setFont(new Font("Tahoma", Font.BOLD, 13));
-		user_OK.setBounds(157, 180, 116, 25);
+		user_OK.setFont(new Font("Open Sans", Font.BOLD, 20));
+		user_OK.setBounds(317, 335, 159, 42);
 		panel_user.add(user_OK);
 		
 		JLabel lblInsertNewUser = new JLabel("Insert New User Details");
-		lblInsertNewUser.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblInsertNewUser.setForeground(new Color(255, 0, 0));
+		lblInsertNewUser.setFont(new Font("Open Sans", Font.BOLD, 30));
 		lblInsertNewUser.setHorizontalAlignment(SwingConstants.CENTER);
-		lblInsertNewUser.setBounds(88, 35, 261, 16);
+		lblInsertNewUser.setBounds(185, 53, 415, 42);
 		panel_user.add(lblInsertNewUser);
 		
 		JButton btnCancel_2 = new JButton("Cancel");
+		btnCancel_2.setFont(new Font("Open Sans", Font.BOLD, 20));
 		btnCancel_2.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -930,10 +1005,11 @@ public class Manager extends JFrame {
 				panelChoose.setVisible(true);
 			}
 		});
-		btnCancel_2.setBounds(165, 218, 97, 25);
+		btnCancel_2.setBounds(317, 390, 159, 42);
 		panel_user.add(btnCancel_2);
 		
 		JButton btnViewUsers = new JButton("View Users");
+		btnViewUsers.setFont(new Font("Open Sans", Font.BOLD, 20));
 		btnViewUsers.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -943,7 +1019,7 @@ public class Manager extends JFrame {
 				view.main(null);
 			}
 		});
-		btnViewUsers.setBounds(319, 256, 97, 25);
+		btnViewUsers.setBounds(613, 390, 159, 42);
 		panel_user.add(btnViewUsers);
 		
 	
