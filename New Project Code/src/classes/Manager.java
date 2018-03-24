@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
@@ -74,6 +75,7 @@ public class Manager extends JFrame {
 		private JTextField update_alergyIn;
 		private JTextField user_emailIn;
 		private JPasswordField user_passwordIn;
+		private JTextField sec;
 
 	/**
 	 * Launch the application.
@@ -335,6 +337,7 @@ public class Manager extends JFrame {
 		panelMenu.add(lblEmail);
 		
 	    JTextField enterEmail = new JTextField();
+	    enterEmail.setFont(new Font("Open Sans", Font.PLAIN, 20));
 		enterEmail.setBounds(338, 195, 172, 35);
 		panelMenu.add(enterEmail);
 		enterEmail.setColumns(10);
@@ -737,11 +740,6 @@ public class Manager extends JFrame {
 		panel_update.add(update_alergyIn);
 		update_alergyIn.setColumns(10);
 		
-		JComboBox update_sectionIn = new JComboBox();
-		update_sectionIn.setModel(new DefaultComboBoxModel(new String[] {"", "Drink", "Main", "Side", "Dessert"}));
-		update_sectionIn.setBounds(332, 212, 137, 26);
-		panel_update.add(update_sectionIn);
-		
 		JButton update_OK = new JButton("Update");
 		update_OK.setFont(new Font("Open Sans", Font.BOLD, 20));
 		update_OK.addActionListener(new ActionListener() 
@@ -755,10 +753,10 @@ public class Manager extends JFrame {
 					 String name3 = update_nameIn.getText();
 					 String price3 = update_priceIn.getText();
 					 String descrip3 = update_descripIn.getText();
-					 //String section3 = update_sectionIn.getText();
+					 String section3 = sec.getText();
 					 String alergy3 = update_alergyIn.getText();
 					 
-				     String text = (String)update_sectionIn.getSelectedItem();
+				     //String text = (String)update_sectionIn.getSelectedItem();
 
 					//CODE TO VERFIY THE EMAIL ADDRESS AND PASSWORD FROM THE DATABASE 
 					Class.forName("com.mysql.jdbc.Driver");
@@ -776,7 +774,7 @@ public class Manager extends JFrame {
 			        	ps.setString(2, name3);
 			        	ps.setString(3, price3);
 			        	ps.setString(4, descrip3);
-			        	ps.setString(5, text);
+			        	ps.setString(5, section3);
 			        	ps.setString(6, alergy3);
 			        	ps.setString(7, code3);
 
@@ -837,36 +835,271 @@ public class Manager extends JFrame {
 		lblMain.setBounds(12, 72, 68, 21);
 		panel_update.add(lblMain);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(12, 99, 137, 26);
-		panel_update.add(comboBox);
+		JComboBox update_main = new JComboBox();
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
+	        statement=conn.createStatement(); 
+			String s = "Select Name from product WHERE Section = 'Main';";
+			ResultSet rs = statement.executeQuery(s);
+			
+			while(rs.next())
+			{
+				update_main.addItem(rs.getString(1));
+			}
+		}
+			catch (Exception e3)
+			{
+				System.out.print(e3);
+				
+			}
+		
+		update_main.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
+			        statement=conn.createStatement(); 
+			        
+			        String s = "Select * from fast_food.product WHERE Section = 'Main' and Name = ?";
+			        PreparedStatement pst = conn.prepareStatement(s);
+			        pst.setString(1, (String)update_main.getSelectedItem());
+			        java.sql.ResultSet rs=pst.executeQuery();
+			        	
+			        
+			        	while(rs.next()) 
+			        	{
+			        		update_codeIn.setText(rs.getString("Product_Code"));
+			        		update_nameIn.setText(rs.getString("Name"));
+			        		update_priceIn.setText(rs.getString("Price"));
+			        		update_descripIn.setText(rs.getString("Description"));
+			        		update_alergyIn.setText(rs.getString("Alergy"));
+			        		sec.setText(rs.getString("Section"));
+			        	}
+			        	
+			        	pst.close();
+						} catch (SQLException | ClassNotFoundException e1) 
+			    	{
+							
+							System.out.print(e1);
+						}
+						
+			        
+			}
+		});
+		update_main.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		update_main.setBounds(12, 99, 137, 26);
+		panel_update.add(update_main);
+		
+		
+       	        
 		
 		JLabel lblNewLabel_2 = new JLabel("Side:");
 		lblNewLabel_2.setFont(new Font("Open Sans", Font.PLAIN, 20));
 		lblNewLabel_2.setBounds(12, 147, 56, 16);
 		panel_update.add(lblNewLabel_2);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(12, 168, 137, 26);
-		panel_update.add(comboBox_1);
+		JComboBox update_side = new JComboBox();
+		
+		update_side.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		update_side.setBounds(12, 168, 137, 26);
+		panel_update.add(update_side);
+		
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
+	        statement=conn.createStatement(); 
+			String s = "Select Name from product WHERE Section = 'Side';";
+			ResultSet rs = statement.executeQuery(s);
+			
+			while(rs.next())
+			{
+				update_side.addItem(rs.getString(1));
+			}
+		}
+			catch (Exception e3)
+			{
+				System.out.print(e3);
+				
+			}
+		
+		update_side.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
+			        statement=conn.createStatement(); 
+			        
+			        String s = "Select * from fast_food.product WHERE Section = 'Side' and Name = ?";
+			        PreparedStatement pst = conn.prepareStatement(s);
+			        pst.setString(1, (String)update_side.getSelectedItem());
+			        java.sql.ResultSet rs=pst.executeQuery();
+			        	
+			        
+			        	while(rs.next()) 
+			        	{
+			        		update_codeIn.setText(rs.getString("Product_Code"));
+			        		update_nameIn.setText(rs.getString("Name"));
+			        		update_priceIn.setText(rs.getString("Price"));
+			        		update_descripIn.setText(rs.getString("Description"));
+			        		update_alergyIn.setText(rs.getString("Alergy"));
+			        		sec.setText(rs.getString("Section"));
+			        	}
+			        	
+			        	pst.close();
+						} catch (SQLException | ClassNotFoundException e1) 
+			    	{
+							
+							System.out.print(e1);
+						}
+						
+			        
+			
+			}
+		});
 		
 		JLabel lblNewLabel_3 = new JLabel("Dessert:");
 		lblNewLabel_3.setFont(new Font("Open Sans", Font.PLAIN, 20));
 		lblNewLabel_3.setBounds(12, 209, 91, 26);
 		panel_update.add(lblNewLabel_3);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(12, 241, 137, 26);
-		panel_update.add(comboBox_2);
+		JComboBox update_dessert = new JComboBox();
+		
+		update_dessert.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		update_dessert.setBounds(12, 241, 137, 26);
+		panel_update.add(update_dessert);
+		
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
+	        statement=conn.createStatement(); 
+			String s = "Select Name from product WHERE Section = 'Dessert';";
+			ResultSet rs = statement.executeQuery(s);
+			
+			while(rs.next())
+			{
+				update_dessert.addItem(rs.getString(1));
+			}
+		}
+			catch (Exception e3)
+			{
+				System.out.print(e3);
+				
+			}
+		
+		update_dessert.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
+			        statement=conn.createStatement(); 
+			        
+			        String s = "Select * from fast_food.product WHERE Section = 'Dessert' and Name = ?";
+			        PreparedStatement pst = conn.prepareStatement(s);
+			        pst.setString(1, (String)update_dessert.getSelectedItem());
+			        java.sql.ResultSet rs=pst.executeQuery();
+			        	
+			        
+			        	while(rs.next()) 
+			        	{
+			        		update_codeIn.setText(rs.getString("Product_Code"));
+			        		update_nameIn.setText(rs.getString("Name"));
+			        		update_priceIn.setText(rs.getString("Price"));
+			        		update_descripIn.setText(rs.getString("Description"));
+			        		update_alergyIn.setText(rs.getString("Alergy"));
+			        		sec.setText(rs.getString("Section"));
+			        	}
+			        	
+			        	pst.close();
+						} catch (SQLException | ClassNotFoundException e1) 
+			    	{
+							
+							System.out.print(e1);
+						}
+						
+			}
+		});
 		
 		JLabel lblDrink = new JLabel("Drink:");
 		lblDrink.setFont(new Font("Open Sans", Font.PLAIN, 20));
 		lblDrink.setBounds(12, 280, 68, 16);
 		panel_update.add(lblDrink);
 		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setBounds(12, 305, 137, 26);
-		panel_update.add(comboBox_3);
+		JComboBox update_drink = new JComboBox();
+		
+		update_drink.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		update_drink.setBounds(12, 305, 137, 26);
+		panel_update.add(update_drink);
+		
+		sec = new JTextField();
+		sec.setBounds(332, 214, 137, 22);
+		panel_update.add(sec);
+		sec.setColumns(10);
+		
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
+	        statement=conn.createStatement(); 
+			String s = "Select Name from product WHERE Section = 'Drink';";
+			ResultSet rs = statement.executeQuery(s);
+			
+			while(rs.next())
+			{
+				update_drink.addItem(rs.getString(1));
+			}
+			
+		    }
+			catch (Exception e3)
+			{
+				System.out.print(e3);
+				
+			}
+		
+		update_drink.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
+			        statement=conn.createStatement(); 
+			        
+			        String s = "Select * from fast_food.product WHERE Section = 'Drink' and Name = ?";
+			        PreparedStatement pst = conn.prepareStatement(s);
+			        pst.setString(1, (String)update_drink.getSelectedItem());
+			        java.sql.ResultSet rs=pst.executeQuery();
+			        	
+			        
+			        	while(rs.next()) 
+			        	{
+			        		update_codeIn.setText(rs.getString("Product_Code"));
+			        		update_nameIn.setText(rs.getString("Name"));
+			        		update_priceIn.setText(rs.getString("Price"));
+			        		update_descripIn.setText(rs.getString("Description"));
+			        		update_alergyIn.setText(rs.getString("Alergy"));
+			        		sec.setText(rs.getString("Section"));
+			        	}
+			        	
+			        	pst.close();
+						} catch (SQLException | ClassNotFoundException e1) 
+			    	{
+							
+							System.out.print(e1);
+						}
+						
+				
+			}
+		});
 		
 		
 		
