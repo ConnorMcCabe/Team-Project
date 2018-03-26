@@ -71,7 +71,7 @@ public class GUI {
 		
 		JLabel name = new JLabel("");
 		
-		JLabel ImageLabel = new JLabel("");
+		JLabel ImageLabel = new JLabel();
 		ImageLabel.setBounds(311, 42, 432, 364);
 		frmMenu.getContentPane().add(ImageLabel);
 
@@ -151,6 +151,14 @@ public class GUI {
 		        		DescriptionBox.setText(rs.getString("Description"));
 		        		AllergenBox.setText(rs.getString("Alergy"));
 		        		name.setText(rs.getString("Name"));
+					
+					 byte[] img = rs.getBytes("Image");
+		                    //Resize The ImageIcon
+		                    ImageIcon image = new ImageIcon(img);
+		                    Image im = image.getImage();
+		                    Image myImg = im.getScaledInstance(ImageLabel.getWidth(), ImageLabel.getHeight(),Image.SCALE_SMOOTH);
+		                    ImageIcon newImage = new ImageIcon(myImg);
+		                    ImageLabel.setIcon(newImage);
 		        	}
 		        	pst.close();
 					} catch (SQLException | ClassNotFoundException e1) 
@@ -210,6 +218,14 @@ public class GUI {
 		        		DescriptionBox.setText(rs.getString("Description"));
 		        		AllergenBox.setText(rs.getString("Alergy"));
 		        		name.setText(rs.getString("Name"));
+					
+					 byte[] img = rs.getBytes("Image");
+		                    //Resize The ImageIcon
+		                    ImageIcon image = new ImageIcon(img);
+		                    Image im = image.getImage();
+		                    Image myImg = im.getScaledInstance(ImageLabel.getWidth(), ImageLabel.getHeight(),Image.SCALE_SMOOTH);
+		                    ImageIcon newImage = new ImageIcon(myImg);
+		                    ImageLabel.setIcon(newImage);
 		        		
 		        	}
 		        	pst.close();
@@ -269,6 +285,14 @@ public class GUI {
 		        		DescriptionBox.setText(rs.getString("Description"));
 		        		AllergenBox.setText(rs.getString("Alergy"));
 		        		name.setText(rs.getString("Name"));
+					
+					 byte[] img = rs.getBytes("Image");
+		                    //Resize The ImageIcon
+		                    ImageIcon image = new ImageIcon(img);
+		                    Image im = image.getImage();
+		                    Image myImg = im.getScaledInstance(ImageLabel.getWidth(), ImageLabel.getHeight(),Image.SCALE_SMOOTH);
+		                    ImageIcon newImage = new ImageIcon(myImg);
+		                    ImageLabel.setIcon(newImage);
 		        	}
 		        	pst.close();
 					} catch (SQLException | ClassNotFoundException e1) 
@@ -328,6 +352,14 @@ public class GUI {
 		        		DescriptionBox.setText(rs.getString("Description"));
 		        		AllergenBox.setText(rs.getString("Alergy"));
 		        		name.setText(rs.getString("Name"));
+					
+					 byte[] img = rs.getBytes("Image");
+		                    //Resize The ImageIcon
+		                    ImageIcon image = new ImageIcon(img);
+		                    Image im = image.getImage();
+		                    Image myImg = im.getScaledInstance(ImageLabel.getWidth(), ImageLabel.getHeight(),Image.SCALE_SMOOTH);
+		                    ImageIcon newImage = new ImageIcon(myImg);
+		                    ImageLabel.setIcon(newImage);
 		        	}
 		        	pst.close();
 					} catch (SQLException | ClassNotFoundException e1) 
