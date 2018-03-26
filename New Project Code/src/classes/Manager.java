@@ -261,7 +261,7 @@ public class Manager extends JFrame {
 			        {
 			        	
 			        	String code = new String(code1);
-			        	String query1 ="INSERT INTO Product values (?,?,?,?,?,?)";
+			        	String query1 ="INSERT INTO Product (Product_Code, Name, Price, Description, Section, Alergy)  values (?,?,?,?,?,?)";
 			        	
 			        	PreparedStatement ps = conn.prepareStatement(query1);
 			        	ps.setString(1, code1);
@@ -276,7 +276,7 @@ public class Manager extends JFrame {
 			        
 				
 			        	
-			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM product where Product_Code = ?"))
+			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT Product_Code, Name, Price, Description, Section, Alergy FROM product where Product_Code = ?"))
 			        			{
 			        				stmt.setString(1, code1);
 			        				ResultSet rs =stmt.executeQuery();
@@ -286,6 +286,11 @@ public class Manager extends JFrame {
 			     			           JOptionPane.showMessageDialog(null, "New Product Was Added to Menu","Product Added", JOptionPane.INFORMATION_MESSAGE);
 			     			           panel_Add.setVisible(false);
 			     			           panelChoose.setVisible(true);
+			     					   panelChoose.updateUI();
+			     					   panel_Add.updateUI();
+			     					   panel_remove.updateUI();
+			     					   panel_update.updateUI();
+
 			     			           
 			        				}
 			        				
@@ -297,6 +302,7 @@ public class Manager extends JFrame {
 			        			}
 
 			        	
+			        	ps.close();
 			        	 conn.close();
 			        }
 				}catch(Exception ee) 
@@ -332,6 +338,7 @@ public class Manager extends JFrame {
 			{
 				panel_Add.setVisible(false);
 				panelChoose.setVisible(true);
+			
 			}
 		});
 		btnCancel.setBounds(546, 405, 141, 43);
@@ -735,13 +742,18 @@ public class Manager extends JFrame {
 			    			        	    JOptionPane.showMessageDialog(null, "Product Deleted from Menu","Product Deleted", JOptionPane.INFORMATION_MESSAGE);
 				     			        panel_remove.setVisible(false);
 				     			           panelChoose.setVisible(true);
+				     			          panelChoose.updateUI();
+				     					   panel_Add.updateUI();
+				     					   panel_remove.updateUI();
+				     					   panel_update.updateUI();
 
 			        				}
 			        			}
 
 			        	
-			        	 conn.close();
-			        }
+			        	ps.close();
+			        	 
+			        	 conn.close();			        }
 				}catch(Exception ee) 
 				{
 
@@ -1140,7 +1152,7 @@ public class Manager extends JFrame {
 
 			        	//ResultSet rs;
 			        	ps.execute();
-			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM product where Product_Code = ?"))
+			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT Product_Code, Name, Price, Description, Section, Alergy FROM product where Product_Code = ?"))
 			        			{
 			        				stmt.setString(1, code3);
 			        				ResultSet rs =stmt.executeQuery();
@@ -1150,6 +1162,10 @@ public class Manager extends JFrame {
 			     			           JOptionPane.showMessageDialog(null, "Product was Updated","Product Updated", JOptionPane.INFORMATION_MESSAGE);
 			     			           panel_update.setVisible(false);
 			     			           panelChoose.setVisible(true);
+			     			          panelChoose.updateUI();
+			     					   panel_Add.updateUI();
+			     					   panel_remove.updateUI();
+			     					   panel_update.updateUI();
 			     			           
 			        				}
 			        				
@@ -1161,8 +1177,8 @@ public class Manager extends JFrame {
 			        			}
 
 			        	
-			        	 conn.close();
-			        }
+			        	ps.close();
+			        	 conn.close();			        }
 				}catch(Exception ee) 
 				{
 					 JOptionPane.showMessageDialog(null, "Cannot be left blank, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
@@ -1225,7 +1241,7 @@ public class Manager extends JFrame {
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement(); 
 			        
-			        String s = "Select * from fast_food.product WHERE Section = 'Main' and Name = ?";
+			        String s = "Select Product_Code, Name, Price, Description, Section, Alergy from fast_food.product WHERE Section = 'Main' and Name = ?";
 			        PreparedStatement pst = conn.prepareStatement(s);
 			        pst.setString(1, (String)update_main.getSelectedItem());
 			        java.sql.ResultSet rs=pst.executeQuery();
@@ -1297,7 +1313,7 @@ public class Manager extends JFrame {
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement(); 
 			        
-			        String s = "Select * from fast_food.product WHERE Section = 'Side' and Name = ?";
+			        String s = "Select Product_Code, Name, Price, Description, Section, Alergy from fast_food.product WHERE Section = 'Side' and Name = ?";
 			        PreparedStatement pst = conn.prepareStatement(s);
 			        pst.setString(1, (String)update_side.getSelectedItem());
 			        java.sql.ResultSet rs=pst.executeQuery();
@@ -1364,7 +1380,7 @@ public class Manager extends JFrame {
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement(); 
 			        
-			        String s = "Select * from fast_food.product WHERE Section = 'Dessert' and Name = ?";
+			        String s = "Select Product_Code, Name, Price, Description, Section, Alergy from fast_food.product WHERE Section = 'Dessert' and Name = ?";
 			        PreparedStatement pst = conn.prepareStatement(s);
 			        pst.setString(1, (String)update_dessert.getSelectedItem());
 			        java.sql.ResultSet rs=pst.executeQuery();
@@ -1446,7 +1462,7 @@ public class Manager extends JFrame {
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement(); 
 			        
-			        String s = "Select * from fast_food.product WHERE Section = 'Drink' and Name = ?";
+			        String s = "Select Product_Code, Name, Price, Description, Section, Alergy from fast_food.product WHERE Section = 'Drink' and Name = ?";
 			        PreparedStatement pst = conn.prepareStatement(s);
 			        pst.setString(1, (String)update_drink.getSelectedItem());
 			        java.sql.ResultSet rs=pst.executeQuery();
