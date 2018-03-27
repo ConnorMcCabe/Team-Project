@@ -1,3 +1,4 @@
+
 package Resturaunt;
 import java.awt.EventQueue;
 
@@ -9,6 +10,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Window;
 
 import javax.swing.JComboBox;
@@ -31,6 +33,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 
 public class GUI {
 
@@ -78,6 +81,7 @@ public class GUI {
 		
 		JTextArea PriceBox = new JTextArea();
 		PriceBox.setText("");
+		//PriceBox.setFormat("%.2f");
 		PriceBox.setEditable(false);
 		PriceBox.setBounds(402, 484, 341, 20);
 		frmMenu.getContentPane().add(PriceBox);
@@ -93,17 +97,17 @@ public class GUI {
 		AllergenBox.setEditable(false);
 		AllergenBox.setBounds(402, 452, 341, 20);
 		frmMenu.getContentPane().add(AllergenBox);
-		
-		JTable OrderSummary = new JTable();
 		String columns[] = new String[] {"Product", "Quantity", "Price"};
 		DefaultTableModel dtm = new DefaultTableModel(columns, 0);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(780, 46, 294, 387);
+		frmMenu.getContentPane().add(scrollPane_1);
+		
+		JTable OrderSummary = new JTable();
+		scrollPane_1.setViewportView(OrderSummary);
 		OrderSummary.setModel(dtm);
-		JScrollPane sp = new JScrollPane();
-		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		sp.add(OrderSummary);
-		OrderSummary.setBounds(780, 46, 294, 387);
-		frmMenu.getContentPane().add(OrderSummary);
-		dtm.addRow(new Object[]{"--Product--", "--Quantity--", "--Price--"});
+		//dtm.addRow(new Object[]{"--Product--", "--Quantity--", "--Price--"});
 		
 		
 		JLabel lblNewLabel = new JLabel("Main's");
@@ -151,6 +155,8 @@ public class GUI {
 		        		DescriptionBox.setText(rs.getString("Description"));
 		        		AllergenBox.setText(rs.getString("Alergy"));
 		        		name.setText(rs.getString("Name"));
+						
+		        		
 					
 					 byte[] img = rs.getBytes("Image");
 		                    //Resize The ImageIcon
@@ -218,6 +224,7 @@ public class GUI {
 		        		DescriptionBox.setText(rs.getString("Description"));
 		        		AllergenBox.setText(rs.getString("Alergy"));
 		        		name.setText(rs.getString("Name"));
+		        		
 					
 					 byte[] img = rs.getBytes("Image");
 		                    //Resize The ImageIcon
@@ -285,6 +292,7 @@ public class GUI {
 		        		DescriptionBox.setText(rs.getString("Description"));
 		        		AllergenBox.setText(rs.getString("Alergy"));
 		        		name.setText(rs.getString("Name"));
+		        		
 					
 					 byte[] img = rs.getBytes("Image");
 		                    //Resize The ImageIcon
@@ -352,6 +360,7 @@ public class GUI {
 		        		DescriptionBox.setText(rs.getString("Description"));
 		        		AllergenBox.setText(rs.getString("Alergy"));
 		        		name.setText(rs.getString("Name"));
+		        		
 					
 					 byte[] img = rs.getBytes("Image");
 		                    //Resize The ImageIcon
@@ -422,28 +431,33 @@ public class GUI {
 			{
 				
 				
-//				Double fprice = Double.parseDouble(( PriceBox).getText());
-//				String fname = name.getText();
-//				
-//				
-//				DefaultTableModel dtm = (DefaultTableModel) OrderSummary.getModel();
-//				dtm.addRow(new Object[]{fname, 1, fprice});
-//				
-//				
-//				int rows = OrderSummary.getRowCount();
-//				double total = 0;
-//				
-//				for(int i =0; i<rows; i++)
-//				{
-//					total=total+Double.parseDouble(OrderSummary.getValueAt(i, 3)+"");
-//				}
-//			        
-//			        System.out.println(total);
-//			    
-//			    JLabel FinalPrice = new JLabel();
-//		    	FinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
-//		    	FinalPrice.setBounds(857, 448, 127, 27);
-//		    	frmMenu.getContentPane().add(FinalPrice);
+				Double fprice = Double.parseDouble(( PriceBox).getText());
+				String fname = name.getText();
+				
+				
+				DefaultTableModel dtm = (DefaultTableModel) OrderSummary.getModel();
+				dtm.addRow(new Object[]{fname, 1, fprice});
+				
+				
+				int rows = OrderSummary.getRowCount();
+				double total = 0;
+				
+				for(int i =0; i<rows; i++)
+				{
+					total=total+Double.parseDouble(OrderSummary.getValueAt(i, 2)+"");
+				}
+			        
+			    
+				String res = Double.toString(total);
+				
+				System.out.print(res);
+				
+			    JTextField FinalPrice = new JTextField();
+			    FinalPrice.setEditable(false);
+			    FinalPrice.setText(res);
+		    	FinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		    	FinalPrice.setBounds(857, 448, 127, 27);
+		    	frmMenu.add(FinalPrice);
 				
 				
 //				try 
@@ -504,11 +518,11 @@ public class GUI {
 		});
 	
 		
-	    
-	    JLabel FinalPrice = new JLabel();
-    	FinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
-    	FinalPrice.setBounds(857, 448, 127, 27);
-    	frmMenu.getContentPane().add(FinalPrice);
+//	    
+//	    JLabel FinalPrice = new JLabel();
+//    	FinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
+//    	FinalPrice.setBounds(857, 448, 127, 27);
+//    	frmMenu.getContentPane().add(FinalPrice);
     	
 	JButton CancelBtn = new JButton("Cancel Order");
 	CancelBtn.addActionListener(new ActionListener() {
@@ -530,6 +544,10 @@ public class GUI {
 	lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 20));
 	lblTotal.setBounds(795, 444, 72, 27);
 	frmMenu.getContentPane().add(lblTotal);
+	
+	JScrollPane scrollPane = new JScrollPane();
+	scrollPane.setBounds(1045, 74, 29, 121);
+	frmMenu.getContentPane().add(scrollPane);
 	
 	
 }
