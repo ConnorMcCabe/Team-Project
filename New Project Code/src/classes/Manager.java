@@ -8,6 +8,7 @@
 package classes;
 
 import java.awt.EventQueue;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import java.awt.CardLayout;
@@ -15,6 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -32,6 +36,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.UIManager;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.jcp.xml.dsig.internal.dom.DOMUtils;
 
@@ -39,6 +44,7 @@ import net.proteanit.sql.DbUtils;
 
 import javax.swing.JTable;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollBar;
@@ -75,6 +81,7 @@ public class Manager extends JFrame {
 		private JTextField user_emailIn;
 		private JPasswordField user_passwordIn;
 		private JTextField sec;
+		String selectImage;
 
 	/**
 	 * Launch the application.
@@ -108,7 +115,7 @@ public class Manager extends JFrame {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1000, 514);
+		frame.setBounds(100, 100, 1000, 758);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
@@ -205,6 +212,7 @@ public class Manager extends JFrame {
 		add_priceIn.setColumns(10);
 		
 		JComboBox add_sectionIn = new JComboBox();
+		add_sectionIn.setBackground(Color.WHITE);
 		add_sectionIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
 		add_sectionIn.setModel(new DefaultComboBoxModel(new String[] {"", "Drink", "Main", "Side", "Dessert"}));
 		add_sectionIn.setBounds(346, 311, 196, 35);
@@ -227,6 +235,38 @@ public class Manager extends JFrame {
 		scrollPane_1.setViewportView(add_alergyIn);
 		add_alergyIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
 		add_alergyIn.setLineWrap(true);
+		
+		JLabel imagelabel = new JLabel("");
+		imagelabel.setBounds(164, 415, 378, 219);
+		panel_Add.add(imagelabel);
+		
+		
+	 
+		
+		
+		JButton Browse = new JButton("Image");
+		Browse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JFileChooser fileChooser = new JFileChooser();
+		         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+		         FileNameExtensionFilter filter = new FileNameExtensionFilter("*.IMAGE", "jpg","gif","png");
+		         fileChooser.addChoosableFileFilter(filter);
+		         int result = fileChooser.showSaveDialog(null);
+		         if(result == JFileChooser.APPROVE_OPTION){
+		             File selectedFile = fileChooser.getSelectedFile();
+		             String path = selectedFile.getAbsolutePath();
+		             ImageIcon image = new ImageIcon(path);
+	                    Image im = image.getImage();
+	                    Image myImg = im.getScaledInstance(imagelabel.getWidth(), imagelabel.getHeight(),Image.SCALE_SMOOTH);
+	                    ImageIcon newImage = new ImageIcon(myImg);
+	                    imagelabel.setIcon(newImage);
+	                    selectImage = path;
+		              }
+			}
+		});
+		Browse.setBounds(346, 367, 196, 39);
+		panel_Add.add(Browse);
 		
 		//AL
 		//
@@ -261,15 +301,17 @@ public class Manager extends JFrame {
 			        {
 			        	
 			        	String code = new String(code1);
-			        	String query1 ="INSERT INTO Product (Product_Code, Name, Price, Description, Section, Alergy)  values (?,?,?,?,?,?)";
+			        	String query1 ="INSERT INTO Product (Product_Code, Name, Price, Description, Section, Alergy, Image)  values (?,?,?,?,?,?,?)";
 			        	
 			        	PreparedStatement ps = conn.prepareStatement(query1);
+			        	InputStream inputImage = new FileInputStream(new File(selectImage));
 			        	ps.setString(1, code1);
 			        	ps.setString(2, name1);
 			        	ps.setString(3, price1);
 			        	ps.setString(4, descrip1);
 			        	ps.setString(5, text);
 			        	ps.setString(6, alergy1);
+			        	ps.setBlob(7, inputImage);
 
 			        	//ResultSet rs;
 			        	ps.execute();
@@ -317,7 +359,7 @@ public class Manager extends JFrame {
 		});
 		//
 		
-		add_OK.setBounds(383, 405, 129, 43);
+		add_OK.setBounds(384, 655, 129, 43);
 		panel_Add.add(add_OK);
 		
 		JLabel lblPleaseEnterProduct = new JLabel("Enter Product Details");
@@ -341,16 +383,26 @@ public class Manager extends JFrame {
 			
 			}
 		});
-		btnCancel.setBounds(546, 405, 141, 43);
+		btnCancel.setBounds(567, 655, 141, 43);
 		panel_Add.add(btnCancel);
 		
 		JLabel label_4 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\ok.png"));
-		label_4.setBounds(354, 392, 94, 62);
+		label_4.setBounds(360, 636, 94, 62);
 		panel_Add.add(label_4);
 		
 		JLabel label_5 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\remove.png"));
-		label_5.setBounds(523, 392, 68, 62);
+		label_5.setBounds(542, 636, 68, 62);
 		panel_Add.add(label_5);
+		
+		JLabel lblSelectImage = new JLabel("Select Image:");
+		lblSelectImage.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		lblSelectImage.setBounds(164, 371, 141, 35);
+		panel_Add.add(lblSelectImage);
+		
+
+		
+		
+		
 		
 		
 		
@@ -371,7 +423,7 @@ public class Manager extends JFrame {
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setFont(new Font("Open Sans", Font.PLAIN, 20));
 		lblEmail.setBackground(UIManager.getColor("Button.background"));
-		lblEmail.setBounds(226, 290, 126, 35);
+		lblEmail.setBounds(226, 210, 126, 35);
 		panelMenu.add(lblEmail);
 		
 	    JTextField enterEmail = new JTextField();
@@ -382,7 +434,7 @@ public class Manager extends JFrame {
 		
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		lblPassword.setBounds(226, 210, 141, 35);
+		lblPassword.setBounds(226, 293, 141, 35);
 		panelMenu.add(lblPassword);
 		
 		enterPassword = new JPasswordField();
@@ -578,7 +630,6 @@ public class Manager extends JFrame {
 		
 		JButton btnSignOut = new JButton("Sign Out");
 		btnSignOut.setContentAreaFilled(false);
-
 		btnSignOut.setBorderPainted(false);
 		btnSignOut.setBackground(new Color(187, 196, 205));
 		btnSignOut.setFont(new Font("Open Sans", Font.BOLD, 20));
@@ -788,6 +839,7 @@ public class Manager extends JFrame {
 		panel_remove.add(lblMain_1);
 		
 		JComboBox remove_main = new JComboBox();
+		remove_main.setBackground(Color.WHITE);
 		remove_main.setFont(new Font("Open Sans", Font.PLAIN, 19));
 		remove_main.setBounds(57, 141, 196, 35);
 		panel_remove.add(remove_main);
@@ -851,6 +903,7 @@ public class Manager extends JFrame {
 		panel_remove.add(lblSide);
 		
 		JComboBox remove_side = new JComboBox();
+		remove_side.setBackground(Color.WHITE);
 		
 		try
 		{
@@ -913,6 +966,7 @@ public class Manager extends JFrame {
 		panel_remove.add(lblDessert);
 		
 		JComboBox remove_dessert = new JComboBox();
+		remove_dessert.setBackground(Color.WHITE);
 
 		try
 		{
@@ -974,6 +1028,7 @@ public class Manager extends JFrame {
 		panel_remove.add(lblDrink_1);
 		
 		JComboBox remove_drink = new JComboBox();
+		remove_drink.setBackground(Color.WHITE);
 		
 		try
 		{
@@ -1213,6 +1268,7 @@ public class Manager extends JFrame {
 		panel_update.add(lblMain);
 		
 		JComboBox update_main = new JComboBox();
+		update_main.setBackground(Color.WHITE);
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
@@ -1280,6 +1336,7 @@ public class Manager extends JFrame {
 		panel_update.add(lblNewLabel_2);
 		
 		JComboBox update_side = new JComboBox();
+		update_side.setBackground(Color.WHITE);
 		
 		update_side.setFont(new Font("Open Sans", Font.PLAIN, 19));
 		update_side.setBounds(12, 168, 196, 35);
@@ -1347,6 +1404,7 @@ public class Manager extends JFrame {
 		panel_update.add(lblNewLabel_3);
 		
 		JComboBox update_dessert = new JComboBox();
+		update_dessert.setBackground(Color.WHITE);
 		
 		update_dessert.setFont(new Font("Open Sans", Font.PLAIN, 19));
 		update_dessert.setBounds(12, 241, 196, 35);
@@ -1412,6 +1470,7 @@ public class Manager extends JFrame {
 		panel_update.add(lblDrink);
 		
 		JComboBox update_drink = new JComboBox();
+		update_drink.setBackground(Color.WHITE);
 		
 		update_drink.setFont(new Font("Open Sans", Font.PLAIN, 19));
 		update_drink.setBounds(12, 305, 196, 35);
