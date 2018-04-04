@@ -82,6 +82,7 @@ public class Manager extends JFrame {
 		private JPasswordField user_passwordIn;
 		private JTextField sec;
 		String selectImage;
+		String selectImage1;
 
 	/**
 	 * Launch the application.
@@ -115,12 +116,12 @@ public class Manager extends JFrame {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1000, 758);
+		frame.setBounds(100, 100, 1001, 758);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
 		final JPanel panelMenu = new JPanel();
-		panelMenu.setBackground(new Color(187, 196, 205));
+		panelMenu.setBackground(new Color(115, 168, 212));
 		panelMenu.setForeground(Color.BLACK);
 		frame.getContentPane().add(panelMenu, "name_10475017053377");
 		panelMenu.setLayout(null);
@@ -128,7 +129,7 @@ public class Manager extends JFrame {
 		
 		final JPanel panelChoose = new JPanel();
 		frame.getContentPane().add(panelChoose, "name_10477123123916");
-		panelChoose.setBackground(new Color(187, 196, 205));
+		panelChoose.setBackground(new Color(115, 168, 212));
 		panelChoose.setLayout(null);
 		panelChoose.setVisible(false);
 		
@@ -136,25 +137,25 @@ public class Manager extends JFrame {
 		frame.getContentPane().add(panel_Add, "name_10478840946849");
 		panel_Add.setLayout(null);
 		panel_Add.setVisible(false);
-		panel_Add.setBackground(new Color(187, 196, 205));
+		panel_Add.setBackground(new Color(115, 168, 212));
 
 		JPanel panel_remove = new JPanel();
 		frame.getContentPane().add(panel_remove, "name_44676578512252");
 		panel_remove.setLayout(null);
 		panel_remove.setVisible(false);
-		panel_remove.setBackground(new Color(187, 196, 205));
+		panel_remove.setBackground(new Color(115, 168, 212));
 
 		JPanel panel_update = new JPanel();
 		frame.getContentPane().add(panel_update, "name_21178903507949");
 		panel_update.setLayout(null);
 		panel_update.setVisible(false);
-		panel_update.setBackground(new Color(187, 196, 205));
+		panel_update.setBackground(new Color(115, 168, 212));
 
 		JPanel panel_user = new JPanel();
 		frame.getContentPane().add(panel_user, "name_1167324204295");
 		panel_user.setLayout(null);
 		panel_user.setVisible(false);
-		panel_user.setBackground(new Color(187, 196, 205));
+		panel_user.setBackground(new Color(115, 168, 212));
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -164,33 +165,33 @@ public class Manager extends JFrame {
 
 
 		JLabel add_code = new JLabel("Product Code:");
-		add_code.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		add_code.setBounds(164, 112, 141, 28);
+		add_code.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		add_code.setBounds(125, 112, 201, 28);
 		panel_Add.add(add_code);
 		
 		JLabel add_name = new JLabel("Name:");
-		add_name.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		add_name.setBounds(164, 176, 94, 28);
+		add_name.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		add_name.setBounds(125, 172, 94, 28);
 		panel_Add.add(add_name);
 		
 		JLabel add_price = new JLabel("Price:");
-		add_price.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		add_price.setBounds(164, 241, 79, 35);
+		add_price.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		add_price.setBounds(125, 241, 79, 35);
 		panel_Add.add(add_price);
 		
 		JLabel add_descrip = new JLabel("Description:");
-		add_descrip.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		add_descrip.setBounds(635, 109, 146, 35);
+		add_descrip.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		add_descrip.setBounds(635, 109, 177, 35);
 		panel_Add.add(add_descrip);
 		
 		JLabel add_section = new JLabel("Section:");
-		add_section.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		add_section.setBounds(164, 311, 94, 35);
+		add_section.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		add_section.setBounds(125, 307, 141, 35);
 		panel_Add.add(add_section);
 		
 		JLabel add_alergy = new JLabel("Alergy:");
-		add_alergy.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		add_alergy.setBounds(635, 241, 94, 35);
+		add_alergy.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		add_alergy.setBounds(635, 266, 129, 39);
 		panel_Add.add(add_alergy);
 		
 		add_codeIn = new JTextField();
@@ -219,7 +220,7 @@ public class Manager extends JFrame {
 		panel_Add.add(add_sectionIn);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(635, 140, 298, 100);
+		scrollPane.setBounds(635, 146, 298, 100);
 		panel_Add.add(scrollPane);
 		
 		JTextArea add_descripIn = new JTextArea();
@@ -228,7 +229,7 @@ public class Manager extends JFrame {
 		add_descripIn.setLineWrap(true);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(635, 276, 298, 100);
+		scrollPane_1.setBounds(635, 306, 298, 100);
 		panel_Add.add(scrollPane_1);
 
 		JTextArea add_alergyIn = new JTextArea();
@@ -236,15 +237,17 @@ public class Manager extends JFrame {
 		add_alergyIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
 		add_alergyIn.setLineWrap(true);
 		
-		JLabel imagelabel = new JLabel("");
-		imagelabel.setBounds(164, 415, 378, 219);
+		JLabel imagelabel = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
+		imagelabel.setBounds(125, 415, 417, 219);
 		panel_Add.add(imagelabel);
 		
 		
 	 
 		
 		
-		JButton Browse = new JButton("Image");
+		JButton Browse = new JButton("Browse");
+		Browse.setFont(new Font("Open Sans", Font.BOLD, 20));
+		Browse.setBackground(Color.WHITE);
 		Browse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -274,7 +277,7 @@ public class Manager extends JFrame {
 		add_OK.setBorderPainted(false);
 		add_OK.setContentAreaFilled(false);
 
-		add_OK.setFont(new Font("Open Sans", Font.BOLD, 20));
+		add_OK.setFont(new Font("Open Sans", Font.BOLD, 30));
 		add_OK.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -332,6 +335,14 @@ public class Manager extends JFrame {
 			     					   panel_Add.updateUI();
 			     					   panel_remove.updateUI();
 			     					   panel_update.updateUI();
+			     					  add_codeIn.setText(null);
+			     					  add_nameIn.setText(null);
+			     					  add_priceIn.setText(null);
+			     					  add_descripIn.setText(null);
+			     					  //add_sectionIn.setText(null);
+			     					  add_alergyIn.setText(null);
+			     					 imagelabel.setIcon(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
+
 
 			     			           
 			        				}
@@ -373,17 +384,25 @@ public class Manager extends JFrame {
 		btnCancel.setBorderPainted(false);
 		btnCancel.setContentAreaFilled(false);
 
-		btnCancel.setFont(new Font("Open Sans", Font.BOLD, 20));
+		btnCancel.setFont(new Font("Open Sans", Font.BOLD, 30));
 		btnCancel.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
 				panel_Add.setVisible(false);
 				panelChoose.setVisible(true);
+				add_codeIn.setText(null);
+				  add_nameIn.setText(null);
+				  add_priceIn.setText(null);
+				  add_descripIn.setText(null);
+				  //add_sectionIn.setText(null);
+				  add_alergyIn.setText(null);
+					 imagelabel.setIcon(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
+
 			
 			}
 		});
-		btnCancel.setBounds(567, 655, 141, 43);
+		btnCancel.setBounds(584, 655, 141, 43);
 		panel_Add.add(btnCancel);
 		
 		JLabel label_4 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\ok.png"));
@@ -395,8 +414,8 @@ public class Manager extends JFrame {
 		panel_Add.add(label_5);
 		
 		JLabel lblSelectImage = new JLabel("Select Image:");
-		lblSelectImage.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		lblSelectImage.setBounds(164, 371, 141, 35);
+		lblSelectImage.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblSelectImage.setBounds(125, 367, 201, 35);
 		panel_Add.add(lblSelectImage);
 		
 
@@ -416,12 +435,12 @@ public class Manager extends JFrame {
 		JLabel lblNewLabel = new JLabel("The Chippy");
 		lblNewLabel.setForeground(new Color(220, 69, 69));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Open Sans", Font.BOLD | Font.ITALIC, 50));
-		lblNewLabel.setBounds(295, 75, 413, 69);
+		lblNewLabel.setFont(new Font("Open Sans", Font.BOLD | Font.ITALIC, 60));
+		lblNewLabel.setBounds(295, 75, 413, 83);
 		panelMenu.add(lblNewLabel);
 		
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		lblEmail.setFont(new Font("Open Sans", Font.PLAIN, 30));
 		lblEmail.setBackground(UIManager.getColor("Button.background"));
 		lblEmail.setBounds(226, 210, 126, 35);
 		panelMenu.add(lblEmail);
@@ -433,8 +452,8 @@ public class Manager extends JFrame {
 		enterEmail.setColumns(10);
 		
 		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		lblPassword.setBounds(226, 293, 141, 35);
+		lblPassword.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblPassword.setBounds(226, 293, 157, 35);
 		panelMenu.add(lblPassword);
 		
 		enterPassword = new JPasswordField();
@@ -447,8 +466,8 @@ public class Manager extends JFrame {
 
 		btnLogin.setBorderPainted(false);
 		btnLogin.setForeground(Color.BLACK);
-		btnLogin.setFont(new Font("Open Sans", Font.BOLD, 20));
-		btnLogin.setBounds(388, 352, 226, 49);
+		btnLogin.setFont(new Font("Open Sans", Font.BOLD, 30));
+		btnLogin.setBounds(395, 352, 226, 49);
 		panelMenu.add(btnLogin);
 		btnLogin.setBorderPainted(false);
 		btnLogin.setBackground(new Color(187, 196, 205));
@@ -513,6 +532,7 @@ public class Manager extends JFrame {
 
 			        		 	panelMenu.setVisible(false);
 			        			panelChoose.setVisible(true);
+			        			
 
 			        	 }
 			        	 
@@ -548,7 +568,7 @@ public class Manager extends JFrame {
 		add.setContentAreaFilled(false);
 
 		add.setBackground(new Color(187, 196, 205));
-		add.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		add.setFont(new Font("Open Sans", Font.PLAIN, 30));
 		add.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -560,14 +580,14 @@ public class Manager extends JFrame {
 		});
 		//
 		
-		add.setBounds(253, 141, 166, 60);
+		add.setBounds(250, 260, 199, 60);
 		panelChoose.add(add);
 		
 		JButton remove = new JButton("Remove Item");
 		remove.setBorderPainted(false);
 		remove.setContentAreaFilled(false);
 		remove.setBackground(new Color(187, 196, 205));
-		remove.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		remove.setFont(new Font("Open Sans", Font.PLAIN, 30));
 		remove.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -580,7 +600,7 @@ public class Manager extends JFrame {
 			
 		});
 		
-		remove.setBounds(266, 260, 166, 60);
+		remove.setBounds(257, 424, 234, 60);
 		panelChoose.add(remove);
 		
 		JButton update = new JButton("Update Item ");
@@ -588,7 +608,7 @@ public class Manager extends JFrame {
 		update.setContentAreaFilled(false);
 
 		update.setBackground(new Color(187, 196, 205));
-		update.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		update.setFont(new Font("Open Sans", Font.PLAIN, 30));
 		update.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e)
@@ -599,7 +619,7 @@ public class Manager extends JFrame {
 			}
 			
 		});
-		update.setBounds(561, 141, 166, 60);
+		update.setBounds(556, 260, 230, 60);
 		panelChoose.add(update);
 		
 		JLabel lblPleaseSelectAn = new JLabel("Please Select An Option");
@@ -611,7 +631,7 @@ public class Manager extends JFrame {
 		
 		//CODE TO CREATE NEW USER 
 		JButton btnCreateUser = new JButton("Create User");
-		btnCreateUser.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		btnCreateUser.setFont(new Font("Open Sans", Font.PLAIN, 30));
 		btnCreateUser.setBorderPainted(false);
 		btnCreateUser.setContentAreaFilled(false);
 
@@ -625,23 +645,25 @@ public class Manager extends JFrame {
 
 			}
 		});
-		btnCreateUser.setBounds(561, 260, 166, 60);
+		btnCreateUser.setBounds(556, 424, 225, 60);
 		panelChoose.add(btnCreateUser);
 		
 		JButton btnSignOut = new JButton("Sign Out");
 		btnSignOut.setContentAreaFilled(false);
 		btnSignOut.setBorderPainted(false);
 		btnSignOut.setBackground(new Color(187, 196, 205));
-		btnSignOut.setFont(new Font("Open Sans", Font.BOLD, 20));
+		btnSignOut.setFont(new Font("Open Sans", Font.BOLD, 30));
 		btnSignOut.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
 				panelChoose.setVisible(false);
 				panelMenu.setVisible(true);
+				enterEmail.setText(null);
+		        enterPassword.setText(null);
 			}
 		});
-		btnSignOut.setBounds(48, 394, 187, 60);
+		btnSignOut.setBounds(100, 587, 187, 60);
 		panelChoose.add(btnSignOut);
 		
 		JButton btnViewProducts = new JButton("View Products");
@@ -649,7 +671,7 @@ public class Manager extends JFrame {
 
 		btnViewProducts.setBorderPainted(false);
 		btnViewProducts.setBackground(new Color(187, 196, 205));
-		btnViewProducts.setFont(new Font("Open Sans", Font.BOLD, 20));
+		btnViewProducts.setFont(new Font("Open Sans", Font.BOLD, 30));
 		btnViewProducts.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -665,32 +687,32 @@ public class Manager extends JFrame {
 				//panel_view.setVisible(true);
 			}
 		});
-		btnViewProducts.setBounds(752, 394, 230, 60);
+		btnViewProducts.setBounds(673, 587, 298, 60);
 		panelChoose.add(btnViewProducts);
 		
 		JLabel lblNewLabel_4 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\add.png"));
-		lblNewLabel_4.setBounds(241, 141, 50, 60);
+		lblNewLabel_4.setBounds(237, 260, 50, 60);
 		panelChoose.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\remove.png"));
-		lblNewLabel_5.setBounds(211, 254, 107, 78);
+		lblNewLabel_5.setBounds(206, 412, 107, 78);
 		panelChoose.add(lblNewLabel_5);
 		
 		JLabel label = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\edit.png"));
 		
-		label.setBounds(516, 130, 107, 78);
+		label.setBounds(515, 254, 107, 78);
 		panelChoose.add(label);
 		
 		JLabel label_1 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\user.png"));
-		label_1.setBounds(518, 254, 94, 78);
+		label_1.setBounds(516, 423, 94, 78);
 		panelChoose.add(label_1);
 		
 		JLabel label_2 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\sign.png"));
-		label_2.setBounds(12, 389, 94, 78);
+		label_2.setBounds(49, 584, 94, 78);
 		panelChoose.add(label_2);
 		
 		JLabel label_3 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\list.png"));
-		label_3.setBounds(715, 389, 94, 65);
+		label_3.setBounds(635, 587, 94, 65);
 		panelChoose.add(label_3);
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -699,13 +721,13 @@ public class Manager extends JFrame {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		JLabel remove_code = new JLabel("Product Code:");
-		remove_code.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		remove_code.setBounds(498, 210, 140, 30);
+		remove_code.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		remove_code.setBounds(411, 210, 227, 30);
 		panel_remove.add(remove_code);
 		
 		JLabel remove_name = new JLabel("Name:");
-		remove_name.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		remove_name.setBounds(498, 301, 104, 30);
+		remove_name.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		remove_name.setBounds(411, 294, 104, 30);
 		panel_remove.add(remove_name);
 		
 		remove_codeIn = new JTextField();
@@ -734,7 +756,7 @@ public class Manager extends JFrame {
 		JButton remove_OK = new JButton("Remove");
 		remove_OK.setBorderPainted(false);
 		remove_OK.setContentAreaFilled(false);
-		remove_OK.setFont(new Font("Open Sans", Font.BOLD, 20));
+		remove_OK.setFont(new Font("Open Sans", Font.BOLD, 30));
 		remove_OK.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -797,6 +819,8 @@ public class Manager extends JFrame {
 				     					   panel_Add.updateUI();
 				     					   panel_remove.updateUI();
 				     					   panel_update.updateUI();
+				     					  remove_codeIn.setText(null);
+				     					  remove_nameIn.setText(null);
 
 			        				}
 			        			}
@@ -815,26 +839,28 @@ public class Manager extends JFrame {
 				
 			}
 		});
-		remove_OK.setBounds(372, 417, 140, 37);
+		remove_OK.setBounds(346, 446, 169, 37);
 		panel_remove.add(remove_OK);
 		
 		JButton btnCancel_1 = new JButton("Cancel");
 		btnCancel_1.setBorderPainted(false);
 		btnCancel_1.setContentAreaFilled(false);
-		btnCancel_1.setFont(new Font("Open Sans", Font.BOLD, 20));
+		btnCancel_1.setFont(new Font("Open Sans", Font.BOLD, 30));
 		btnCancel_1.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
 				panel_remove.setVisible(false);
 				panelChoose.setVisible(true);
+				  remove_codeIn.setText(null);
+					  remove_nameIn.setText(null);
 			}
 		});
-		btnCancel_1.setBounds(564, 417, 140, 37);
+		btnCancel_1.setBounds(565, 446, 140, 37);
 		panel_remove.add(btnCancel_1);
 		
 		JLabel lblMain_1 = new JLabel("Main");
-		lblMain_1.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		lblMain_1.setFont(new Font("Open Sans", Font.PLAIN, 30));
 		lblMain_1.setBounds(57, 108, 147, 30);
 		panel_remove.add(lblMain_1);
 		
@@ -898,7 +924,7 @@ public class Manager extends JFrame {
 		
 		
 		JLabel lblSide = new JLabel("Side");
-		lblSide.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		lblSide.setFont(new Font("Open Sans", Font.PLAIN, 30));
 		lblSide.setBounds(59, 191, 78, 30);
 		panel_remove.add(lblSide);
 		
@@ -957,12 +983,12 @@ public class Manager extends JFrame {
 			}
 		});
 		remove_side.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		remove_side.setBounds(57, 219, 196, 35);
+		remove_side.setBounds(59, 222, 196, 35);
 		panel_remove.add(remove_side);
 		
 		JLabel lblDessert = new JLabel("Dessert");
-		lblDessert.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		lblDessert.setBounds(59, 267, 95, 30);
+		lblDessert.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblDessert.setBounds(59, 267, 119, 30);
 		panel_remove.add(lblDessert);
 		
 		JComboBox remove_dessert = new JComboBox();
@@ -1023,8 +1049,8 @@ public class Manager extends JFrame {
 		panel_remove.add(remove_dessert);
 		
 		JLabel lblDrink_1 = new JLabel("Drink");
-		lblDrink_1.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		lblDrink_1.setBounds(59, 344, 95, 23);
+		lblDrink_1.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblDrink_1.setBounds(59, 352, 95, 23);
 		panel_remove.add(lblDrink_1);
 		
 		JComboBox remove_drink = new JComboBox();
@@ -1080,15 +1106,15 @@ public class Manager extends JFrame {
 			}
 		});
 		remove_drink.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		remove_drink.setBounds(57, 367, 196, 35);
+		remove_drink.setBounds(57, 382, 196, 35);
 		panel_remove.add(remove_drink);
 		
 		JLabel lblNewLabel_6 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\delete.png"));
-		lblNewLabel_6.setBounds(343, 409, 83, 58);
+		lblNewLabel_6.setBounds(305, 437, 83, 58);
 		panel_remove.add(lblNewLabel_6);
 		
 		JLabel label_6 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\remove.png"));
-		label_6.setBounds(536, 409, 78, 58);
+		label_6.setBounds(516, 437, 78, 58);
 		panel_remove.add(label_6);
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1101,73 +1127,106 @@ public class Manager extends JFrame {
 		lblEnterInformationTo.setForeground(new Color(220, 69, 69));
 		lblEnterInformationTo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEnterInformationTo.setFont(new Font("Open Sans", Font.BOLD | Font.ITALIC, 45));
-		lblEnterInformationTo.setBounds(32, 13, 869, 36);
+		lblEnterInformationTo.setBounds(32, 25, 869, 63);
 		panel_update.add(lblEnterInformationTo);
 		
 		JLabel update_code = new JLabel("Product Code:");
-		update_code.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		update_code.setBounds(251, 158, 145, 16);
+		update_code.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		update_code.setBounds(251, 149, 203, 25);
 		panel_update.add(update_code);
 		
 		JLabel update_name = new JLabel("Name:");
-		update_name.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		update_name.setBounds(251, 214, 98, 16);
+		update_name.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		update_name.setBounds(251, 205, 98, 25);
 		panel_update.add(update_name);
 		
 		JLabel lblPrice = new JLabel("Price:");
-		lblPrice.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		lblPrice.setBounds(251, 270, 78, 16);
+		lblPrice.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblPrice.setBounds(251, 261, 78, 25);
 		panel_update.add(lblPrice);
 		
 		JLabel lblSection = new JLabel("Section:");
-		lblSection.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		lblSection.setBounds(251, 324, 98, 16);
+		lblSection.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblSection.setBounds(251, 309, 116, 31);
 		panel_update.add(lblSection);
 		
 		JLabel update_descrip = new JLabel("Description:");
-		update_descrip.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		update_descrip.setBounds(691, 67, 116, 26);
+		update_descrip.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		update_descrip.setBounds(690, 141, 168, 40);
 		panel_update.add(update_descrip);
 		
 		update_codeIn = new JTextField();
 		update_codeIn.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		update_codeIn.setBounds(408, 149, 196, 35);
+		update_codeIn.setBounds(462, 148, 196, 35);
 		panel_update.add(update_codeIn);
 		update_codeIn.setColumns(10);
 		
 		update_nameIn = new JTextField();
 		update_nameIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		update_nameIn.setBounds(408, 205, 196, 35);
+		update_nameIn.setBounds(462, 204, 196, 35);
 		panel_update.add(update_nameIn);
 		update_nameIn.setColumns(10);
 		
 		update_priceIn = new JTextField();
 		update_priceIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		update_priceIn.setBounds(408, 261, 196, 35);
+		update_priceIn.setBounds(462, 260, 196, 35);
 		panel_update.add(update_priceIn);
 		update_priceIn.setColumns(10);
 		
 		JLabel lblAlergy = new JLabel("Alergy:");
-		lblAlergy.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		lblAlergy.setBounds(691, 234, 91, 26);
+		lblAlergy.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblAlergy.setBounds(691, 294, 116, 46);
 		panel_update.add(lblAlergy);
 		
 		JTextArea update_descripIn = new JTextArea();
 		update_descripIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		update_descripIn.setBounds(694, 101, 229, 112);
+		update_descripIn.setBounds(691, 183, 229, 112);
 		panel_update.add(update_descripIn);
 		update_descripIn.setLineWrap(true);
 
 		
 		JTextArea update_alergyIn = new JTextArea();
 		update_alergyIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		update_alergyIn.setBounds(694, 273, 229, 112);
+		update_alergyIn.setBounds(691, 337, 229, 112);
 		panel_update.add(update_alergyIn);
+		
+		JLabel image_update = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
+		image_update.setBounds(251, 413, 407, 236);
+		panel_update.add(image_update);
+		
+		JButton btnNewButton_1 = new JButton("Browse");
+		btnNewButton_1.setFont(new Font("Open Sans", Font.BOLD, 20));
+		btnNewButton_1.setBackground(Color.WHITE);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+
+				JFileChooser fileChooser = new JFileChooser();
+		         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+		         FileNameExtensionFilter filter = new FileNameExtensionFilter("*.IMAGE", "jpg","gif","png");
+		         fileChooser.addChoosableFileFilter(filter);
+		         int result = fileChooser.showSaveDialog(null);
+		         if(result == JFileChooser.APPROVE_OPTION){
+		             File selectedFile = fileChooser.getSelectedFile();
+		             String path = selectedFile.getAbsolutePath();
+		             ImageIcon image = new ImageIcon(path);
+	                    Image im = image.getImage();
+	                    Image myImg = im.getScaledInstance(imagelabel.getWidth(), imagelabel.getHeight(),Image.SCALE_SMOOTH);
+	                    ImageIcon newImage = new ImageIcon(myImg);
+	                    image_update.setIcon(newImage);
+	                    selectImage1 = path;
+				
+			}
+			}});
+		btnNewButton_1.setBounds(462, 359, 196, 35);
+		panel_update.add(btnNewButton_1);
+		
+		
 		
 		JButton update_OK = new JButton("Update");
 		update_OK.setBorderPainted(false);
 		update_OK.setContentAreaFilled(false);
-		update_OK.setFont(new Font("Open Sans", Font.BOLD, 20));
+		update_OK.setFont(new Font("Open Sans", Font.BOLD, 30));
 		update_OK.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -1181,8 +1240,9 @@ public class Manager extends JFrame {
 					 String descrip3 = update_descripIn.getText();
 					 String section3 = sec.getText();
 					 String alergy3 = update_alergyIn.getText();
-					 
-				     //String text = (String)update_sectionIn.getSelectedItem();
+			        	InputStream inputImage = new FileInputStream(new File(selectImage1));
+
+						 image_update.setIcon(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
 
 					//CODE TO VERFIY THE EMAIL ADDRESS AND PASSWORD FROM THE DATABASE 
 					Class.forName("com.mysql.jdbc.Driver");
@@ -1191,23 +1251,27 @@ public class Manager extends JFrame {
 			       	        
 			        if(code3 != null)
 			        {
-			        	
+
 			        	String code = new String(code3);
-			        	String query1 ="UPDATE Product SET Product_Code=?, Name=?, Price=?, Description=?, Section=?, Alergy=? WHERE Product_Code= ?";
+			        	String query1 ="UPDATE Product SET Product_Code=?, Name=?, Price=?, Description=?, Section=?, Alergy=?, Image=? WHERE Product_Code= ?";
 			        	
 			        	PreparedStatement ps = conn.prepareStatement(query1);
+			        	//InputStream inputImage = new FileInputStream(new File(selectImage1));
+
 			        	ps.setString(1, code3);
 			        	ps.setString(2, name3);
 			        	ps.setString(3, price3);
 			        	ps.setString(4, descrip3);
 			        	ps.setString(5, section3);
 			        	ps.setString(6, alergy3);
-			        	ps.setString(7, code3);
+			        	ps.setBlob(7, inputImage);
+			        	ps.setString(8, code3);
+
 
 
 			        	//ResultSet rs;
 			        	ps.execute();
-			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT Product_Code, Name, Price, Description, Section, Alergy FROM product where Product_Code = ?"))
+			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT Product_Code, Name, Price, Description, Section, Alergy, Image FROM product where Product_Code = ?"))
 			        			{
 			        				stmt.setString(1, code3);
 			        				ResultSet rs =stmt.executeQuery();
@@ -1221,6 +1285,12 @@ public class Manager extends JFrame {
 			     					   panel_Add.updateUI();
 			     					   panel_remove.updateUI();
 			     					   panel_update.updateUI();
+			     					  update_codeIn.setText(null);
+			     					 update_nameIn.setText(null);
+			     					 update_priceIn.setText(null);
+			     					 update_descripIn.setText(null);
+			     					 sec.setText(null);
+			     					 update_alergyIn.setText(null);
 			     			           
 			        				}
 			        				
@@ -1244,27 +1314,35 @@ public class Manager extends JFrame {
 				
 			}
 		});
-		update_OK.setBounds(325, 407, 116, 36);
+		update_OK.setBounds(308, 662, 180, 36);
 		panel_update.add(update_OK);
 		
 		JButton btnNewButton = new JButton("Cancel");
 		btnNewButton.setBorderPainted(false);
 		btnNewButton.setContentAreaFilled(false);
-		btnNewButton.setFont(new Font("Open Sans", Font.BOLD, 20));
+		btnNewButton.setFont(new Font("Open Sans", Font.BOLD, 30));
 		btnNewButton.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
 				panel_update.setVisible(false);
 				panelChoose.setVisible(true);
+				update_codeIn.setText(null);
+				 update_nameIn.setText(null);
+				 update_priceIn.setText(null);
+				 update_descripIn.setText(null);
+				 sec.setText(null);
+				 update_alergyIn.setText(null);
+				 image_update.setIcon(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
+
 			}
 		});
-		btnNewButton.setBounds(520, 407, 138, 36);
+		btnNewButton.setBounds(511, 662, 189, 36);
 		panel_update.add(btnNewButton);
 		
 		JLabel lblMain = new JLabel("Main:");
-		lblMain.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		lblMain.setBounds(12, 72, 68, 21);
+		lblMain.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblMain.setBounds(12, 116, 91, 31);
 		panel_update.add(lblMain);
 		
 		JComboBox update_main = new JComboBox();
@@ -1297,7 +1375,7 @@ public class Manager extends JFrame {
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement(); 
 			        
-			        String s = "Select Product_Code, Name, Price, Description, Section, Alergy from fast_food.product WHERE Section = 'Main' and Name = ?";
+			        String s = "Select Product_Code, Name, Price, Description, Section, Alergy, Image from fast_food.product WHERE Section = 'Main' and Name = ?";
 			        PreparedStatement pst = conn.prepareStatement(s);
 			        pst.setString(1, (String)update_main.getSelectedItem());
 			        java.sql.ResultSet rs=pst.executeQuery();
@@ -1311,6 +1389,15 @@ public class Manager extends JFrame {
 			        		update_descripIn.setText(rs.getString("Description"));
 			        		update_alergyIn.setText(rs.getString("Alergy"));
 			        		sec.setText(rs.getString("Section"));
+			        		
+			        		byte[] img = rs.getBytes("Image");
+		                    //Resize The ImageIcon
+		                    ImageIcon image = new ImageIcon(img);
+		                    Image im = image.getImage();
+		                    Image myImg = im.getScaledInstance(image_update.getWidth(), image_update.getHeight(),Image.SCALE_SMOOTH);
+		                    ImageIcon newImage = new ImageIcon(myImg);
+		                    image_update.setIcon(newImage);
+		                    
 			        	}
 			        	
 			        	pst.close();
@@ -1324,22 +1411,22 @@ public class Manager extends JFrame {
 			}
 		});
 		update_main.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		update_main.setBounds(12, 99, 196, 35);
+		update_main.setBounds(12, 148, 196, 35);
 		panel_update.add(update_main);
 		
 		
        	        
 		
 		JLabel lblNewLabel_2 = new JLabel("Side:");
-		lblNewLabel_2.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		lblNewLabel_2.setBounds(12, 147, 56, 16);
+		lblNewLabel_2.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblNewLabel_2.setBounds(12, 192, 78, 26);
 		panel_update.add(lblNewLabel_2);
 		
 		JComboBox update_side = new JComboBox();
 		update_side.setBackground(Color.WHITE);
 		
 		update_side.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		update_side.setBounds(12, 168, 196, 35);
+		update_side.setBounds(12, 221, 196, 35);
 		panel_update.add(update_side);
 		
 		try
@@ -1370,7 +1457,7 @@ public class Manager extends JFrame {
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement(); 
 			        
-			        String s = "Select Product_Code, Name, Price, Description, Section, Alergy from fast_food.product WHERE Section = 'Side' and Name = ?";
+			        String s = "Select Product_Code, Name, Price, Description, Section, Alergy, Image from fast_food.product WHERE Section = 'Side' and Name = ?";
 			        PreparedStatement pst = conn.prepareStatement(s);
 			        pst.setString(1, (String)update_side.getSelectedItem());
 			        java.sql.ResultSet rs=pst.executeQuery();
@@ -1384,6 +1471,14 @@ public class Manager extends JFrame {
 			        		update_descripIn.setText(rs.getString("Description"));
 			        		update_alergyIn.setText(rs.getString("Alergy"));
 			        		sec.setText(rs.getString("Section"));
+			        		
+			        		byte[] img = rs.getBytes("Image");
+		                    //Resize The ImageIcon
+		                    ImageIcon image = new ImageIcon(img);
+		                    Image im = image.getImage();
+		                    Image myImg = im.getScaledInstance(image_update.getWidth(), image_update.getHeight(),Image.SCALE_SMOOTH);
+		                    ImageIcon newImage = new ImageIcon(myImg);
+		                    image_update.setIcon(newImage);
 			        	}
 			        	
 			        	pst.close();
@@ -1399,16 +1494,17 @@ public class Manager extends JFrame {
 		});
 		
 		JLabel lblNewLabel_3 = new JLabel("Dessert:");
-		lblNewLabel_3.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		lblNewLabel_3.setBounds(12, 209, 91, 26);
+		lblNewLabel_3.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblNewLabel_3.setBounds(12, 269, 116, 26);
 		panel_update.add(lblNewLabel_3);
 		
 		JComboBox update_dessert = new JComboBox();
 		update_dessert.setBackground(Color.WHITE);
 		
 		update_dessert.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		update_dessert.setBounds(12, 241, 196, 35);
+		update_dessert.setBounds(12, 300, 196, 35);
 		panel_update.add(update_dessert);
+		
 		
 		try
 		{
@@ -1438,7 +1534,7 @@ public class Manager extends JFrame {
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement(); 
 			        
-			        String s = "Select Product_Code, Name, Price, Description, Section, Alergy from fast_food.product WHERE Section = 'Dessert' and Name = ?";
+			        String s = "Select Product_Code, Name, Price, Description, Section, Alergy, Image from fast_food.product WHERE Section = 'Dessert' and Name = ?";
 			        PreparedStatement pst = conn.prepareStatement(s);
 			        pst.setString(1, (String)update_dessert.getSelectedItem());
 			        java.sql.ResultSet rs=pst.executeQuery();
@@ -1452,6 +1548,14 @@ public class Manager extends JFrame {
 			        		update_descripIn.setText(rs.getString("Description"));
 			        		update_alergyIn.setText(rs.getString("Alergy"));
 			        		sec.setText(rs.getString("Section"));
+			        		
+			        		 byte[] img = rs.getBytes("Image");
+			                    //Resize The ImageIcon
+			                    ImageIcon image = new ImageIcon(img);
+			                    Image im = image.getImage();
+			                    Image myImg = im.getScaledInstance(image_update.getWidth(), image_update.getHeight(),Image.SCALE_SMOOTH);
+			                    ImageIcon newImage = new ImageIcon(myImg);
+			                    image_update.setIcon(newImage);
 			        	}
 			        	
 			        	pst.close();
@@ -1465,33 +1569,36 @@ public class Manager extends JFrame {
 		});
 		
 		JLabel lblDrink = new JLabel("Drink:");
-		lblDrink.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		lblDrink.setBounds(12, 280, 68, 16);
+		lblDrink.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblDrink.setBounds(12, 348, 116, 26);
 		panel_update.add(lblDrink);
 		
 		JComboBox update_drink = new JComboBox();
 		update_drink.setBackground(Color.WHITE);
 		
 		update_drink.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		update_drink.setBounds(12, 305, 196, 35);
+		update_drink.setBounds(12, 379, 196, 35);
 		panel_update.add(update_drink);
 		
 		sec = new JTextField();
 		sec.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		sec.setBounds(408, 309, 196, 35);
+		sec.setBounds(462, 311, 196, 35);
 		panel_update.add(sec);
 		sec.setColumns(10);
 		
 		JLabel label_7 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\edit.png"));
-		label_7.setBounds(284, 388, 91, 66);
+		label_7.setBounds(276, 645, 91, 66);
 		panel_update.add(label_7);
 		
 		JLabel lblNewLabel_7 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\remove.png"));
-		lblNewLabel_7.setBounds(483, 388, 91, 66);
+		lblNewLabel_7.setBounds(489, 645, 91, 66);
 		panel_update.add(lblNewLabel_7);
 		
-		
-		
+		JLabel lblSelectNewImage = new JLabel("Select Image:");
+		lblSelectNewImage.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblSelectNewImage.setBounds(251, 360, 189, 40);
+		panel_update.add(lblSelectNewImage);
+			
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
@@ -1521,7 +1628,7 @@ public class Manager extends JFrame {
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement(); 
 			        
-			        String s = "Select Product_Code, Name, Price, Description, Section, Alergy from fast_food.product WHERE Section = 'Drink' and Name = ?";
+			        String s = "Select Product_Code, Name, Price, Description, Section, Alergy, Image from fast_food.product WHERE Section = 'Drink' and Name = ?";
 			        PreparedStatement pst = conn.prepareStatement(s);
 			        pst.setString(1, (String)update_drink.getSelectedItem());
 			        java.sql.ResultSet rs=pst.executeQuery();
@@ -1535,6 +1642,14 @@ public class Manager extends JFrame {
 			        		update_descripIn.setText(rs.getString("Description"));
 			        		update_alergyIn.setText(rs.getString("Alergy"));
 			        		sec.setText(rs.getString("Section"));
+			        		
+			        		byte[] img = rs.getBytes("Image");
+		                    //Resize The ImageIcon
+		                    ImageIcon image = new ImageIcon(img);
+		                    Image im = image.getImage();
+		                    Image myImg = im.getScaledInstance(image_update.getWidth(), image_update.getHeight(),Image.SCALE_SMOOTH);
+		                    ImageIcon newImage = new ImageIcon(myImg);
+		                    image_update.setIcon(newImage);
 			        	}
 			        	
 			        	pst.close();
@@ -1544,7 +1659,7 @@ public class Manager extends JFrame {
 							System.out.print(e1);
 						}
 						
-				
+			
 			}
 		});
 		
@@ -1558,25 +1673,25 @@ public class Manager extends JFrame {
 
 		
 		JLabel user_email = new JLabel("Email:");
-		user_email.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		user_email.setBounds(273, 169, 105, 26);
+		user_email.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		user_email.setBounds(273, 192, 105, 26);
 		panel_user.add(user_email);
 		
 		JLabel user_pass = new JLabel("Password:");
-		user_pass.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		user_pass.setBounds(273, 244, 105, 28);
+		user_pass.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		user_pass.setBounds(273, 273, 142, 28);
 		panel_user.add(user_pass);
 		
 		user_emailIn = new JTextField();
 		user_emailIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		user_emailIn.setBounds(409, 165, 196, 35);
+		user_emailIn.setBounds(432, 192, 196, 35);
 		panel_user.add(user_emailIn);
 		user_emailIn.setColumns(10);
 		user_emailIn.setText(null);
 		
 		user_passwordIn = new JPasswordField();
 		user_passwordIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		user_passwordIn.setBounds(409, 241, 196, 35);
+		user_passwordIn.setBounds(432, 274, 196, 35);
 		panel_user.add(user_passwordIn);
 		user_passwordIn.setText(null);
 
@@ -1630,7 +1745,8 @@ public class Manager extends JFrame {
 			        	
 			        	ps.execute();
   			            JOptionPane.showMessageDialog(null, "User was Registered as Admin","User Added", JOptionPane.INFORMATION_MESSAGE);
-				
+  			          user_emailIn.setText(null);
+ 			          user_passwordIn.setText(null);
 			        		/*
 			        //	try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM manager where Email = ? and Password = ?"))
 			        			{
@@ -1668,35 +1784,37 @@ public class Manager extends JFrame {
 				
 			}
 		});
-		user_OK.setFont(new Font("Open Sans", Font.BOLD, 20));
-		user_OK.setBounds(256, 390, 178, 42);
+		user_OK.setFont(new Font("Open Sans", Font.BOLD, 30));
+		user_OK.setBounds(256, 390, 221, 42);
 		panel_user.add(user_OK);
 		
 		JLabel lblInsertNewUser = new JLabel("Insert New User Details");
 		lblInsertNewUser.setForeground(new Color(220, 69, 69));
-		lblInsertNewUser.setFont(new Font("Open Sans", Font.BOLD | Font.ITALIC, 50));
+		lblInsertNewUser.setFont(new Font("Open Sans", Font.BOLD | Font.ITALIC, 60));
 		lblInsertNewUser.setHorizontalAlignment(SwingConstants.CENTER);
-		lblInsertNewUser.setBounds(135, 52, 730, 42);
+		lblInsertNewUser.setBounds(135, 52, 742, 54);
 		panel_user.add(lblInsertNewUser);
 		
 		JButton btnCancel_2 = new JButton("Cancel");
 		btnCancel_2.setBorderPainted(false);
 		btnCancel_2.setContentAreaFilled(false);
-		btnCancel_2.setFont(new Font("Open Sans", Font.BOLD, 20));
+		btnCancel_2.setFont(new Font("Open Sans", Font.BOLD, 30));
 		btnCancel_2.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
 				panel_update.setVisible(false);
 				panelChoose.setVisible(true);
+				user_emailIn.setText(null);
+		          user_passwordIn.setText(null);
 			}
 		});
-		btnCancel_2.setBounds(512, 390, 159, 42);
+		btnCancel_2.setBounds(520, 390, 168, 42);
 		panel_user.add(btnCancel_2);
 		
 		
 		JButton btnViewUsers = new JButton("View Users");
-		btnViewUsers.setFont(new Font("Open Sans", Font.BOLD, 20));
+		btnViewUsers.setFont(new Font("Open Sans", Font.BOLD, 30));
 		btnViewUsers.setBorderPainted(false);
 		btnViewUsers.setContentAreaFilled(false);
 		
@@ -1709,11 +1827,11 @@ public class Manager extends JFrame {
 				view.main(null);
 			}
 		});
-		btnViewUsers.setBounds(796, 390, 196, 42);
+		btnViewUsers.setBounds(380, 476, 213, 42);
 		panel_user.add(btnViewUsers);
 		
 		JLabel label_8 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\newuser.png"));
-		label_8.setBounds(239, 377, 56, 72);
+		label_8.setBounds(230, 377, 56, 72);
 		panel_user.add(label_8);
 		
 		JLabel label_9 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\remove.png"));
@@ -1721,7 +1839,7 @@ public class Manager extends JFrame {
 		panel_user.add(label_9);
 		
 		JLabel label_10 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\list.png"));
-		label_10.setBounds(749, 379, 105, 75);
+		label_10.setBounds(311, 460, 105, 75);
 		panel_user.add(label_10);
 		
 	
