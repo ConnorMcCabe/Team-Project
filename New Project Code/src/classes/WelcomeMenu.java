@@ -86,21 +86,6 @@ public class WelcomeMenu {
 		btnAdmin.setBounds(37, 552, 192, 53);
 		panel.add(btnAdmin);
 		
-		JButton btnKitchenStaff = new JButton("Kitchen Staff");
-		btnKitchenStaff.setContentAreaFilled(false);
-		btnKitchenStaff.setBorderPainted(false);
-		btnKitchenStaff.setFont(new Font("Open Sans", Font.BOLD, 20));
-		btnKitchenStaff.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent e) 
-			{
-				KitchenStaff kitchenStaff = new KitchenStaff();
-				kitchenStaff.main(null);
-			}
-		});
-		btnKitchenStaff.setBounds(37, 552, 1500, 53);
-		panel.add(btnKitchenStaff);
-		
 		JLabel label_logo = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
 		label_logo.setBounds(290, 157, 431, 245);
 		panel.add(label_logo);
