@@ -471,7 +471,7 @@ public class GUI {
 				
 				
 
-				Double fprice = Double.parseDouble(( PriceBox).getText());
+				Double sprice = Double.parseDouble(( PriceBox).getText());
 				String fname = name.getText();
 				
 				Integer fQuan = (Integer)spinner.getValue();
@@ -481,6 +481,7 @@ public class GUI {
 				int rowss = OrderSummary.getRowCount();
 				int cols = OrderSummary.getColumnCount();
 				
+				double fprice = sprice * fQuan;
 				
 				dtm.addRow(new Object[]{fname, fQuan, fprice});
 				
