@@ -453,7 +453,8 @@ public class GUI {
 				}
 			        
 			    
-				String res = Double.toString(total);
+				String res = String.format("%.2f", total);
+
 				
 				System.out.print(res);
 				
@@ -689,6 +690,16 @@ public class GUI {
 	JLabel label_3 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\bin.png"));
 	label_3.setBounds(1005, 674, 93, 69);
 	frmMenu.getContentPane().add(label_3);
+	
+	JLabel lblNewLabel_1 = new JLabel("\u20AC");
+	lblNewLabel_1.setFont(new Font("Open Sans Semibold", Font.BOLD, 35));
+	lblNewLabel_1.setBounds(398, 680, 36, 40);
+	frmMenu.getContentPane().add(lblNewLabel_1);
+		
+	JLabel label_4 = new JLabel("\u20AC");
+	label_4.setFont(new Font("Open Sans Semibold", Font.BOLD, 35));
+	label_4.setBounds(942, 573, 36, 40);
+	frmMenu.getContentPane().add(label_4);
 	
 	
 	
