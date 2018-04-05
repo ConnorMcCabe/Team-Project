@@ -448,6 +448,34 @@ public class GUI {
 		ConfirmBtn.setBorderPainted(false);
 		ConfirmBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try 
+				{
+			    	Class.forName("com.mysql.jdbc.Driver");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+			        java.sql.ResultSet rs;
+			        
+			        String s = "INSERT INTO fast_food.Order_Item (Product_Name, Quanity, Total_Price) VALUES(?,?,?)";
+			        PreparedStatement pst = conn.prepareStatement(s);
+			        
+			        for(int r=0; r<OrderSummary.getRowCount(); r++)
+			        {
+			        	String name = (String)OrderSummary.getValueAt(r, 0);
+			        	int quan = (Integer)OrderSummary.getValueAt(r, 1);
+			        	double price = Double.parseDouble(FinalPrice.getText());
+			        	
+			        	pst.setString(1, name);
+			        	pst.setInt(2, quan);
+			        	pst.setDouble(3,price);
+			        	
+			        	pst.addBatch();
+			        }
+			        pst.executeBatch();
+			        conn.commit();
+				}
+				catch(Exception e5)
+				{
+					System.out.print(e5);
+				}
 			}
 		});
 		ConfirmBtn.setBounds(1122, 622, 225, 40);
