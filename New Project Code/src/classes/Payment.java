@@ -26,19 +26,21 @@ import javax.swing.UIManager;
 
 import org.jcp.xml.dsig.internal.dom.DOMUtils;
 
+import com.sun.glass.events.KeyEvent;
+
 import net.proteanit.sql.DbUtils;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import java.awt.event.KeyAdapter;
 
 
-public class Payment {
+public class Payment extends JFrame {
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField payment_numberIn;
+	private JTextField payment_ccvIn;
 	
 	//VARIABLES FOR DATABSE CONNECTION
 	private String url = "jdbc:mysql://localhost:3306/";
@@ -87,7 +89,7 @@ public class Payment {
 		
 		JLabel lblPleaseEnterCard = new JLabel("Please Enter Card Details");
 		lblPleaseEnterCard.setFont(new Font("Open Sans", Font.BOLD | Font.ITALIC, 50));
-		lblPleaseEnterCard.setBounds(0, 13, 929, 151);
+		lblPleaseEnterCard.setBounds(24, 13, 929, 151);
 		frame.getContentPane().add(lblPleaseEnterCard);
 		
 		JLabel lblCardType = new JLabel("Card Type:");
@@ -95,55 +97,157 @@ public class Payment {
 		lblCardType.setBounds(271, 231, 116, 28);
 		frame.getContentPane().add(lblCardType);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBackground(Color.WHITE);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Visa ", "Mastercard"}));
-		comboBox.setFont(new Font("Open Sans", Font.BOLD, 20));
-		comboBox.setBounds(501, 228, 175, 34);
-		frame.getContentPane().add(comboBox);
+		JComboBox payment_cardIn = new JComboBox();
+		payment_cardIn.setBackground(Color.WHITE);
+		payment_cardIn.setModel(new DefaultComboBoxModel(new String[] {"","Visa ", "Mastercard"}));
+		payment_cardIn.setFont(new Font("Open Sans", Font.BOLD, 20));
+		payment_cardIn.setBounds(529, 228, 204, 34);
+		frame.getContentPane().add(payment_cardIn);
 		
 		JLabel lblNumber = new JLabel("Number:");
 		lblNumber.setFont(new Font("Open Sans", Font.BOLD, 20));
 		lblNumber.setBounds(271, 286, 116, 28);
 		frame.getContentPane().add(lblNumber);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		textField.setBounds(501, 284, 175, 34);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		payment_numberIn = new JTextField();
+		payment_numberIn.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(java.awt.event.KeyEvent e) 
+			{
+				char vchar = e.getKeyChar();
+				if(!(Character.isDigit(vchar)) 
+						|| (vchar == KeyEvent.VK_BACKSPACE)
+                         || (vchar == KeyEvent.VK_DELETE)) 
+						{
+                    e.consume();
+                    
+						}
+                    
+                   //JOptionPane.showMessageDialog(null, "NO LETTERS, NUMBERS ONLY","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+                  
+                    else if(payment_numberIn.getText().length() >= 15 )
+                    {
+						 JOptionPane.showMessageDialog(null, "NO MORE THAN 16 DIGITS","WARNING", JOptionPane.WARNING_MESSAGE);
+
+                    }
+		
+			}});
+		payment_numberIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
+		payment_numberIn.setBounds(529, 284, 204, 34);
+		frame.getContentPane().add(payment_numberIn);
+		payment_numberIn.setColumns(10);
 		
 		JLabel lblCsv = new JLabel("CCV:");
 		lblCsv.setFont(new Font("Open Sans", Font.BOLD, 20));
 		lblCsv.setBounds(271, 340, 94, 34);
 		frame.getContentPane().add(lblCsv);
 		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		textField_1.setBounds(501, 341, 83, 34);
-		frame.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		payment_ccvIn = new JTextField();
+		payment_ccvIn.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(java.awt.event.KeyEvent e) 
+			{
+				char vchar = e.getKeyChar();
+				if(!(Character.isDigit(vchar)) 
+						|| (vchar == KeyEvent.VK_BACKSPACE)
+                         || (vchar == KeyEvent.VK_DELETE)) 
+						{
+                    e.consume();
+                    
+						}
+                    
+                   //JOptionPane.showMessageDialog(null, "NO LETTERS, NUMBERS ONLY","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+                  
+                    else if(payment_ccvIn.getText().length() >= 3)
+                    {
+                    	 e.consume(); 
+						 JOptionPane.showMessageDialog(null, "NO MORE THAN 3 DIGITS","WARNING", JOptionPane.WARNING_MESSAGE);
+				         e.consume(); 
+
+                    }
+			}
+		});
+		payment_ccvIn.setToolTipText("3 DIGIT CODE AT THE BACK OF THE CARD");
+		payment_ccvIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
+		payment_ccvIn.setBounds(529, 341, 83, 34);
+		frame.getContentPane().add(payment_ccvIn);
+		payment_ccvIn.setColumns(10);
 		
-		JLabel lblEx = new JLabel("Expiry Date (MM/YY):");
+		JLabel lblEx = new JLabel("Expiry Date (MMM/YY):");
 		lblEx.setFont(new Font("Open Sans", Font.BOLD, 20));
-		lblEx.setBounds(271, 397, 212, 34);
+		lblEx.setBounds(271, 397, 231, 34);
 		frame.getContentPane().add(lblEx);
 		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		textField_2.setBounds(501, 398, 83, 34);
-		frame.getContentPane().add(textField_2);
-		textField_2.setColumns(10);
+		JLabel lblNewLabel = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\pay.png"));
+		lblNewLabel.setBounds(479, 485, 105, 78);
+		frame.getContentPane().add(lblNewLabel);
 		
-		JButton btnConfirm = new JButton("Confirm");
+		JLabel lblNewLabel_1 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\remove.png"));
+		lblNewLabel_1.setBounds(241, 485, 83, 64);
+		frame.getContentPane().add(lblNewLabel_1);
+		
+		JComboBox payment_monthIn = new JComboBox();
+		payment_monthIn.setModel(new DefaultComboBoxModel(new String[] {"", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dev"}));
+		payment_monthIn.setBackground(Color.WHITE);
+		payment_monthIn.setFont(new Font("Open Sans", Font.BOLD, 19));
+		payment_monthIn.setBounds(529, 388, 83, 34);
+		frame.getContentPane().add(payment_monthIn);
+		
+		JComboBox payment_yearIn = new JComboBox();
+		payment_yearIn.setModel(new DefaultComboBoxModel(new String[] {"", "18", "19", "20", "21", "22"}));
+		payment_yearIn.setBackground(Color.WHITE);
+		payment_yearIn.setFont(new Font("Open Sans", Font.BOLD, 19));
+		payment_yearIn.setBounds(624, 388, 83, 34);
+		frame.getContentPane().add(payment_yearIn);
+		
+		
+		
+		JButton btnConfirm = new JButton("Pay");
+	
 		btnConfirm.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				
-			}
+				   try 
+				   {
+					   String cardIn = (String)payment_cardIn.getSelectedItem();
+					   String numberIn = payment_numberIn.getText();
+					   String ccvIn = payment_ccvIn.getText();
+					   String monthIn = (String)payment_monthIn.getSelectedItem();
+					   String yearIn = (String)payment_yearIn.getSelectedItem();
+					   
+					   
+					   if(e.getSource() == btnConfirm && numberIn.equals("") || ccvIn.equals("") || ccvIn.equals("") || monthIn.equals("") || yearIn.equals(""))
+						 {
+
+							 JOptionPane.showMessageDialog(null, "Cannot be left blank, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+						 }
+					   
+					   else if(e.getSource() == btnConfirm && cardIn == "Visa" || numberIn.contains("4319"))
+					   {
+							 JOptionPane.showMessageDialog(null, "Thank You", "Enjoy ", JOptionPane.ERROR_MESSAGE);
+
+					   }
+					   
+					   else if(e.getSource() == btnConfirm && cardIn == "Visa" || !numberIn.contains("4319"))
+					   {
+							 JOptionPane.showMessageDialog(null, "INVALID CARD", "TRY AGAIN ", JOptionPane.ERROR_MESSAGE);
+
+					   }
+					   
+					   
+					  
+
+				   }catch(Exception ee) 
+					
+				   {
+
+					   	System.out.println(ee);
+				
+				  }
 			
-		});
+			}});
 		btnConfirm.setContentAreaFilled(false);
 		btnConfirm.setBorderPainted(false);
 		btnConfirm.setFont(new Font("Open Sans", Font.BOLD, 20));
@@ -172,15 +276,9 @@ public class Payment {
 		btnCancel.setContentAreaFilled(false);
 		btnCancel.setBorderPainted(false);
 		btnCancel.setFont(new Font("Open Sans", Font.BOLD, 20));
-		btnCancel.setBounds(257, 497, 175, 51);
+		btnCancel.setBounds(260, 497, 175, 51);
 		frame.getContentPane().add(btnCancel);
 		
-		JLabel lblNewLabel = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\pay.png"));
-		lblNewLabel.setBounds(479, 485, 105, 78);
-		frame.getContentPane().add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\remove.png"));
-		lblNewLabel_1.setBounds(241, 485, 83, 64);
-		frame.getContentPane().add(lblNewLabel_1);
 	}
 }
