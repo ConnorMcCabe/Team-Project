@@ -21,6 +21,7 @@ import javax.swing.JTextPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import com.mysql.jdbc.Connection;
 //import com.mysql.jdbc.ResultSet;
@@ -443,6 +444,26 @@ public class GUI {
 				int sRow = OrderSummary.getSelectedRow();
 				
 				dtm.removeRow(sRow);
+				int rows = OrderSummary.getRowCount();
+				double total = 0;
+				
+				for(int i =0; i<rows; i++)
+				{
+					total=total+Double.parseDouble(OrderSummary.getValueAt(i, 2)+"");
+				}
+			        
+			    
+				String res = Double.toString(total);
+				
+				System.out.print(res);
+				
+				JTextField FinalPrice = new JTextField();
+				FinalPrice.setBounds(966, 582, 116, 27);
+				frmMenu.getContentPane().add(FinalPrice);
+				FinalPrice.setColumns(10);
+				FinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
+				FinalPrice.setEditable(false);
+			    FinalPrice.setText(res);
 			}
 		});
 		DeleteBtn.setBounds(973, 685, 294, 40);
@@ -485,7 +506,24 @@ public class GUI {
 				
 				dtm.addRow(new Object[]{fname, fQuan, fprice});
 				
+				Object[] row = new Object[2];
+				ThankYou frame = new ThankYou();
 				
+				TableModel model1 = OrderSummary.getModel();
+				
+				//DefaultTableModel dtm2 = (DefaultTableModel)ThankYou.JTable1.getModel();
+				int rs = OrderSummary.getRowCount();
+				
+				for(int i =0; i<OrderSummary.getRowCount(); i++)
+				{
+					row[0]= (String)model1.getValueAt(rs, 0);
+		        	row[1]= (Integer)model1.getValueAt(rs, 1);
+		        	row[2]= (Double)model1.getValueAt(rs, 2);
+		        	
+		        	dtm2.addRow(row);
+				}
+				
+				//ty.setVisible(true);
 				int rows = OrderSummary.getRowCount();
 				double total = 0;
 				
@@ -581,18 +619,18 @@ public class GUI {
 					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 			        java.sql.ResultSet rs;
 			        
-			        String s = "INSERT INTO fast_food.Order_Item (Product_Name, Quanity, Total_Price) VALUES(?,?,?)";
+			        String s = "INSERT INTO fast_food.Order_Item (Product_Name, Quanity) VALUES(?,?)";
 			        PreparedStatement pst = conn.prepareStatement(s);
 			        
 			        for(int r=0; r<OrderSummary.getRowCount(); r++)
 			        {
 			        	String name = (String)OrderSummary.getValueAt(r, 0);
 			        	int quan = (Integer)OrderSummary.getValueAt(r, 1);
-			        	double price = Double.parseDouble(FinalPrice.getText());
+			        	//double price = total;
 			        	
 			        	pst.setString(1, name);
 			        	pst.setInt(2, quan);
-			        	pst.setDouble(3,price);
+			        	//pst.setDouble(3,price);
 			        	
 			        	pst.addBatch();
 			        }
@@ -651,6 +689,7 @@ public class GUI {
 	JLabel label_3 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\bin.png"));
 	label_3.setBounds(1005, 674, 93, 69);
 	frmMenu.getContentPane().add(label_3);
+	
 	
 	
     
