@@ -69,9 +69,9 @@ public class KitchenStaff {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 ///////////////// ORDER NUMBER COMBO BOX /////////////////////////////////////////////////////	
+		JLabel NumberLabel = new JLabel("Order Number");
 		JComboBox OrderNum = new JComboBox();
-		//OrderNum.setModel(new DefaultComboBoxModel(new String[] {"", "1", "2", "3", "4", "5"}));
-		OrderNum.setModel(new DefaultComboBoxModel(new String[] {"Select Order Num"}));
+		OrderNum.setModel(new DefaultComboBoxModel(new String[] {"Select Order"}));
 		try
 		{
 			java.sql.ResultSet rs;
@@ -85,18 +85,18 @@ public class KitchenStaff {
 			{
 				OrderNum.addItem(rs.getString(1));
 			}
+			
+			
 		}
 			catch (Exception x2)
 			{
 				System.out.print(x2);
 				JOptionPane.showMessageDialog(null, "Error");
-			}
-		JLabel NumberLabel = new JLabel("Order Number");
-		
+			}		
+///////////////////// ORDER STATUS COMBO BOX ////////////////////////////////////////////////	
 		JLabel StatusLabel = new JLabel("Order Status");
-///////////////////// ORDER STATUS COMBO BOX ////////////////////////////////////////////////		
 		JComboBox<String> OrderStatus = new JComboBox<String>();
-		OrderStatus.setModel(new DefaultComboBoxModel(new String[] {"Select Order Status", "True", "False"}));
+		OrderStatus.setModel(new DefaultComboBoxModel(new String[] {"Select Order Status", "Ready", "Not Ready"}));
 		try
 		{
 			java.sql.ResultSet rs;
@@ -113,8 +113,8 @@ public class KitchenStaff {
 				JOptionPane.showMessageDialog(null, "Error");
 			}
 ////////////////////// VIEW ORDER BUTTON ///////////////////////////////////////////////////////////////////////
-		JButton ViewOrder = new JButton("View Order");
-		ViewOrder.addActionListener(new ActionListener() {
+		JButton AccessOrders = new JButton("Access Orders");
+		AccessOrders.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				OrderNum.addActionListener(new ActionListener()
 				{
@@ -163,7 +163,7 @@ public class KitchenStaff {
 				try{
 					Class.forName("com.mysql.jdbc.Driver");
 					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
-					String query="Select * from Fast_Food.order where Order_Status = 'False'";
+					String query="Select * from Fast_Food.order where Order_Status = 'Not Ready'";
 					
 					PreparedStatement pst = conn.prepareStatement(query);
 							ResultSet rs = pst.executeQuery();
@@ -192,13 +192,14 @@ public class KitchenStaff {
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(21)
 									.addComponent(NumberLabel))
+								.addComponent(LoadTableButton))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(LoadTableButton)))
-							.addGap(13)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(SetStatus))
+									.addGap(39)
+									.addComponent(SetStatus))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(13)
+									.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 							.addGap(34)
 							.addComponent(StatusLabel)
 							.addGap(18)
@@ -207,7 +208,7 @@ public class KitchenStaff {
 							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(ViewOrder, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE))
+						.addComponent(AccessOrders, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE))
 					.addGap(173))
 		);
 		groupLayout.setVerticalGroup(
@@ -215,7 +216,7 @@ public class KitchenStaff {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap(108, Short.MAX_VALUE)
+							.addContainerGap(116, Short.MAX_VALUE)
 							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(123))
 						.addGroup(groupLayout.createSequentialGroup()
@@ -225,9 +226,9 @@ public class KitchenStaff {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(SetStatus)
 						.addComponent(LoadTableButton))
-					.addGap(10)
-					.addComponent(ViewOrder)
-					.addGap(18)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(AccessOrders)
+					.addGap(17)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(NumberLabel)
 						.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
