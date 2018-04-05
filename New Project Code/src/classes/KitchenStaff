@@ -11,7 +11,6 @@ import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JList;
@@ -20,13 +19,14 @@ import java.awt.GridLayout;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.LayoutStyle.ComponentPlacement;
-
 import net.proteanit.sql.DbUtils;
-
 import javax.swing.JLabel;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
+import java.awt.Button;
+import javax.swing.JScrollPane;
 
 public class KitchenStaff {
 	Connection conn = null;
@@ -34,7 +34,7 @@ public class KitchenStaff {
 	PreparedStatement pst = null;
 	private JFrame frame;
 	private JTable table;
-
+	JButton HideAllButton = new JButton("Hide All untrue");
 	/**
 	 * Launch the application.
 	 */
@@ -57,6 +57,7 @@ public class KitchenStaff {
 	public KitchenStaff() {
 		initialize();
 		conn = ConnectionDB.connectDB();
+		
 	}
 
 	/**
@@ -64,83 +65,13 @@ public class KitchenStaff {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 659, 385);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-			},
-			new String[] {
-				"Product Code", "Name", "Price", "Description", "Section"
-			}
-		));
-		
-		
+///////////////// ORDER NUMBER COMBO BOX /////////////////////////////////////////////////////	
 		JComboBox OrderNum = new JComboBox();
-		OrderNum.setModel(new DefaultComboBoxModel(new String[] {"", "1", "2", "3", "4", "5"}));
-		
-		JLabel NumberLabel = new JLabel("Order Status");
-		
-		JLabel StatusLabel = new JLabel("Order Number");
-		
-		JButton btnNewButton = new JButton("Viewing");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					String sql = "Select * from fast_food.product";
-					pst = conn.prepareStatement(sql);
-					rs = pst.executeQuery();
-					table.setModel(DbUtils.resultSetToTableModel(rs));
-				}catch(Exception e) {
-					JOptionPane.showMessageDialog(null, e);
-				}
-			}
-		});
-		
-		JButton btnNewButton_1 = new JButton("Hiding");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					String sql = "Select * from fast_food.product where section <> 'drink' ";
-					pst = conn.prepareStatement(sql);
-					rs = pst.executeQuery();
-					table.setModel(DbUtils.resultSetToTableModel(rs));
-				}catch(Exception e) {
-					JOptionPane.showMessageDialog(null, e);
-				}
-			}
-		});
-		
-		JComboBox<String> OrderStatus = new JComboBox<String>();
-		//OrderStatus.setModel(new DefaultComboBoxModel(new String[] {"", "Drink", "True", "False"}));
-
-		OrderStatus.setModel(new DefaultComboBoxModel(new String[] {"Select Type"}));
+		//OrderNum.setModel(new DefaultComboBoxModel(new String[] {"", "1", "2", "3", "4", "5"}));
+		OrderNum.setModel(new DefaultComboBoxModel(new String[] {"Select Order Num"}));
 		try
 		{
 			java.sql.ResultSet rs;
@@ -148,11 +79,11 @@ public class KitchenStaff {
 			Class.forName("com.mysql.jdbc.Driver");
 			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 			st = conn.createStatement();
-			String s = "Select Name from fast_food.product WHERE Section = 'Drink';";
+			String s = "Select Order_Number from fast_food.order;";
 			rs = st.executeQuery(s);
 			while(rs.next())
 			{
-				OrderStatus.addItem(rs.getString(1));
+				OrderNum.addItem(rs.getString(1));
 			}
 		}
 			catch (Exception x2)
@@ -160,98 +91,163 @@ public class KitchenStaff {
 				System.out.print(x2);
 				JOptionPane.showMessageDialog(null, "Error");
 			}
+		JLabel NumberLabel = new JLabel("Order Number");
 		
-		JButton btnNonFunction = new JButton("Non Function");
-		OrderStatus.addActionListener(new ActionListener()
+		JLabel StatusLabel = new JLabel("Order Status");
+///////////////////// ORDER STATUS COMBO BOX ////////////////////////////////////////////////		
+		JComboBox<String> OrderStatus = new JComboBox<String>();
+		OrderStatus.setModel(new DefaultComboBoxModel(new String[] {"Select Order Status", "True", "False"}));
+		try
 		{
-		    public void actionPerformed(ActionEvent arg0) {
-		    	try {
-		    	Class.forName("com.mysql.jdbc.Driver");
-				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
-		        	String s = "Select * from fast_food.product WHERE Section = 'Drink' and Name <> ?";
-		        	PreparedStatement pst = conn.prepareStatement(s);
-		        	pst.setString(1, (String)OrderStatus.getSelectedItem());
-		        	java.sql.ResultSet rs=pst.executeQuery();
-		        	table.setModel(DbUtils.resultSetToTableModel(rs));
-		        
-		        	pst.close();
-					} catch (SQLException | ClassNotFoundException e1) 
-		    	{						
-						System.out.print(e1);
-					}					
-		        }
-		    });
-//		btnNonFunction.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				try {
-//					String sql = "Select * from fast_food.product where Section NOT = ?";
-//					PreparedStatement pst = conn.prepareStatement(sql);
-//					pst.setString(1, (String)OrderStatus.getSelectedItem());
-//		        	java.sql.ResultSet rs=pst.executeQuery();
-//					pst = conn.prepareStatement(sql);
-//					rs = pst.executeQuery();
-//					pst.close();
-//				}catch(Exception e) {
-//					JOptionPane.showMessageDialog(null, e);
-//				}
-//			}
-//		});
+			java.sql.ResultSet rs;
+			java.sql.Statement st;
+			Class.forName("com.mysql.jdbc.Driver");
+			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+			st = conn.createStatement();
+			String s = "Select Order_Status from fast_food.order;";
+			rs = st.executeQuery(s);
+		}
+			catch (Exception x2)
+			{
+				System.out.print(x2);
+				JOptionPane.showMessageDialog(null, "Error");
+			}
+////////////////////// VIEW ORDER BUTTON ///////////////////////////////////////////////////////////////////////
+		JButton ViewOrder = new JButton("View Order");
+		ViewOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				OrderNum.addActionListener(new ActionListener()
+				{
+				    public void actionPerformed(ActionEvent arg0) {
+				    	try {
+				    	Class.forName("com.mysql.jdbc.Driver");
+						java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+				        	String s = "Select * from fast_food.order WHERE Order_Number = ?";
+				        	PreparedStatement pst = conn.prepareStatement(s);
+				        	pst.setString(1, (String)OrderNum.getSelectedItem());
+				        	java.sql.ResultSet rs=pst.executeQuery();
+				        	table.setModel(DbUtils.resultSetToTableModel(rs));				        
+				        	pst.close();
+							} catch (SQLException | ClassNotFoundException e1) 
+				    	{						
+								System.out.print(e1);
+							}					
+				        }
+				    });
+			}
+		});
+//////////////////////////// SET STATUS BUTTON //////////////////////////////////////////////////////		
+		JButton SetStatus = new JButton("Set Status");
+		SetStatus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					
+					String s = "UPDATE Fast_Food.order SET Order_Status = ? where Order_Number=?";
+					PreparedStatement pst = conn.prepareStatement(s);
+					pst.setString(1, (String)OrderStatus.getSelectedItem());
+					pst.setString(2, (String)OrderNum.getSelectedItem());
+		        	int rs=pst.executeUpdate();
+					pst = conn.prepareStatement(s);
+					rs = pst.executeUpdate();
+					pst.close();
+
+				}catch(SQLException e1) {
+					System.out.print("");
+				}
+			}
+		});
+///////////////////////// Load Table Button ////////////////////////////////////////////////////////	
+		JButton LoadTableButton = new JButton("Load Table");
+		LoadTableButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+					String query="Select * from Fast_Food.order where Order_Status = 'False'";
+					
+					PreparedStatement pst = conn.prepareStatement(query);
+							ResultSet rs = pst.executeQuery();
+					table.setModel(DbUtils.resultSetToTableModel(rs));
+					
+					pst.close();
+					rs.close();				
+				}catch(Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		});
 		
+		JScrollPane scrollPane = new JScrollPane();	
+		JScrollPane scrollPane_1 = new JScrollPane();
+
+/////////////////////GROUP LAYOUT////////////////////////////////////////////////////////////////
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-							.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-								.addContainerGap(51, Short.MAX_VALUE)
-								.addComponent(NumberLabel)
-								.addPreferredGap(ComponentPlacement.RELATED))
-							.addGroup(groupLayout.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-									.addComponent(btnNewButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
-									.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
-								.addPreferredGap(ComponentPlacement.RELATED)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(btnNonFunction)
-							.addPreferredGap(ComponentPlacement.UNRELATED)))
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(table, GroupLayout.PREFERRED_SIZE, 282, GroupLayout.PREFERRED_SIZE))
-					.addGap(45))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(341, Short.MAX_VALUE)
-					.addComponent(StatusLabel)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-		);
-		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnNonFunction)
-							.addGap(45)
-							.addComponent(btnNewButton_1)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton)
-							.addGap(51))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(table, GroupLayout.PREFERRED_SIZE, 224, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(NumberLabel))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(21)
+									.addComponent(NumberLabel))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(LoadTableButton)))
+							.addGap(13)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(StatusLabel)))))
+								.addComponent(SetStatus))
+							.addGap(34)
+							.addComponent(StatusLabel)
+							.addGap(18)
+							.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(ViewOrder, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE))
+					.addGap(173))
 		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap(108, Short.MAX_VALUE)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(123))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(52)
+							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(SetStatus)
+						.addComponent(LoadTableButton))
+					.addGap(10)
+					.addComponent(ViewOrder)
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(NumberLabel)
+						.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(StatusLabel)
+						.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		
+		table = new JTable();
+		scrollPane_1.setViewportView(table);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null},
+			},
+			new String[] {
+				"Order_Number", "Total_Cost", "Time", "Date", "Paid", "Order_Status"
+			}
+		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(89);
+		table.getColumnModel().getColumn(5).setPreferredWidth(79);
 		frame.getContentPane().setLayout(groupLayout);
 	}
 }
