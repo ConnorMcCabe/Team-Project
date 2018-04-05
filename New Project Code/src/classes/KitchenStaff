@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,6 +28,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import java.awt.Button;
 import javax.swing.JScrollPane;
+import java.awt.Font;
 
 public class KitchenStaff {
 	Connection conn = null;
@@ -56,7 +58,6 @@ public class KitchenStaff {
 	public KitchenStaff() {
 		initialize();
 		conn = ConnectionDB.connectDB();
-
 	}
 
 	/**
@@ -64,14 +65,21 @@ public class KitchenStaff {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 659, 385);
+		//frame.setBounds(100, 100, 659, 385);
+		frame.setBounds(100, 100, 950, 550);
+		frame.getContentPane().setBackground(new Color(115, 168, 100));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
 ///////////////////// ORDER STATUS COMBO BOX ////////////////////////////////////////////////	
 		JLabel StatusLabel = new JLabel("Order Status");
+		StatusLabel.setForeground(new Color(0, 0, 0));
+		StatusLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		JComboBox<String> OrderStatus = new JComboBox<String>();
-		OrderStatus.setModel(new DefaultComboBoxModel(new String[] {"Select Order Status", "Ready", "Not Ready"}));
+		OrderStatus.setForeground(new Color(0, 0, 0));
+		OrderStatus.setBackground(new Color(255, 255, 102));
+		OrderStatus.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		OrderStatus.setModel(new DefaultComboBoxModel(new String[] {"Not Ready", "Ready"}));
 		try
 		{
 			java.sql.ResultSet rs;
@@ -90,7 +98,12 @@ public class KitchenStaff {
 
 ///////////////// ORDER NUMBER COMBO BOX /////////////////////////////////////////////////////	
 		JLabel NumberLabel = new JLabel("Order Number");
+		NumberLabel.setForeground(new Color(0, 0, 0));
+		NumberLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		JComboBox<String> OrderNum = new JComboBox();
+		OrderNum.setForeground(new Color(0, 0, 0));
+		OrderNum.setBackground(new Color(255, 255, 102));
+		OrderNum.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		OrderNum.setModel(new DefaultComboBoxModel(new String[] {"Select Order"}));
 		try
 		{
@@ -132,6 +145,9 @@ public class KitchenStaff {
 
 //////////////////////////// SET STATUS BUTTON //////////////////////////////////////////////////////		
 		JButton SetStatus = new JButton("Set Status");
+		SetStatus.setForeground(new Color(0, 0, 0));
+		SetStatus.setBackground(new Color(255, 255, 102));
+		SetStatus.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		SetStatus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -150,6 +166,9 @@ public class KitchenStaff {
 		});
 /////////////////////////////////// Load Table Button ////////////////////////////////////////////////////////	
 		JButton LoadTableButton = new JButton("Load Table");
+		LoadTableButton.setForeground(new Color(0, 0, 0));
+		LoadTableButton.setBackground(new Color(255, 255, 102));
+		LoadTableButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		LoadTableButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
@@ -168,66 +187,76 @@ public class KitchenStaff {
 				}
 			}
 		});
-
-		JScrollPane scrollPane = new JScrollPane();	
 		JScrollPane scrollPane_1 = new JScrollPane();
+////////////////////////////// DISPLAY ORDER ITEM //////////////////////////////////////////////////////////		
+		JButton DisplayOrderItem = new JButton("Display Order Criteria");
+		DisplayOrderItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+//					String query="Select Name from Fast_Food.product where Product_Code = 10";//= fast_food.order_item.Product_Code and where order_item.Order_Number = 1";
+					//String query="Select Product_Name from order_item where Order_Number = 2";//= fast_food.order_item.Product_Code and where order_item.Order_Number = 1";
+					String query = "Select * from fast_food.order_item WHERE Order_Number = ?";
+					PreparedStatement pst = conn.prepareStatement(query);
+		        	pst.setString(1, (String)OrderNum.getSelectedItem());
+		        	java.sql.ResultSet rs=pst.executeQuery();
+		        	table.setModel(DbUtils.resultSetToTableModel(rs));				        
+		        	pst.close();
+					} catch (SQLException | ClassNotFoundException e1) 
+		    	{						
+						System.out.print(e1);
+					}					
+		        }
+		    });
+		DisplayOrderItem.setForeground(Color.BLACK);
+		DisplayOrderItem.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		DisplayOrderItem.setBackground(new Color(255, 255, 102));
 //////////////////////////////GROUP LAYOUT////////////////////////////////////////////////////////////////
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(21)
-									.addComponent(NumberLabel))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(10)
-									.addComponent(LoadTableButton)))
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(39)
-									.addComponent(SetStatus))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(13)
-									.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-							.addGap(34)
-							.addComponent(StatusLabel)
-							.addGap(18)
-							.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 564, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(173))
+							.addGap(20)
+							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 910, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(179)
+							.addComponent(LoadTableButton, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
+							.addGap(108)
+							.addComponent(DisplayOrderItem)
+							.addGap(126)
+							.addComponent(SetStatus, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(49)
+					.addComponent(NumberLabel, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
+					.addGap(140)
+					.addComponent(StatusLabel, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+					.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, 243, GroupLayout.PREFERRED_SIZE)
+					.addGap(41))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap(116, Short.MAX_VALUE)
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(123))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(52)
-							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(SetStatus)
-							.addGap(51)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(NumberLabel)
-								.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(StatusLabel)
-								.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(LoadTableButton)))
-					.addContainerGap())
+					.addContainerGap()
+					.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
+					.addGap(77)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(LoadTableButton, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
+						.addComponent(SetStatus, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+						.addComponent(DisplayOrderItem, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE))
+					.addGap(66)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(NumberLabel, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+						.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(StatusLabel, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+						.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addGap(236))
 		);
 
 		table = new JTable();
