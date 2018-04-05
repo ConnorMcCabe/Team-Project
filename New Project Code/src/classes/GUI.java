@@ -1,11 +1,12 @@
 
-package classes;
+package Resturaunt;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
@@ -17,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -435,6 +437,12 @@ public class GUI {
 		DeleteBtn.setFont(new Font("Open Sans", Font.BOLD, 20));
 		DeleteBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				DefaultTableModel dtm = (DefaultTableModel) OrderSummary.getModel();
+				
+				int sRow = OrderSummary.getSelectedRow();
+				
+				dtm.removeRow(sRow);
 			}
 		});
 		DeleteBtn.setBounds(973, 685, 294, 40);
@@ -442,44 +450,13 @@ public class GUI {
 		
 		
 		
-		JButton ConfirmBtn = new JButton("Confirm Order");
-		ConfirmBtn.setFont(new Font("Open Sans", Font.BOLD, 20));
-		ConfirmBtn.setContentAreaFilled(false);
-		ConfirmBtn.setBorderPainted(false);
-		ConfirmBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try 
-				{
-			    	Class.forName("com.mysql.jdbc.Driver");
-					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
-			        java.sql.ResultSet rs;
-			        
-			        String s = "INSERT INTO fast_food.Order_Item (Product_Name, Quanity, Total_Price) VALUES(?,?,?)";
-			        PreparedStatement pst = conn.prepareStatement(s);
-			        
-			        for(int r=0; r<OrderSummary.getRowCount(); r++)
-			        {
-			        	String name = (String)OrderSummary.getValueAt(r, 0);
-			        	int quan = (Integer)OrderSummary.getValueAt(r, 1);
-			        	double price = Double.parseDouble(FinalPrice.getText());
-			        	
-			        	pst.setString(1, name);
-			        	pst.setInt(2, quan);
-			        	pst.setDouble(3,price);
-			        	
-			        	pst.addBatch();
-			        }
-			        pst.executeBatch();
-			        conn.commit();
-				}
-				catch(Exception e5)
-				{
-					System.out.print(e5);
-				}
-			}
-		});
-		ConfirmBtn.setBounds(1122, 622, 225, 40);
-		frmMenu.getContentPane().add(ConfirmBtn);
+		
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(1, 1, 100, 1));
+		spinner.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		spinner.setBounds(665, 689, 63, 32);
+		frmMenu.getContentPane().add(spinner);
 		
 		JButton addBtn = new JButton("Add To Order");
 		addBtn.setContentAreaFilled(false);
@@ -493,12 +470,19 @@ public class GUI {
 			{
 				
 				
+
 				Double fprice = Double.parseDouble(( PriceBox).getText());
 				String fname = name.getText();
 				
+				Integer fQuan = (Integer)spinner.getValue();
 				
 				DefaultTableModel dtm = (DefaultTableModel) OrderSummary.getModel();
-				dtm.addRow(new Object[]{fname, 1, fprice});
+				
+				int rowss = OrderSummary.getRowCount();
+				int cols = OrderSummary.getColumnCount();
+				
+				
+				dtm.addRow(new Object[]{fname, fQuan, fprice});
 				
 				
 				int rows = OrderSummary.getRowCount();
@@ -584,7 +568,44 @@ public class GUI {
 		});
 	
 		
-//	    
+		JButton ConfirmBtn = new JButton("Confirm Order");
+		ConfirmBtn.setFont(new Font("Open Sans", Font.BOLD, 20));
+		ConfirmBtn.setContentAreaFilled(false);
+		ConfirmBtn.setBorderPainted(false);
+		ConfirmBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try 
+				{
+			    	Class.forName("com.mysql.jdbc.Driver");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+			        java.sql.ResultSet rs;
+			        
+			        String s = "INSERT INTO fast_food.Order_Item (Product_Name, Quanity, Total_Price) VALUES(?,?,?)";
+			        PreparedStatement pst = conn.prepareStatement(s);
+			        
+			        for(int r=0; r<OrderSummary.getRowCount(); r++)
+			        {
+			        	String name = (String)OrderSummary.getValueAt(r, 0);
+			        	int quan = (Integer)OrderSummary.getValueAt(r, 1);
+			        	double price = Double.parseDouble(FinalPrice.getText());
+			        	
+			        	pst.setString(1, name);
+			        	pst.setInt(2, quan);
+			        	pst.setDouble(3,price);
+			        	
+			        	pst.addBatch();
+			        }
+			        pst.executeBatch();
+			        conn.commit();
+				}
+				catch(Exception e5)
+				{
+					System.out.print(e5);
+				}
+			}
+		});
+		ConfirmBtn.setBounds(1122, 622, 225, 40);
+		frmMenu.getContentPane().add(ConfirmBtn);
 //	    JLabel FinalPrice = new JLabel();
 //    	FinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
 //    	FinalPrice.setBounds(857, 448, 127, 27);
