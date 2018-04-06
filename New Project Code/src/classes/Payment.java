@@ -110,6 +110,7 @@ public class Payment extends JFrame {
 		frame.getContentPane().add(lblNumber);
 		
 		payment_numberIn = new JTextField();
+			  
 		payment_numberIn.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(java.awt.event.KeyEvent e) 
@@ -130,8 +131,12 @@ public class Payment extends JFrame {
 						 JOptionPane.showMessageDialog(null, "NO MORE THAN 16 DIGITS","WARNING", JOptionPane.WARNING_MESSAGE);
 
                     }
+				
+                   
 		
-			}});
+			}	
+	
+});
 		payment_numberIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
 		payment_numberIn.setBounds(529, 284, 204, 34);
 		frame.getContentPane().add(payment_numberIn);
@@ -166,7 +171,11 @@ public class Payment extends JFrame {
 
                     }
 			}
+			
+
 		});
+		
+		
 		payment_ccvIn.setToolTipText("3 DIGIT CODE AT THE BACK OF THE CARD");
 		payment_ccvIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
 		payment_ccvIn.setBounds(529, 341, 83, 34);
@@ -187,14 +196,14 @@ public class Payment extends JFrame {
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		JComboBox payment_monthIn = new JComboBox();
-		payment_monthIn.setModel(new DefaultComboBoxModel(new String[] {"", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dev"}));
+		payment_monthIn.setModel(new DefaultComboBoxModel(new String[] {"", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"}));
 		payment_monthIn.setBackground(Color.WHITE);
 		payment_monthIn.setFont(new Font("Open Sans", Font.BOLD, 19));
 		payment_monthIn.setBounds(529, 388, 83, 34);
 		frame.getContentPane().add(payment_monthIn);
 		
 		JComboBox payment_yearIn = new JComboBox();
-		payment_yearIn.setModel(new DefaultComboBoxModel(new String[] {"", "18", "19", "20", "21", "22"}));
+		payment_yearIn.setModel(new DefaultComboBoxModel(new String[] {"", "18", "19", "20", "21", "22", "23", "24", "25", "26"}));
 		payment_yearIn.setBackground(Color.WHITE);
 		payment_yearIn.setFont(new Font("Open Sans", Font.BOLD, 19));
 		payment_yearIn.setBounds(624, 388, 83, 34);
@@ -217,7 +226,8 @@ public class Payment extends JFrame {
 					   String monthIn = (String)payment_monthIn.getSelectedItem();
 					   String yearIn = (String)payment_yearIn.getSelectedItem();
 					   
-					   
+					   //numberIn.getDocument().getLength();
+
 					   if(e.getSource() == btnConfirm && numberIn.equals("") || ccvIn.equals("") || ccvIn.equals("") || monthIn.equals("") || yearIn.equals(""))
 						 {
 
@@ -227,12 +237,42 @@ public class Payment extends JFrame {
 					   else if(e.getSource() == btnConfirm && cardIn == "Visa" || numberIn.contains("4319"))
 					   {
 							 JOptionPane.showMessageDialog(null, "Thank You", "Enjoy ", JOptionPane.ERROR_MESSAGE);
-
+							 payment_cardIn.setSelectedItem("");
+							 payment_numberIn.setText(null);
+							 payment_ccvIn.setText(null);
+							 payment_monthIn.setSelectedItem("");
+							 payment_yearIn.setSelectedItem("");
 					   }
 					   
 					   else if(e.getSource() == btnConfirm && cardIn == "Visa" || !numberIn.contains("4319"))
 					   {
 							 JOptionPane.showMessageDialog(null, "INVALID CARD", "TRY AGAIN ", JOptionPane.ERROR_MESSAGE);
+							 payment_cardIn.setSelectedItem("");
+							 payment_numberIn.setText(null);
+							 payment_ccvIn.setText(null);
+							 payment_monthIn.setSelectedItem("");
+							 payment_yearIn.setSelectedItem("");
+
+					   }
+					   
+					   else if(e.getSource() == btnConfirm && cardIn == "Mastercard" || numberIn.contains("5432"))
+					   {
+							 JOptionPane.showMessageDialog(null, "Thank You", "Enjoy ", JOptionPane.ERROR_MESSAGE);
+							 payment_cardIn.setSelectedItem("");
+							 payment_numberIn.setText(null);
+							 payment_ccvIn.setText(null);
+							 payment_monthIn.setSelectedItem("");
+							 payment_yearIn.setSelectedItem("");
+					   }
+					   
+					   else if(e.getSource() == btnConfirm && cardIn == "Mastercard" || !numberIn.contains("5432"))
+					   {
+							 JOptionPane.showMessageDialog(null, "INVALID CARD", "TRY AGAIN ", JOptionPane.ERROR_MESSAGE);
+							 payment_cardIn.setSelectedItem("");
+							 payment_numberIn.setText(null);
+							 payment_ccvIn.setText(null);
+							 payment_monthIn.setSelectedItem("");
+							 payment_yearIn.setSelectedItem("");
 
 					   }
 					   
