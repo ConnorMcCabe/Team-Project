@@ -155,21 +155,27 @@ public class KitchenStaff {
 					PreparedStatement pst = conn.prepareStatement(s);
 					pst.setString(1, (String)OrderStatus.getSelectedItem());
 					pst.setString(2, (String)OrderNum.getSelectedItem());
+					if(OrderNum.getSelectedItem() == "Select Order")
+		        	{
+		        		JOptionPane.showMessageDialog(null, "You may not have selected a number, please try again!","Invalid Selection", JOptionPane.INFORMATION_MESSAGE);
+		        	}
+		        	else {
+		        	pst.setString(2, (String)OrderNum.getSelectedItem());
 					int rs=pst.executeUpdate();
 					pst = conn.prepareStatement(s);
 					rs = pst.executeUpdate();
-					pst.close();
+					pst.close();}
 				}catch(SQLException e1) {
 					System.out.print("");
 				}
 			}
 		});
 /////////////////////////////////// Load Table Button ////////////////////////////////////////////////////////	
-		JButton LoadTableButton = new JButton("Load Table");
-		LoadTableButton.setForeground(new Color(0, 0, 0));
-		LoadTableButton.setBackground(new Color(255, 255, 102));
-		LoadTableButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		LoadTableButton.addActionListener(new ActionListener() {
+		JButton LoadOrderButton = new JButton("Load Orders");
+		LoadOrderButton.setForeground(new Color(0, 0, 0));
+		LoadOrderButton.setBackground(new Color(255, 255, 102));
+		LoadOrderButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		LoadOrderButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					Class.forName("com.mysql.jdbc.Driver");
@@ -195,19 +201,24 @@ public class KitchenStaff {
 				try{
 					Class.forName("com.mysql.jdbc.Driver");
 					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
-//					String query="Select Name from Fast_Food.product where Product_Code = 10";//= fast_food.order_item.Product_Code and where order_item.Order_Number = 1";
-					//String query="Select Product_Name from order_item where Order_Number = 2";//= fast_food.order_item.Product_Code and where order_item.Order_Number = 1";
 					String query = "Select * from fast_food.order_item WHERE Order_Number = ?";
 					PreparedStatement pst = conn.prepareStatement(query);
 		        	pst.setString(1, (String)OrderNum.getSelectedItem());
+		        	if(OrderNum.getSelectedItem() == "Select Order")
+		        	{		        		
+		        		JOptionPane.showMessageDialog(null, "You may not have selected a number, please try again!","Invalid Selection", JOptionPane.INFORMATION_MESSAGE);
+		        	}
+		        	else {
+		        	pst.setString(1, (String)OrderNum.getSelectedItem());
 		        	java.sql.ResultSet rs=pst.executeQuery();
 		        	table.setModel(DbUtils.resultSetToTableModel(rs));				        
-		        	pst.close();
+		        	pst.close();}
 					} catch (SQLException | ClassNotFoundException e1) 
 		    	{						
 						System.out.print(e1);
 					}					
 		        }
+			
 		    });
 		DisplayOrderItem.setForeground(Color.BLACK);
 		DisplayOrderItem.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -222,8 +233,8 @@ public class KitchenStaff {
 							.addGap(20)
 							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 910, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(179)
-							.addComponent(LoadTableButton, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
+							.addGap(161)
+							.addComponent(LoadOrderButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
 							.addGap(108)
 							.addComponent(DisplayOrderItem)
 							.addGap(126)
@@ -247,7 +258,7 @@ public class KitchenStaff {
 					.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
 					.addGap(77)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(LoadTableButton, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
+						.addComponent(LoadOrderButton, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
 						.addComponent(SetStatus, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
 						.addComponent(DisplayOrderItem, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE))
 					.addGap(66)
