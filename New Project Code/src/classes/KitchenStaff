@@ -131,11 +131,21 @@ public class KitchenStaff {
 		    	Class.forName("com.mysql.jdbc.Driver");
 				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 		        	String s = "Select * from fast_food.order WHERE Order_Number = ?";
+
+		        	if(OrderNum.getSelectedItem() != "Select Order")
+		        	{		        				        	
 		        	PreparedStatement pst = conn.prepareStatement(s);
 		        	pst.setString(1, (String)OrderNum.getSelectedItem());
 		        	java.sql.ResultSet rs=pst.executeQuery();
-		        	table.setModel(DbUtils.resultSetToTableModel(rs));				        
-		        	pst.close();
+		        	table.setModel(DbUtils.resultSetToTableModel(rs));	
+		        	} 
+		        	else
+		        	{		
+		        		String se ="Select * from fast_food.order";
+		        		PreparedStatement pst = conn.prepareStatement(se);
+			        	java.sql.ResultSet rs=pst.executeQuery();
+			        	table.setModel(DbUtils.resultSetToTableModel(rs));	        		
+		        	pst.close();}
 					} catch (SQLException | ClassNotFoundException e1) 
 		    	{						
 						System.out.print(e1);
@@ -273,13 +283,13 @@ public class KitchenStaff {
 		table = new JTable();
 		scrollPane_1.setViewportView(table);
 		table.setModel(new DefaultTableModel(
-				new Object[][] {
-					{null, null, null, null, null, null},
-				},
-				new String[] {
-						"Order_Number", "Total_Cost", "Time", "Date", "Paid", "Order_Status"
-				}
-				));
+			new Object[][] {
+				{null, null, null, null, null, null},
+			},
+			new String[] {
+				"Order_Number", "Total_Cost", "Time", "Date", "Paid", "Order_Status"
+			}
+		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(89);
 		table.getColumnModel().getColumn(5).setPreferredWidth(79);
 		frame.getContentPane().setLayout(groupLayout);
