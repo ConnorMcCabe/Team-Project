@@ -131,6 +131,15 @@ public class GUI {
 		OrderSummary.setFont(new Font("Open Sans", Font.PLAIN, 25));
 		scrollPane_1.setViewportView(OrderSummary);
 		OrderSummary.setModel(dtm);
+		
+		OrderSummary.setAutoResizeMode(OrderSummary.AUTO_RESIZE_OFF);
+		javax.swing.table.TableColumn col = OrderSummary.getColumnModel().getColumn(0);
+		col.setPreferredWidth(300);
+		col=OrderSummary.getColumnModel().getColumn(1);
+		col.setPreferredWidth(100);
+		col=OrderSummary.getColumnModel().getColumn(2);
+		col.setPreferredWidth(100);
+		
 		//dtm.addRow(new Object[]{"--Product--", "--Quantity--", "--Price--"});
 		
 		
