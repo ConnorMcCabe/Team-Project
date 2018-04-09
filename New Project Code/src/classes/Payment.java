@@ -81,7 +81,7 @@ public class Payment extends JFrame {
 		frame = new JFrame();
 	    
 		frame.getContentPane().setFont(new Font("Open Sans", Font.BOLD, 20));
-		frame.getContentPane().setBackground(new Color(115, 168, 212));
+		frame.getContentPane().setBackground(new Color(255, 216, 120));
 
 		frame.setBounds(100, 100, 1098, 775);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,19 +93,19 @@ public class Payment extends JFrame {
 		frame.getContentPane().add(lblPleaseEnterCard);
 		
 		JLabel lblCardType = new JLabel("Card Type:");
-		lblCardType.setFont(new Font("Open Sans", Font.BOLD, 20));
-		lblCardType.setBounds(271, 231, 116, 28);
+		lblCardType.setFont(new Font("Open Sans", Font.BOLD, 25));
+		lblCardType.setBounds(271, 231, 164, 28);
 		frame.getContentPane().add(lblCardType);
 		
 		JComboBox payment_cardIn = new JComboBox();
 		payment_cardIn.setBackground(Color.WHITE);
 		payment_cardIn.setModel(new DefaultComboBoxModel(new String[] {"","Visa ", "Mastercard"}));
 		payment_cardIn.setFont(new Font("Open Sans", Font.BOLD, 20));
-		payment_cardIn.setBounds(529, 228, 204, 34);
+		payment_cardIn.setBounds(583, 230, 204, 34);
 		frame.getContentPane().add(payment_cardIn);
 		
 		JLabel lblNumber = new JLabel("Number:");
-		lblNumber.setFont(new Font("Open Sans", Font.BOLD, 20));
+		lblNumber.setFont(new Font("Open Sans", Font.BOLD, 25));
 		lblNumber.setBounds(271, 286, 116, 28);
 		frame.getContentPane().add(lblNumber);
 		
@@ -137,13 +137,13 @@ public class Payment extends JFrame {
 			}	
 	
 });
-		payment_numberIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		payment_numberIn.setBounds(529, 284, 204, 34);
+		payment_numberIn.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		payment_numberIn.setBounds(583, 286, 204, 34);
 		frame.getContentPane().add(payment_numberIn);
 		payment_numberIn.setColumns(10);
 		
 		JLabel lblCsv = new JLabel("CCV:");
-		lblCsv.setFont(new Font("Open Sans", Font.BOLD, 20));
+		lblCsv.setFont(new Font("Open Sans", Font.BOLD, 25));
 		lblCsv.setBounds(271, 340, 94, 34);
 		frame.getContentPane().add(lblCsv);
 		
@@ -177,36 +177,36 @@ public class Payment extends JFrame {
 		
 		
 		payment_ccvIn.setToolTipText("3 DIGIT CODE AT THE BACK OF THE CARD");
-		payment_ccvIn.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		payment_ccvIn.setBounds(529, 341, 83, 34);
+		payment_ccvIn.setFont(new Font("Open Sans", Font.PLAIN, 20));
+		payment_ccvIn.setBounds(583, 343, 83, 34);
 		frame.getContentPane().add(payment_ccvIn);
 		payment_ccvIn.setColumns(10);
 		
 		JLabel lblEx = new JLabel("Expiry Date (MMM/YY):");
-		lblEx.setFont(new Font("Open Sans", Font.BOLD, 20));
-		lblEx.setBounds(271, 397, 231, 34);
+		lblEx.setFont(new Font("Open Sans", Font.BOLD, 25));
+		lblEx.setBounds(271, 397, 300, 34);
 		frame.getContentPane().add(lblEx);
 		
 		JLabel lblNewLabel = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\pay.png"));
-		lblNewLabel.setBounds(479, 485, 105, 78);
+		lblNewLabel.setBounds(490, 471, 105, 78);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\remove.png"));
-		lblNewLabel_1.setBounds(241, 485, 83, 64);
+		lblNewLabel_1.setBounds(249, 471, 83, 64);
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		JComboBox payment_monthIn = new JComboBox();
 		payment_monthIn.setModel(new DefaultComboBoxModel(new String[] {"", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"}));
 		payment_monthIn.setBackground(Color.WHITE);
-		payment_monthIn.setFont(new Font("Open Sans", Font.BOLD, 19));
-		payment_monthIn.setBounds(529, 388, 83, 34);
+		payment_monthIn.setFont(new Font("Open Sans", Font.BOLD, 20));
+		payment_monthIn.setBounds(583, 388, 83, 34);
 		frame.getContentPane().add(payment_monthIn);
 		
 		JComboBox payment_yearIn = new JComboBox();
 		payment_yearIn.setModel(new DefaultComboBoxModel(new String[] {"", "18", "19", "20", "21", "22", "23", "24", "25", "26"}));
 		payment_yearIn.setBackground(Color.WHITE);
-		payment_yearIn.setFont(new Font("Open Sans", Font.BOLD, 19));
-		payment_yearIn.setBounds(624, 388, 83, 34);
+		payment_yearIn.setFont(new Font("Open Sans", Font.BOLD, 20));
+		payment_yearIn.setBounds(704, 388, 83, 34);
 		frame.getContentPane().add(payment_yearIn);
 		
 		
@@ -290,8 +290,8 @@ public class Payment extends JFrame {
 			}});
 		btnConfirm.setContentAreaFilled(false);
 		btnConfirm.setBorderPainted(false);
-		btnConfirm.setFont(new Font("Open Sans", Font.BOLD, 20));
-		btnConfirm.setBounds(512, 497, 221, 51);
+		btnConfirm.setFont(new Font("Open Sans", Font.BOLD, 30));
+		btnConfirm.setBounds(509, 485, 221, 51);
 		frame.getContentPane().add(btnConfirm);
 		
 		JButton btnCancel = new JButton("Cancel");
@@ -315,8 +315,8 @@ public class Payment extends JFrame {
 		});
 		btnCancel.setContentAreaFilled(false);
 		btnCancel.setBorderPainted(false);
-		btnCancel.setFont(new Font("Open Sans", Font.BOLD, 20));
-		btnCancel.setBounds(260, 497, 175, 51);
+		btnCancel.setFont(new Font("Open Sans", Font.BOLD, 30));
+		btnCancel.setBounds(280, 485, 175, 51);
 		frame.getContentPane().add(btnCancel);
 		
 		

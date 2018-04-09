@@ -1,5 +1,5 @@
 
-package Resturaunt;
+package classes;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -34,6 +35,8 @@ import java.awt.event.ItemListener;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -48,7 +51,7 @@ public class GUI {
 	/**
 	 * Launch the application.
 	 */
-	public static void Menu() {
+	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -75,56 +78,57 @@ public class GUI {
 		frmMenu = new JFrame();
 		//panel_3.setBackground(new Color(115, 168, 212));
 
-		frmMenu.getContentPane().setBackground(new Color(115, 168, 212));
+		frmMenu.getContentPane().setBackground(new Color(255, 216, 120));
 		frmMenu.setTitle("MENU");
-		frmMenu.setBounds(100, 100, 1398, 889);
+		frmMenu.setBounds(100, 100, 1587, 951);
 		frmMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenu.getContentPane().setLayout(null);
 		
 		JLabel name = new JLabel("");
 		
 		JLabel ImageLabel = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
-		ImageLabel.setBounds(335, 94, 432, 364);
+		ImageLabel.setBounds(450, 103, 432, 364);
 		frmMenu.getContentPane().add(ImageLabel);
 
 		
 		JTextArea PriceBox = new JTextArea();
-		PriceBox.setFont(new Font("Open Sans", Font.PLAIN, 19));
+		PriceBox.setFont(new Font("Open Sans", Font.PLAIN, 25));
 		PriceBox.setText("");
 		//PriceBox.setFormat("%.2f");
 		PriceBox.setEditable(false);
-		PriceBox.setBounds(422, 686, 114, 34);
+		PriceBox.setBounds(568, 763, 114, 34);
 		frmMenu.getContentPane().add(PriceBox);
 		
 		JTextArea DescriptionBox = new JTextArea();
 		DescriptionBox.setLineWrap(true);
 
-		DescriptionBox.setFont(new Font("Open Sans", Font.PLAIN, 19));
+		DescriptionBox.setFont(new Font("Open Sans", Font.PLAIN, 25));
 		DescriptionBox.setText("");
 		DescriptionBox.setEditable(false);
-		DescriptionBox.setBounds(422, 506, 345, 63);
+		DescriptionBox.setBounds(568, 507, 345, 100);
 		frmMenu.getContentPane().add(DescriptionBox);
 		
 		JTextArea AllergenBox = new JTextArea();
 		AllergenBox.setLineWrap(true);
 
-		AllergenBox.setFont(new Font("Open Sans", Font.PLAIN, 19));
+		AllergenBox.setFont(new Font("Open Sans", Font.PLAIN, 25));
 		AllergenBox.setText("");
 		AllergenBox.setEditable(false);
-		AllergenBox.setBounds(422, 598, 345, 63);
+		AllergenBox.setBounds(568, 633, 345, 100);
 		frmMenu.getContentPane().add(AllergenBox);
 		String columns[] = new String[] {"Product", "Quantity", "Price"};
 		DefaultTableModel dtm = new DefaultTableModel(columns, 0);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBackground(Color.WHITE);
-		scrollPane_1.setFont(new Font("Open Sans", Font.PLAIN, 19));
-		scrollPane_1.setBounds(853, 94, 515, 475);
+		scrollPane_1.setFont(new Font("Open Sans", Font.PLAIN, 15));
+		scrollPane_1.setBounds(973, 94, 584, 475);
 		frmMenu.getContentPane().add(scrollPane_1);
 		
 		JTable OrderSummary = new JTable();
+		OrderSummary.setRowHeight(25);
 		OrderSummary.setBackground(Color.WHITE);
-		OrderSummary.setFont(new Font("Open Sans", Font.PLAIN, 16));
+		OrderSummary.setFont(new Font("Open Sans", Font.PLAIN, 25));
 		scrollPane_1.setViewportView(OrderSummary);
 		OrderSummary.setModel(dtm);
 		//dtm.addRow(new Object[]{"--Product--", "--Quantity--", "--Price--"});
@@ -136,10 +140,10 @@ public class GUI {
 		frmMenu.getContentPane().add(lblNewLabel);
 		
 		JComboBox<String> MainCB = new JComboBox<String>();
-		MainCB.setBackground(new Color(194, 200, 205));
-		MainCB.setFont(new Font("Open Sans", Font.BOLD, 19));
+		MainCB.setBackground(Color.WHITE);
+		MainCB.setFont(new Font("Open Sans", Font.BOLD, 25));
 		MainCB.setModel(new DefaultComboBoxModel<>(new String[] {"Select Main"}));
-		MainCB.setBounds(10, 87, 225, 40);
+		MainCB.setBounds(10, 87, 300, 40);
 		try
 		{
 			java.sql.ResultSet rs;
@@ -207,10 +211,10 @@ public class GUI {
 		frmMenu.getContentPane().add(lblSides);
 		
 		JComboBox<String> SideCB = new JComboBox<String>();
-		SideCB.setFont(new Font("Open Sans", Font.BOLD, 19));
-		SideCB.setBackground(new Color(194, 200, 205));
+		SideCB.setFont(new Font("Open Sans", Font.BOLD, 25));
+		SideCB.setBackground(Color.WHITE);
 		SideCB.setModel(new DefaultComboBoxModel<String>(new String[] {"Select Sides"}));
-		SideCB.setBounds(10, 206, 225, 40);
+		SideCB.setBounds(10, 206, 300, 40);
 		try
 		{
 			java.sql.ResultSet rs;
@@ -277,10 +281,10 @@ public class GUI {
 		frmMenu.getContentPane().add(lblDesserts);
 		
 		JComboBox<String> DessertCB = new JComboBox<String>();
-		DessertCB.setFont(new Font("Open Sans", Font.BOLD, 19));
-		DessertCB.setBackground(new Color(194, 200, 205));
+		DessertCB.setFont(new Font("Open Sans", Font.BOLD, 25));
+		DessertCB.setBackground(Color.WHITE);
 		DessertCB.setModel(new DefaultComboBoxModel<String>(new String[] {"Select Dessert"}));
-		DessertCB.setBounds(10, 325, 225, 40);
+		DessertCB.setBounds(10, 325, 300, 40);
 		try
 		{
 			java.sql.ResultSet rs;
@@ -346,10 +350,10 @@ public class GUI {
 		frmMenu.getContentPane().add(lblDrinks);
 		
 		JComboBox<String> DrinkCB = new JComboBox<String>();
-		DrinkCB.setFont(new Font("Open Sans", Font.BOLD, 19));
-		DrinkCB.setBackground(new Color(194, 200, 205));
+		DrinkCB.setFont(new Font("Open Sans", Font.BOLD, 25));
+		DrinkCB.setBackground(Color.WHITE);
 		DrinkCB.setModel(new DefaultComboBoxModel<String>(new String[] {"Select Drink"}));
-		DrinkCB.setBounds(10, 445, 225, 40);
+		DrinkCB.setBounds(10, 445, 300, 40);
 		try
 		{
 			java.sql.ResultSet rs;
@@ -411,31 +415,41 @@ public class GUI {
 		frmMenu.getContentPane().add(DrinkCB);
 		
 		JLabel lblDescription = new JLabel("Description:");
-		lblDescription.setFont(new Font("Open Sans", Font.PLAIN, 25));
-		lblDescription.setBounds(276, 531, 187, 27);
+		lblDescription.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblDescription.setBounds(369, 541, 187, 38);
 		frmMenu.getContentPane().add(lblDescription);
 		
 		
 		
 		JLabel lblAllergens = new JLabel("Allergens:");
-		lblAllergens.setFont(new Font("Open Sans", Font.PLAIN, 25));
-		lblAllergens.setBounds(276, 617, 114, 40);
+		lblAllergens.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblAllergens.setBounds(371, 660, 142, 40);
 		frmMenu.getContentPane().add(lblAllergens);
 		
 		JLabel lblPrice = new JLabel("Price:");
-		lblPrice.setFont(new Font("Open Sans", Font.PLAIN, 25));
-		lblPrice.setBounds(276, 686, 114, 27);
+		lblPrice.setFont(new Font("Open Sans", Font.PLAIN, 30));
+		lblPrice.setBounds(369, 767, 114, 27);
 		frmMenu.getContentPane().add(lblPrice);
 		
 		JLabel lblOrderSummary = new JLabel("Order Summary:");
 		lblOrderSummary.setFont(new Font("Open Sans", Font.BOLD, 30));
-		lblOrderSummary.setBounds(853, 42, 294, 34);
+		lblOrderSummary.setBounds(973, 42, 294, 34);
 		frmMenu.getContentPane().add(lblOrderSummary);
+		
+
+		JTextField FinalPrice = new JTextField();
+		FinalPrice.setBounds(1096, 575, 93, 32);
+		frmMenu.getContentPane().add(FinalPrice);
+		FinalPrice.setColumns(10);
+		FinalPrice.setFont(new Font("Open Sans", Font.PLAIN, 25));
+		FinalPrice.setEditable(false);
+	   // FinalPrice.setText(res);;
+	    
 		
 		JButton DeleteBtn = new JButton("Delete");
 		DeleteBtn.setContentAreaFilled(false);
 		DeleteBtn.setBorderPainted(false);
-		DeleteBtn.setFont(new Font("Open Sans", Font.BOLD, 20));
+		DeleteBtn.setFont(new Font("Open Sans", Font.BOLD, 25));
 		DeleteBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -451,23 +465,14 @@ public class GUI {
 				{
 					total=total+Double.parseDouble(OrderSummary.getValueAt(i, 2)+"");
 				}
-			        
-			    
+			         
+				//String res = String.format("%.2f", total);
 				String res = String.format("%.2f", total);
 
-				
-				System.out.print(res);
-				
-				JTextField FinalPrice = new JTextField();
-				FinalPrice.setBounds(966, 582, 116, 27);
-				frmMenu.getContentPane().add(FinalPrice);
-				FinalPrice.setColumns(10);
-				FinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
-				FinalPrice.setEditable(false);
 			    FinalPrice.setText(res);
 			}
 		});
-		DeleteBtn.setBounds(973, 685, 294, 40);
+		DeleteBtn.setBounds(1113, 710, 294, 40);
 		frmMenu.getContentPane().add(DeleteBtn);
 		
 		
@@ -476,16 +481,18 @@ public class GUI {
 		
 		JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(1, 1, 100, 1));
-		spinner.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		spinner.setBounds(665, 689, 63, 32);
+		spinner.setFont(new Font("Open Sans", Font.BOLD, 20));
+		spinner.setBounds(853, 763, 60, 34);
 		frmMenu.getContentPane().add(spinner);
 		
 		JButton addBtn = new JButton("Add To Order");
 		addBtn.setContentAreaFilled(false);
 		addBtn.setBorderPainted(false);
-		addBtn.setFont(new Font("Open Sans", Font.BOLD, 20));
-		addBtn.setBounds(444, 755, 225, 52);
+		addBtn.setFont(new Font("Open Sans", Font.BOLD, 30));
+		addBtn.setBounds(581, 839, 314, 52);
 		frmMenu.getContentPane().add(addBtn);
+		
+		
 		addBtn.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -506,13 +513,13 @@ public class GUI {
 				double fprice = sprice * fQuan;
 				
 				dtm.addRow(new Object[]{fname, fQuan, fprice});
-				
+				/*
 				Object[] row = new Object[2];
 				ThankYou frame = new ThankYou();
 				
 				TableModel model1 = OrderSummary.getModel();
 				
-				//DefaultTableModel dtm2 = (DefaultTableModel)ThankYou.JTable1.getModel();
+				DefaultTableModel dtm2 = (DefaultTableModel)ThankYou.JTable1.getModel();
 				int rs = OrderSummary.getRowCount();
 				
 				for(int i =0; i<OrderSummary.getRowCount(); i++)
@@ -523,7 +530,7 @@ public class GUI {
 		        	
 		        	dtm2.addRow(row);
 				}
-				
+				*/
 				//ty.setVisible(true);
 				int rows = OrderSummary.getRowCount();
 				double total = 0;
@@ -532,21 +539,12 @@ public class GUI {
 				{
 					total=total+Double.parseDouble(OrderSummary.getValueAt(i, 2)+"");
 				}
-			        
-			    
-				String res = Double.toString(total);
-				
-				System.out.print(res);
-				
-				JTextField FinalPrice = new JTextField();
-				FinalPrice.setBounds(966, 582, 116, 27);
-				frmMenu.getContentPane().add(FinalPrice);
-				FinalPrice.setColumns(10);
-				FinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
-				FinalPrice.setEditable(false);
+			          
+				//String res = Double.toString(total);
+
+				String res = String.format("%.2f", total);
+
 			    FinalPrice.setText(res);
-			    
-				
 			    
 				
 				
@@ -609,11 +607,18 @@ public class GUI {
 	
 		
 		JButton ConfirmBtn = new JButton("Confirm Order");
-		ConfirmBtn.setFont(new Font("Open Sans", Font.BOLD, 20));
+		ConfirmBtn.setFont(new Font("Open Sans", Font.BOLD, 25));
 		ConfirmBtn.setContentAreaFilled(false);
 		ConfirmBtn.setBorderPainted(false);
 		ConfirmBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				String price = FinalPrice.getText();
+				
+				Payment payment = new Payment();
+				payment.main(null);
+				
+				System.out.print(price);
 				try 
 				{
 			    	Class.forName("com.mysql.jdbc.Driver");
@@ -644,7 +649,7 @@ public class GUI {
 				}
 			}
 		});
-		ConfirmBtn.setBounds(1122, 622, 225, 40);
+		ConfirmBtn.setBounds(1332, 632, 225, 40);
 		frmMenu.getContentPane().add(ConfirmBtn);
 //	    JLabel FinalPrice = new JLabel();
 //    	FinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -652,7 +657,7 @@ public class GUI {
 //    	frmMenu.getContentPane().add(FinalPrice);
     	
 	JButton CancelBtn = new JButton("Cancel Order");
-	CancelBtn.setFont(new Font("Open Sans", Font.BOLD, 20));
+	CancelBtn.setFont(new Font("Open Sans", Font.BOLD, 25));
 	CancelBtn.setContentAreaFilled(false);
 	CancelBtn.setBorderPainted(false);
 	CancelBtn.addActionListener(new ActionListener() {
@@ -667,41 +672,67 @@ public class GUI {
 		}
 		}
 	);
-	CancelBtn.setBounds(863, 621, 212, 40);
+	CancelBtn.setBounds(998, 632, 212, 40);
 	frmMenu.getContentPane().add(CancelBtn);
 	
 	JLabel lblTotal = new JLabel("Total:");
 	lblTotal.setFont(new Font("Open Sans", Font.BOLD, 30));
-	lblTotal.setBounds(853, 582, 101, 27);
+	lblTotal.setBounds(973, 578, 101, 27);
 	frmMenu.getContentPane().add(lblTotal);
 	
 	JLabel label = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\add.png"));
-	label.setBounds(419, 744, 83, 74);
+	label.setBounds(553, 830, 83, 74);
 	frmMenu.getContentPane().add(label);
 	
 	JLabel label_1 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\remove.png"));
-	label_1.setBounds(832, 617, 83, 53);
+	label_1.setBounds(958, 629, 83, 53);
 	frmMenu.getContentPane().add(label_1);
 	
 	JLabel label_2 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\ok.png"));
-	label_2.setBounds(1082, 609, 93, 63);
+	label_2.setBounds(1272, 619, 93, 63);
 	frmMenu.getContentPane().add(label_2);
 	
 	JLabel label_3 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\bin.png"));
-	label_3.setBounds(1005, 674, 93, 69);
+	label_3.setBounds(1148, 697, 93, 69);
 	frmMenu.getContentPane().add(label_3);
 	
 	JLabel lblNewLabel_1 = new JLabel("\u20AC");
 	lblNewLabel_1.setFont(new Font("Open Sans Semibold", Font.BOLD, 35));
-	lblNewLabel_1.setBounds(398, 680, 36, 40);
+	lblNewLabel_1.setBounds(535, 758, 36, 40);
 	frmMenu.getContentPane().add(lblNewLabel_1);
 		
 	JLabel label_4 = new JLabel("\u20AC");
 	label_4.setFont(new Font("Open Sans Semibold", Font.BOLD, 35));
-	label_4.setBounds(942, 573, 36, 40);
+	label_4.setBounds(1074, 569, 36, 40);
 	frmMenu.getContentPane().add(label_4);
 	
+
+	JLabel time_label = new JLabel("");
+	time_label.setBounds(426, 26, 487, 30);
+	frmMenu.getContentPane().add(time_label);
+	time_label.setFont(new Font("Open Sans", Font.BOLD, 30));
+
+	String timeStamp = new SimpleDateFormat("dd:MM:yyyy HH:mm:ss").format(Calendar.getInstance().getTime());	
+	time_label.setText(timeStamp + "");
 	
+	int delay = 1000; // milliseconds
+	ActionListener al = new ActionListener() {
+	public void actionPerformed(ActionEvent evt) {
+		String date = new java.text.SimpleDateFormat("HH:mm:ss")
+				.format(new java.util.Date(System.currentTimeMillis()));
+		time_label.setText("" + Calendar.getInstance().getTime());
+	}
+};
+new Timer(delay, al).start();
+
+	JLabel lblQuantity = new JLabel("Quantity:");
+	lblQuantity.setFont(new Font("Open Sans", Font.PLAIN, 25));
+	lblQuantity.setBounds(743, 765, 118, 34);
+	frmMenu.getContentPane().add(lblQuantity);
+	
+	
+	
+
 	
     
 	//JTextField FinalPrice = new JTextField();
