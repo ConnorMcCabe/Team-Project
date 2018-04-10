@@ -1,5 +1,5 @@
 
-package classes;
+package Resturaunt;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -80,7 +80,7 @@ public class GUI {
 
 		frmMenu.getContentPane().setBackground(new Color(255, 216, 120));
 		frmMenu.setTitle("MENU");
-		frmMenu.setBounds(100, 100, 1587, 951);
+		frmMenu.setBounds(100, 100, 1587, 900);
 		frmMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenu.getContentPane().setLayout(null);
 		
@@ -498,7 +498,7 @@ public class GUI {
 		addBtn.setContentAreaFilled(false);
 		addBtn.setBorderPainted(false);
 		addBtn.setFont(new Font("Open Sans", Font.BOLD, 30));
-		addBtn.setBounds(581, 839, 314, 52);
+		addBtn.setBounds(578, 809, 314, 52);
 		frmMenu.getContentPane().add(addBtn);
 		
 		
@@ -625,7 +625,7 @@ public class GUI {
 				String price = FinalPrice.getText();
 				
 				Payment payment = new Payment();
-				payment.main(null);
+				//payment.main(null);
 				
 				System.out.print(price);
 				try 
@@ -634,23 +634,23 @@ public class GUI {
 					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 			        java.sql.ResultSet rs;
 			        
-			        String s = "INSERT INTO fast_food.Order_Item (Product_Name, Quanity) VALUES(?,?)";
+			        String s = "INSERT INTO fast_food.Order_Item (Product_Name, Quanity, Total_Price) VALUES(?,?,?)";
 			        PreparedStatement pst = conn.prepareStatement(s);
 			        
 			        for(int r=0; r<OrderSummary.getRowCount(); r++)
 			        {
 			        	String name = (String)OrderSummary.getValueAt(r, 0);
 			        	int quan = (Integer)OrderSummary.getValueAt(r, 1);
-			        	//double price = total;
+			        	double fprice = Double.parseDouble(price);
 			        	
 			        	pst.setString(1, name);
 			        	pst.setInt(2, quan);
-			        	//pst.setDouble(3,price);
+			        	pst.setDouble(3,fprice);
 			        	
 			        	pst.addBatch();
 			        }
 			        pst.executeBatch();
-			        conn.commit();
+			        //conn.commit();
 				}
 				catch(Exception e5)
 				{
