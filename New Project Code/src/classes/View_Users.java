@@ -16,6 +16,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+import java.awt.Font;
+import java.awt.Color;
 
 public class View_Users {
 
@@ -60,18 +62,22 @@ public class View_Users {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 322);
+		frame.getContentPane().setBackground(new Color(255, 216, 120));
+		frame.setBounds(100, 100, 808, 775);
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 13, 408, 214);
+		scrollPane.setBounds(12, 13, 766, 635);
 		frame.getContentPane().add(scrollPane);
 		
 		view_table = new JTable();
+		view_table.setRowHeight(30);
+		view_table.setFont(new Font("Open Sans", Font.PLAIN, 25));
 		scrollPane.setViewportView(view_table);
 		
 		JButton btnViewUser = new JButton("View User");
+		btnViewUser.setFont(new Font("Open Sans", Font.BOLD, 30));
 		btnViewUser.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -82,7 +88,7 @@ public class View_Users {
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement();
 			        
-			        String sql="SELECT Employee_ID, Email FROM manager";
+			        String sql="SELECT Email FROM manager";
 			        PreparedStatement stmt = conn.prepareStatement(sql);
 			        ResultSet rs = stmt.executeQuery(sql);
 			        
@@ -95,7 +101,7 @@ public class View_Users {
 				}
 			}
 		});
-		btnViewUser.setBounds(165, 237, 97, 25);
+		btnViewUser.setBounds(288, 661, 212, 51);
 		frame.getContentPane().add(btnViewUser);
 	}
 

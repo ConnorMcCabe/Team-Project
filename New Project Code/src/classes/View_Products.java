@@ -1,5 +1,6 @@
 package classes;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -17,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+import java.awt.Font;
 
 public class View_Products extends JFrame {
 
@@ -61,18 +63,27 @@ public class View_Products extends JFrame {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 739, 454);
+		frame.getContentPane().setBackground(new Color(255, 216, 120));
+		//frame.setBackground(new Color(115, 168, 212));
+		frame.setBounds(100, 100, 1412, 690);
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setBackground(new Color(255, 216, 120));
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 23, 697, 333);
+		scrollPane.setBounds(12, 23, 1354, 547);
 		frame.getContentPane().add(scrollPane);
 		
 		view_table = new JTable();
+		view_table.setRowHeight(30);
+		view_table.setFont(new Font("Open Sans", Font.PLAIN, 25));
 		scrollPane.setViewportView(view_table);
 		
+		
+		
+		
 		JButton btnViewProducts = new JButton("View Products");
+		btnViewProducts.setFont(new Font("Open Sans", Font.BOLD, 30));
 		btnViewProducts.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e)
@@ -96,7 +107,7 @@ public class View_Products extends JFrame {
 				}
 			}
 		});
-		btnViewProducts.setBounds(300, 369, 143, 25);
+		btnViewProducts.setBounds(554, 583, 295, 36);
 		frame.getContentPane().add(btnViewProducts);
 	}
 
