@@ -34,6 +34,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -43,6 +44,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JPanel;
+import java.awt.CardLayout;
 
 public class GUI {
 
@@ -90,6 +92,9 @@ public class GUI {
 		JLabel ImageLabel = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
 		ImageLabel.setBounds(450, 103, 432, 364);
 		frmMenu.getContentPane().add(ImageLabel);
+		
+		JTextField pc = new JTextField();
+		
 
 		
 		JTextArea PriceBox = new JTextArea();
@@ -117,7 +122,7 @@ public class GUI {
 		AllergenBox.setEditable(false);
 		AllergenBox.setBounds(568, 633, 345, 100);
 		frmMenu.getContentPane().add(AllergenBox);
-		String columns[] = new String[] {"Product", "Quantity", "Price"};
+		String columns[] = new String[] {"Product Code", "Product", "Quantity", "Price"};
 		DefaultTableModel dtm = new DefaultTableModel(columns, 0);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
@@ -191,6 +196,7 @@ public class GUI {
 		        		DescriptionBox.setText(rs.getString("Description"));
 		        		AllergenBox.setText(rs.getString("Alergy"));
 		        		name.setText(rs.getString("Name"));
+		        		pc.setText(rs.getString("Product_Code"));
 						
 		        		
 					
@@ -210,6 +216,11 @@ public class GUI {
 					}
 					
 		        }
+
+			private JTextField setText(int int1) {
+				// TODO Auto-generated method stub
+				return null;
+			}
 
 		    });
 			
@@ -262,7 +273,7 @@ public class GUI {
 		        		DescriptionBox.setText(rs.getString("Description"));
 		        		AllergenBox.setText(rs.getString("Alergy"));
 		        		name.setText(rs.getString("Name"));
-		        		
+		        		pc.setText(rs.getString("Product_Code"));
 					
 					 byte[] img = rs.getBytes("Image");
 		                    //Resize The ImageIcon
@@ -332,7 +343,7 @@ public class GUI {
 		        		DescriptionBox.setText(rs.getString("Description"));
 		        		AllergenBox.setText(rs.getString("Alergy"));
 		        		name.setText(rs.getString("Name"));
-		        		
+		        		pc.setText(rs.getString("Product_Code"));
 					
 					 byte[] img = rs.getBytes("Image");
 		                    //Resize The ImageIcon
@@ -402,7 +413,7 @@ public class GUI {
 		        		DescriptionBox.setText(rs.getString("Description"));
 		        		AllergenBox.setText(rs.getString("Alergy"));
 		        		name.setText(rs.getString("Name"));
-		        		
+		        		pc.setText(rs.getString("Product_Code"));
 					
 					 byte[] img = rs.getBytes("Image");
 		                    //Resize The ImageIcon
@@ -472,7 +483,7 @@ public class GUI {
 				
 				for(int i =0; i<rows; i++)
 				{
-					total=total+Double.parseDouble(OrderSummary.getValueAt(i, 2)+"");
+					total=total+Double.parseDouble(OrderSummary.getValueAt(i, 3)+"");
 				}
 			         
 				//String res = String.format("%.2f", total);
@@ -495,6 +506,7 @@ public class GUI {
 		frmMenu.getContentPane().add(spinner);
 		
 		
+		
 		JButton addBtn = new JButton("Add To Order");
 		addBtn.setContentAreaFilled(false);
 		addBtn.setBorderPainted(false);
@@ -515,6 +527,8 @@ public class GUI {
 				
 				Integer fQuan = (Integer)spinner.getValue();
 				
+				int Finalpc = Integer.parseInt(pc.getText());
+				
 				DefaultTableModel dtm = (DefaultTableModel) OrderSummary.getModel();
 				
 				int rowss = OrderSummary.getRowCount();
@@ -525,7 +539,7 @@ public class GUI {
 				
 				//String res = String.format("%.2f", total)
 				
-				dtm.addRow(new Object[]{fname, fQuan, df.format(fprice)});
+				dtm.addRow(new Object[]{Finalpc, fname, fQuan, df.format(fprice)});
 				
 				spinner.setValue(1);
 				
@@ -553,7 +567,7 @@ public class GUI {
 				
 				for(int i =0; i<rows; i++)
 				{
-					total=total+Double.parseDouble(OrderSummary.getValueAt(i, 2)+"");
+					total=total+Double.parseDouble(OrderSummary.getValueAt(i, 3)+"");
 				}
 			          
 				//String res = Double.toString(total);
@@ -634,6 +648,9 @@ public class GUI {
 				Payment payment = new Payment();
 				//payment.main(null);
 				
+				java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+				
+				
 				System.out.print(price);
 				try 
 				{
@@ -641,33 +658,103 @@ public class GUI {
 					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 			        java.sql.ResultSet rs;
 			        
-			        String s = "INSERT INTO fast_food.Order_Item (Order_Number, Product_Code, Product_Name, Quanity, Total_Price) VALUES(?,?,?,?,?)";
+			        String s = "INSERT INTO fast_food.Order (Total_Cost, TimeDate, Order_Status) VALUES(?,?,?)";
 			        PreparedStatement pst = conn.prepareStatement(s);
 			        
-			        int count =1;
+			       
 			        
-			        int pc = 2;
+			        
 			  
 			        
-			        pst.setInt(1, count);
-			        pst.setInt(2,  pc);
+			        //pst.setInt(1, count);
+			        //pst.setInt(2,  pc);
+			       // for(int r=0; r<OrderSummary.getRowCount(); r++)
+			       // {
+			        	//String name = (String)OrderSummary.getValueAt(r, 0);
+			        	//int quan = (Integer)OrderSummary.getValueAt(r, 1);
+			        	//String rprice = (String)OrderSummary.getValueAt(r, 2);
+			        	
+			        
+			        	double fprice = Double.parseDouble(FinalPrice.getText());
+			        	
+			        	pst.setDouble(1, fprice);
+			        	pst.setTimestamp(2, date);
+			        	pst.setString(3, "Not Ready");
+			        	
+			        	//pst.setInt(4, quan);
+			        	//pst.setDouble(5,fprice);
+			        	
+			        	
+			        	
+			        	//pst.addBatch();
+			       // }
+			        pst.executeUpdate();
+			       
+				}
+				catch(Exception e5)
+				{
+					System.out.print(e5);
+				}
+				
+				int orderPassedIn = 0;
+				try 
+				{
+			    	Class.forName("com.mysql.jdbc.Driver");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+			        java.sql.ResultSet rs;
+			        
+			        String s = "SELECT MAX(Order_Number) FROM fast_food.`order` ";
+			        PreparedStatement pst = conn.prepareStatement(s);
+			        ResultSet resultSet = pst.executeQuery();
+			        while(resultSet.next())
+			        {
+			        	orderPassedIn = resultSet.getInt(1);
+			        }
+				}
+				catch(Exception e5)
+				{
+					System.out.print(e5);
+				}
+			
+				
+				//int Finalpc = Integer.parseInt(pc.getText());
+				//System.out.print(orderPassedIn);
+				try 
+				{
+			    	Class.forName("com.mysql.jdbc.Driver");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+			        java.sql.ResultSet rs;
+			        
+			        String s = "INSERT INTO fast_food.Order_Item (Order_Number, Product_Code, Quantity, Total_Price) VALUES(?,?,?,?)";
+			        PreparedStatement pst = conn.prepareStatement(s);
+			  
+			        
+			        int orderNo = orderPassedIn;
 			        for(int r=0; r<OrderSummary.getRowCount(); r++)
 			        {
-			        	String name = (String)OrderSummary.getValueAt(r, 0);
-			        	int quan = (Integer)OrderSummary.getValueAt(r, 1);
-			        	String rprice = (String)OrderSummary.getValueAt(r, 2);
+			        	
+			        	int pc = (Integer)OrderSummary.getValueAt(r, 0);
+			        	int quan = (Integer)OrderSummary.getValueAt(r, 2);
+			        	String rprice = (String)OrderSummary.getValueAt(r, 3);
 			        	
 			        	double fprice = Double.parseDouble(rprice);
+			        	//int fpc = Integer.parseInt(pc);
+			        	//int fquan = Integer.parseInt(quan);
 			        	
-			        	pst.setString(3, name);
-			        	pst.setInt(4, quan);
-			        	pst.setDouble(5,fprice);
+			        	pst.setInt(0,orderNo);
+			        	pst.setInt(1, pc);
+			        	pst.setInt(2, quan);
+			        	pst.setDouble(3, fprice);
+			        	
+			        	//pst.setInt(4, quan);
+			        	//pst.setDouble(5,fprice);
 			        	
 			        	
 			        	
 			        	pst.addBatch();
-			        }
-			        pst.executeBatch();
+			       }
+			        
+			        pst.executeUpdate();
 			       
 				}
 				catch(Exception e5)
