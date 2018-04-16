@@ -35,6 +35,7 @@ import java.awt.event.ItemListener;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
@@ -413,8 +414,7 @@ public class GUI {
 		        	}
 		        	pst.close();
 					} catch (SQLException | ClassNotFoundException e1) 
-		    	{
-						
+		    	{		
 						System.out.print(e1);
 					}
 					
@@ -494,6 +494,7 @@ public class GUI {
 		spinner.setBounds(853, 763, 60, 34);
 		frmMenu.getContentPane().add(spinner);
 		
+		
 		JButton addBtn = new JButton("Add To Order");
 		addBtn.setContentAreaFilled(false);
 		addBtn.setBorderPainted(false);
@@ -519,9 +520,15 @@ public class GUI {
 				int rowss = OrderSummary.getRowCount();
 				int cols = OrderSummary.getColumnCount();
 				
+				DecimalFormat df = new DecimalFormat("#.00"); 
 				double fprice = sprice * fQuan;
 				
-				dtm.addRow(new Object[]{fname, fQuan, fprice});
+				//String res = String.format("%.2f", total)
+				
+				dtm.addRow(new Object[]{fname, fQuan, df.format(fprice)});
+				
+				spinner.setValue(1);
+				
 				/*
 				Object[] row = new Object[2];
 				ThankYou frame = new ThankYou();
@@ -634,23 +641,34 @@ public class GUI {
 					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 			        java.sql.ResultSet rs;
 			        
-			        String s = "INSERT INTO fast_food.Order_Item (Product_Name, Quanity, Total_Price) VALUES(?,?,?)";
+			        String s = "INSERT INTO fast_food.Order_Item (Order_Number, Product_Code, Product_Name, Quanity, Total_Price) VALUES(?,?,?,?,?)";
 			        PreparedStatement pst = conn.prepareStatement(s);
 			        
+			        int count =1;
+			        
+			        int pc = 2;
+			  
+			        
+			        pst.setInt(1, count);
+			        pst.setInt(2,  pc);
 			        for(int r=0; r<OrderSummary.getRowCount(); r++)
 			        {
 			        	String name = (String)OrderSummary.getValueAt(r, 0);
 			        	int quan = (Integer)OrderSummary.getValueAt(r, 1);
-			        	double fprice = Double.parseDouble(price);
+			        	String rprice = (String)OrderSummary.getValueAt(r, 2);
 			        	
-			        	pst.setString(1, name);
-			        	pst.setInt(2, quan);
-			        	pst.setDouble(3,fprice);
+			        	double fprice = Double.parseDouble(rprice);
+			        	
+			        	pst.setString(3, name);
+			        	pst.setInt(4, quan);
+			        	pst.setDouble(5,fprice);
+			        	
+			        	
 			        	
 			        	pst.addBatch();
 			        }
 			        pst.executeBatch();
-			        //conn.commit();
+			       
 				}
 				catch(Exception e5)
 				{
