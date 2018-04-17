@@ -710,8 +710,10 @@ public class GUI {
 				try 
 				{
 			    	Class.forName("com.mysql.jdbc.Driver");
-					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
+				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
 			        java.sql.ResultSet rs;
+				conn.setAutoCommit(false);
+
 
 			        
 			        String s = "INSERT INTO fast_food.Order_Item (Order_Number, Product_Code, Quantity, Total_Price) VALUES(?,?,?,?)";
@@ -739,9 +741,9 @@ public class GUI {
 			        	pst.addBatch();
 			       }
 
-			        //pst.executeBatch();
-			        pst.executeUpdate();
-			        //conn.commit();
+			          pst.executeBatch();
+			       // pst.executeUpdate();
+			          conn.commit();
 			       
 				}
 				catch(Exception e5)
