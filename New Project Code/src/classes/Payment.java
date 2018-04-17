@@ -1,4 +1,4 @@
-package classes;
+package Resturaunt;
 
 import java.awt.EventQueue;
 
@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.SwingConstants;
@@ -34,6 +35,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import java.awt.event.KeyAdapter;
+import java.io.PrintWriter;
 
 
 public class Payment extends JFrame {
@@ -286,6 +288,52 @@ public class Payment extends JFrame {
 					   	System.out.println(ee);
 				
 				  }
+				   
+				   try
+				   {
+					   
+					   Class.forName("com.mysql.jdbc.Driver");
+						java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
+				        java.sql.ResultSet rs;
+				        Statement stmt = conn.createStatement();
+				        //java.sql.PreparedStatement pst;
+				        
+					    rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
+int orderNum=0;
+		        	    if (rs.next())
+		        	    {
+		        	    	orderNum = rs.getInt(1);
+		        	    } else 
+		        	    {
+		        	        // throw an exception from here
+		        	    }
+				        
+		        	    String s = "Select * from fast_food.order_item WHERE 'Order_Number' = ?";
+			        	PreparedStatement pst = conn.prepareStatement(s);
+			        	pst.setInt(1, orderNum);
+			        	java.sql.ResultSet rst=pst.executeQuery();
+			        	PrintWriter out = new PrintWriter("Recipt.txt");
+			        	
+			        	out.println("Kitchen Staff Recipt");
+			        	out.println("Order Number: "+orderNum);
+			        	
+			        	while(rst.next()) 
+			        	{
+			        		out.println(rst.getInt("Order_Number"));
+			        		out.println(rst.getInt("Product_Code"));
+			        		out.println(rst.getInt("Quantity"));
+			        		out.println(rst.getDouble("Total_Price"));
+						
+						 
+			        	}
+			        	pst.close();
+						} 
+					   
+
+				   catch(Exception ee) 
+				   {
+					   	System.out.println(ee);
+				  }
 			
 			}});
 		btnConfirm.setContentAreaFilled(false);
@@ -318,7 +366,7 @@ public class Payment extends JFrame {
 		btnCancel.setFont(new Font("Open Sans", Font.BOLD, 30));
 		btnCancel.setBounds(280, 485, 175, 51);
 		frame.getContentPane().add(btnCancel);
-		
+
 		
 	}
 }
