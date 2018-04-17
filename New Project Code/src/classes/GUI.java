@@ -1,5 +1,5 @@
 
-package Resturaunt;
+package classes;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -23,10 +23,16 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.sql.Statement;
 
 import com.mysql.jdbc.Connection;
-//import com.mysql.jdbc.ResultSet;
-import com.mysql.jdbc.Statement;
+import com.sun.jmx.snmp.Timestamp;
+import java.math.*;
+
+
+
+import javafx.scene.control.TableColumn;
+import net.proteanit.sql.DbUtils;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -48,6 +54,7 @@ import java.awt.CardLayout;
 
 public class GUI {
 
+	protected static final ResultSet Statement = null;
 	private JFrame frmMenu;
 	private JTextField textField;
 
@@ -83,7 +90,7 @@ public class GUI {
 
 		frmMenu.getContentPane().setBackground(new Color(255, 216, 120));
 		frmMenu.setTitle("MENU");
-		frmMenu.setBounds(100, 100, 1587, 900);
+		frmMenu.setBounds(100, 100, 1638, 947);
 		frmMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmMenu.getContentPane().setLayout(null);
 		
@@ -128,11 +135,11 @@ public class GUI {
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBackground(Color.WHITE);
 		scrollPane_1.setFont(new Font("Open Sans", Font.PLAIN, 15));
-		scrollPane_1.setBounds(973, 94, 584, 475);
+		scrollPane_1.setBounds(973, 94, 621, 475);
 		frmMenu.getContentPane().add(scrollPane_1);
 		
 		JTable OrderSummary = new JTable();
-		OrderSummary.setRowHeight(25);
+		OrderSummary.setRowHeight(35);
 		OrderSummary.setBackground(Color.WHITE);
 		OrderSummary.setFont(new Font("Open Sans", Font.PLAIN, 25));
 		scrollPane_1.setViewportView(OrderSummary);
@@ -140,10 +147,12 @@ public class GUI {
 		
 		OrderSummary.setAutoResizeMode(OrderSummary.AUTO_RESIZE_OFF);
 		javax.swing.table.TableColumn col = OrderSummary.getColumnModel().getColumn(0);
-		col.setPreferredWidth(300);
-		col=OrderSummary.getColumnModel().getColumn(1);
 		col.setPreferredWidth(100);
+		col=OrderSummary.getColumnModel().getColumn(1);
+		col.setPreferredWidth(300);
 		col=OrderSummary.getColumnModel().getColumn(2);
+		col.setPreferredWidth(100);
+		col=OrderSummary.getColumnModel().getColumn(3);
 		col.setPreferredWidth(100);
 		
 		//dtm.addRow(new Object[]{"--Product--", "--Quantity--", "--Price--"});
@@ -492,7 +501,7 @@ public class GUI {
 			    FinalPrice.setText(res);
 			}
 		});
-		DeleteBtn.setBounds(1113, 710, 294, 40);
+		DeleteBtn.setBounds(1137, 726, 294, 40);
 		frmMenu.getContentPane().add(DeleteBtn);
 		
 		
@@ -511,7 +520,7 @@ public class GUI {
 		addBtn.setContentAreaFilled(false);
 		addBtn.setBorderPainted(false);
 		addBtn.setFont(new Font("Open Sans", Font.BOLD, 30));
-		addBtn.setBounds(578, 809, 314, 52);
+		addBtn.setBounds(596, 835, 314, 52);
 		frmMenu.getContentPane().add(addBtn);
 		
 		
@@ -650,120 +659,98 @@ public class GUI {
 				
 				java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 				
-				
+				//RETURN_GENERATED_KEYS
+				int orderNum = -1;
 				System.out.print(price);
 				try 
 				{
 			    	Class.forName("com.mysql.jdbc.Driver");
-					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
 			        java.sql.ResultSet rs;
+			        //java.sql.Statement
 			        
-			        String s = "INSERT INTO fast_food.Order (Total_Cost, TimeDate, Order_Status) VALUES(?,?,?)";
-			        PreparedStatement pst = conn.prepareStatement(s);
-			        
-			       
-			        
-			        
-			  
-			        
-			        //pst.setInt(1, count);
-			        //pst.setInt(2,  pc);
-			       // for(int r=0; r<OrderSummary.getRowCount(); r++)
-			       // {
-			        	//String name = (String)OrderSummary.getValueAt(r, 0);
-			        	//int quan = (Integer)OrderSummary.getValueAt(r, 1);
-			        	//String rprice = (String)OrderSummary.getValueAt(r, 2);
-			        	
-			        
-			        	double fprice = Double.parseDouble(FinalPrice.getText());
+			       String s = "INSERT INTO fast_food.Order (Total_Cost, TimeDate, Order_Status) VALUES(?,?,?)";
+			       PreparedStatement pst = conn.prepareStatement(s);
+			       Statement stmt = conn.createStatement();
+
+			        double fprice = Double.parseDouble(FinalPrice.getText());
 			        	
 			        	pst.setDouble(1, fprice);
 			        	pst.setTimestamp(2, date);
 			        	pst.setString(3, "Not Ready");
 			        	
-			        	//pst.setInt(4, quan);
-			        	//pst.setDouble(5,fprice);
+			        	pst.executeUpdate();
+			  
+			        	// int autoIncKeyFromFunc = -1;
+			        	    rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
+
+			        	    if (rs.next())
+			        	    {
+			        	    	orderNum = rs.getInt(1);
+			        	    } else 
+			        	    {
+			        	        // throw an exception from here
+			        	    }
+
+			        	    System.out.println("Key returned from " +
+			        	                       "'SELECT LAST_INSERT_ID()': " +
+			        	                       orderNum);
+
 			        	
-			        	
-			        	
-			        	//pst.addBatch();
-			       // }
-			        pst.executeUpdate();
-			       
+			       conn.close();
+			       pst.close();
 				}
 				catch(Exception e5)
 				{
 					System.out.print(e5);
 				}
 				
-				int orderPassedIn = 0;
-				try 
-				{
-			    	Class.forName("com.mysql.jdbc.Driver");
-					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
-			        java.sql.ResultSet rs;
-			        
-			        String s = "SELECT MAX(Order_Number) FROM fast_food.`order` ";
-			        PreparedStatement pst = conn.prepareStatement(s);
-			        ResultSet resultSet = pst.executeQuery();
-			        while(resultSet.next())
-			        {
-			        	orderPassedIn = resultSet.getInt(1);
-			        }
-				}
-				catch(Exception e5)
-				{
-					System.out.print(e5);
-				}
-			
 				
-				//int Finalpc = Integer.parseInt(pc.getText());
-				//System.out.print(orderPassedIn);
+						
 				try 
 				{
 			    	Class.forName("com.mysql.jdbc.Driver");
-					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
 			        java.sql.ResultSet rs;
+
 			        
 			        String s = "INSERT INTO fast_food.Order_Item (Order_Number, Product_Code, Quantity, Total_Price) VALUES(?,?,?,?)";
 			        PreparedStatement pst = conn.prepareStatement(s);
 			  
 			        
-			        int orderNo = orderPassedIn;
-			        for(int r=0; r<OrderSummary.getRowCount(); r++)
+			        int orderNo = orderNum;
+			        int data =OrderSummary.getRowCount();
+			        for(int r=0; r<data; r++)
 			        {
 			        	
 			        	int pc = (Integer)OrderSummary.getValueAt(r, 0);
+			        	String name1 = (String)OrderSummary.getValueAt(r, 1);
 			        	int quan = (Integer)OrderSummary.getValueAt(r, 2);
 			        	String rprice = (String)OrderSummary.getValueAt(r, 3);
 			        	
 			        	double fprice = Double.parseDouble(rprice);
-			        	//int fpc = Integer.parseInt(pc);
-			        	//int fquan = Integer.parseInt(quan);
-			        	
-			        	pst.setInt(0,orderNo);
-			        	pst.setInt(1, pc);
-			        	pst.setInt(2, quan);
-			        	pst.setDouble(3, fprice);
-			        	
-			        	//pst.setInt(4, quan);
-			        	//pst.setDouble(5,fprice);
 			        	
 			        	
+			        	pst.setInt(1, orderNo);
+			        	pst.setInt(2, pc);
+			        	pst.setInt(3, quan);
+			        	pst.setDouble(4, fprice);
 			        	
 			        	pst.addBatch();
 			       }
-			        
+
+			        //pst.executeBatch();
 			        pst.executeUpdate();
+			        //conn.commit();
 			       
 				}
 				catch(Exception e5)
 				{
-					System.out.print(e5);
+					System.out.print("wrong"+e5);
 				}
 			}
 		});
-		ConfirmBtn.setBounds(1332, 632, 225, 40);
+		ConfirmBtn.setBounds(1383, 632, 225, 40);
 		frmMenu.getContentPane().add(ConfirmBtn);
 //	    JLabel FinalPrice = new JLabel();
 //    	FinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -795,7 +782,7 @@ public class GUI {
 	frmMenu.getContentPane().add(lblTotal);
 	
 	JLabel label = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\add.png"));
-	label.setBounds(553, 830, 83, 74);
+	label.setBounds(578, 826, 83, 74);
 	frmMenu.getContentPane().add(label);
 	
 	JLabel label_1 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\remove.png"));
@@ -803,11 +790,11 @@ public class GUI {
 	frmMenu.getContentPane().add(label_1);
 	
 	JLabel label_2 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\ok.png"));
-	label_2.setBounds(1272, 619, 93, 63);
+	label_2.setBounds(1338, 619, 93, 63);
 	frmMenu.getContentPane().add(label_2);
 	
 	JLabel label_3 = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\bin.png"));
-	label_3.setBounds(1148, 697, 93, 69);
+	label_3.setBounds(1161, 711, 93, 69);
 	frmMenu.getContentPane().add(label_3);
 	
 	JLabel lblNewLabel_1 = new JLabel("\u20AC");
