@@ -1,4 +1,4 @@
-package Resturaunt;
+package classes;
 
 import java.awt.EventQueue;
 
@@ -376,24 +376,20 @@ public class Payment extends JFrame {
 			        	        // throw an exception from here
 			        	    }
 					        
-			        	    String s = "select fast_food.order_item.Order_Number, Name, Quantity, Total_Price, Order_Status, TimeDate from fast_food.order, order_item, product where fast_food.order.Order_Number = order_item.Order_Number && order_item.Product_Code = product.Product_Code && fast_food.Order.Order_Number = ?";
+			        	    String s = "Select * from fast_food.order_item WHERE 'Order_Number' = ?";
 				        	PreparedStatement pst = conn.prepareStatement(s);
 				        	pst.setInt(1, orderNum1);
 				        	java.sql.ResultSet rst=pst.executeQuery();
-				        	PrintWriter out = new PrintWriter("Recipt"+orderNum1+".txt");
+				        	PrintWriter out = new PrintWriter("Recipt"+orderNum+".txt");
 				        	
-				        	out.println("****************************************");
-				        	out.println("***************The Chippy***************");
-				        	out.println("****************************************");
 				        	out.println("Kitchen Staff Recipt");
-				        	out.print(rst.getInt("Order_Number"));
-				        	out.println(rst.getTimestamp("TimeDate"));
-				        	out.println("Product Code *  Product Name  *  Quantity  *  Total Price");
+				        	out.println("Order Number: "+orderNum1);
+				        	
 				        	while(rst.next()) 
 				        	{
-				        		//out.println(rst.getInt("Order_Number"));
-				        		out.println(rst.getInt("Product_Code"));
-				        		out.print(rst.getString("Product_Name"));
+				        		
+				        		out.print(rst.getInt("Order_Number"));
+				        		out.print(rst.getInt("Product_Code"));
 				        		out.print(rst.getInt("Quantity"));
 				        		out.print(rst.getDouble("Total_Price"));
 							
@@ -419,7 +415,7 @@ public class Payment extends JFrame {
 			orderIn = new JTextField();
 			orderIn.setBackground(new Color(255, 224, 147));
 			orderIn.setFont(new Font("Tahoma", Font.BOLD, 50));
-			orderIn.setBounds(421, 352, 162, 108);
+			orderIn.setBounds(421, 350, 162, 108);
 			panel_1.add(orderIn);
 			orderIn.setColumns(10);
 			orderIn.setEditable(false);
@@ -434,7 +430,7 @@ public class Payment extends JFrame {
 			
 			JLabel lblOrderNumber = new JLabel("Order Number:");
 			lblOrderNumber.setFont(new Font("Open Sans", Font.BOLD, 30));
-			lblOrderNumber.setBounds(379, 272, 322, 83);
+			lblOrderNumber.setBounds(386, 273, 322, 83);
 			panel_1.add(lblOrderNumber);
 			
 			JLabel lblEnjoy = new JLabel("ENJOY ");
@@ -444,7 +440,7 @@ public class Payment extends JFrame {
 			
 			JLabel lblYour = new JLabel("Your");
 			lblYour.setFont(new Font("Open Sans", Font.BOLD, 30));
-			lblYour.setBounds(445, 236, 134, 61);
+			lblYour.setBounds(458, 237, 88, 61);
 			panel_1.add(lblYour);
 		
 			
