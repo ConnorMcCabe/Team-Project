@@ -68,7 +68,7 @@ public class KitchenStaff {
 		frame = new JFrame();
 		//frame.setBounds(100, 100, 659, 385);
 		frame.setBounds(100, 100, 925, 550);
-		frame.getContentPane().setBackground(new Color(115, 168, 100));
+		frame.getContentPane().setBackground(new Color(255, 244, 147));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
@@ -80,7 +80,7 @@ public class KitchenStaff {
 		JComboBox<String> OrderStatus = new JComboBox<String>();
 		OrderStatus.setBounds(656, 432, 243, 30);
 		OrderStatus.setForeground(new Color(0, 0, 0));
-		OrderStatus.setBackground(new Color(255, 255, 102));
+		OrderStatus.setBackground(Color.WHITE);
 		OrderStatus.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		OrderStatus.setModel(new DefaultComboBoxModel(new String[] {"Not Ready", "Ready"}));
 		try
@@ -107,7 +107,7 @@ public class KitchenStaff {
 		JComboBox<String> OrderNum = new JComboBox();
 		OrderNum.setBounds(203, 432, 151, 31);
 		OrderNum.setForeground(new Color(0, 0, 0));
-		OrderNum.setBackground(new Color(255, 255, 102));
+		OrderNum.setBackground(new Color(255, 255, 255));
 		OrderNum.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		OrderNum.setModel(new DefaultComboBoxModel(new String[] {"Select Order"}));
 		try
@@ -162,7 +162,7 @@ public class KitchenStaff {
 		JButton SetStatus = new JButton("Set Status");
 		SetStatus.setBounds(734, 235, 126, 125);
 		SetStatus.setForeground(new Color(0, 0, 0));
-		SetStatus.setBackground(new Color(255, 255, 102));
+		SetStatus.setBackground(Color.WHITE);
 		SetStatus.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		SetStatus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -187,10 +187,10 @@ public class KitchenStaff {
 			}
 		});
 /////////////////////////////////// Load Table Button ////////////////////////////////////////////////////////	
-		JButton LoadOrderButton = new JButton("Load Orders");
-		LoadOrderButton.setBounds(161, 239, 140, 117);
+		JButton LoadOrderButton = new JButton("View All Orders");
+		LoadOrderButton.setBounds(84, 239, 217, 117);
 		LoadOrderButton.setForeground(new Color(0, 0, 0));
-		LoadOrderButton.setBackground(new Color(255, 255, 102));
+		LoadOrderButton.setBackground(Color.WHITE);
 		LoadOrderButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		LoadOrderButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -213,15 +213,16 @@ public class KitchenStaff {
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(0, 11, 910, 147);
 ////////////////////////////// DISPLAY ORDER ITEM //////////////////////////////////////////////////////////		
-		JButton DisplayOrderItem = new JButton("Display Order Criteria");
+		JButton DisplayOrderItem = new JButton("View Order Details");
 		DisplayOrderItem.setBounds(409, 239, 232, 117);
 		DisplayOrderItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					Class.forName("com.mysql.jdbc.Driver");
 					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
-					String query = "Select Order_Number,Product_Code,Quantity,Total_Price,Name FROM fast_food.order_item, fast_food.product WHERE order_item.Product_Code = Product_Code WHERE Order_Number = ?";
 
+					String query = "SELECT fast_food.order_item.Order_Number, Name, Quantity, Order_Status, TimeDate FROM fast_food.order, order_item, product where fast_food.order.Order_Number = ? && order_item.Product_Code = product.Product_Code";
+					
 					PreparedStatement pst = conn.prepareStatement(query);
 		        	pst.setString(1, (String)OrderNum.getSelectedItem());
 		        	if(OrderNum.getSelectedItem() == "Select Order")
@@ -242,7 +243,7 @@ public class KitchenStaff {
 		    });
 		DisplayOrderItem.setForeground(Color.BLACK);
 		DisplayOrderItem.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		DisplayOrderItem.setBackground(new Color(255, 255, 102));
+		DisplayOrderItem.setBackground(Color.WHITE);
 
 		table = new JTable();
 		table.setRowHeight(20);
@@ -250,14 +251,13 @@ public class KitchenStaff {
 		scrollPane_1.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null},
 			},
 			new String[] {
-				"Order_Number", "Total_Cost", "Time", "Date", "Paid", "Order_Status"
+				"Order_Number", "Total_Cost", "TimeDate", "Order_Status"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(89);
-		table.getColumnModel().getColumn(5).setPreferredWidth(79);
+		table.getColumnModel().getColumn(3).setPreferredWidth(79);
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().add(scrollPane_1);
 		frame.getContentPane().add(LoadOrderButton);
