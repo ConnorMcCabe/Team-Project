@@ -642,6 +642,7 @@ public class GUI {
 			    	Class.forName("com.mysql.jdbc.Driver");
 					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
 			        java.sql.ResultSet rs;
+			        conn.setAutoCommit(false);
 
 			        
 			        String s = "INSERT INTO fast_food.Order_Item (Order_Number, Product_Code, Quantity, Total_Price) VALUES(?,?,?,?)";
@@ -650,13 +651,13 @@ public class GUI {
 			        
 			        int orderNo = orderNum;
 			        int data =OrderSummary.getRowCount();
-			        for(int i=0; r<data; i++)
+			        for(int r1=0; r1<data; r1++)
 			        {
 			        	
-			        	int pc = (Integer)OrderSummary.getValueAt(r, 0);
-			        	String name1 = (String)OrderSummary.getValueAt(r, 1);
-			        	int quan = (Integer)OrderSummary.getValueAt(r, 2);
-			        	String rprice = (String)OrderSummary.getValueAt(r, 3);
+			        	int pc = (Integer)OrderSummary.getValueAt(r1, 0);
+			        	//String name1 = (String)OrderSummary.getValueAt(r1, 1);
+			        	int quan = (Integer)OrderSummary.getValueAt(r1, 2);
+			        	String rprice = (String)OrderSummary.getValueAt(r1, 3);
 			        	
 			        	double fprice = Double.parseDouble(rprice);
 			        	
@@ -670,8 +671,7 @@ public class GUI {
 			       }
 
 			        pst.executeBatch();
-			        //pst.executeUpdate();
-			        //conn.commit();
+			        conn.commit();
 			       
 				}
 				catch(Exception e5)
