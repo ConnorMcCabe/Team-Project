@@ -1,5 +1,5 @@
 
-package Resturaunt;
+package classes;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -83,7 +83,7 @@ public class GUI {
 	private void initialize() {
 		frmMenu = new JFrame();
 
-		frmMenu.getContentPane().setBackground(new Color(255, 216, 120));
+		frmMenu.getContentPane().setBackground(new Color(255, 224, 147));
 		frmMenu.setTitle("MENU");
 		frmMenu.setBounds(100, 100, 1638, 947);
 		frmMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -516,7 +516,7 @@ public class GUI {
 		addBtn.setContentAreaFilled(false);
 		addBtn.setBorderPainted(false);
 		addBtn.setFont(new Font("Open Sans", Font.BOLD, 30));
-		addBtn.setBounds(596, 800, 314, 52);
+		addBtn.setBounds(595, 835, 314, 52);
 		frmMenu.getContentPane().add(addBtn);
 		
 		
@@ -585,7 +585,7 @@ public class GUI {
 				String price = FinalPrice.getText();
 				
 				Payment payment = new Payment();
-				//payment.main(null);
+				payment.main(null);
 				
 				java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
 				
@@ -751,7 +751,7 @@ public class GUI {
 		time_label.setText("" + Calendar.getInstance().getTime());
 	}
 };
-new Timer(delay, al).start();
+	new Timer(delay, al).start();
 
 	JLabel lblQuantity = new JLabel("Quantity:");
 	lblQuantity.setFont(new Font("Open Sans", Font.PLAIN, 25));
