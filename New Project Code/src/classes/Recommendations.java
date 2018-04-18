@@ -1,18 +1,40 @@
 package classes;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Color;
+import javax.swing.UIManager;
+import javax.swing.SwingConstants;
+import java.awt.Component;
+import javax.swing.JTextPane;
+import javax.swing.JComboBox;
+import javax.swing.JMenuBar;
+import java.awt.TextArea;
+import javax.swing.JTextArea;
 
 public class Recommendations {
 
 	private JFrame frame;
+	
+	private Connection conn;
+	private Statement stmt;
+	private PreparedStatement ppdStmt;
+	private ResultSet resultSet;
 
 	/**
 	 * Launch the application.
@@ -42,44 +64,73 @@ public class Recommendations {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 609, 406);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		frame.getContentPane().add(panel, "name_280259102687753");
-		panel.setLayout(null);
-		
-		JButton btnRecomm = new JButton("Recommendations");
-		btnRecomm.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnRecomm.setBounds(120, 90, 220, 60);
-		panel.add(btnRecomm);
+		/***************JPANELS CREATED***************/
 		
 		JPanel panel_1 = new JPanel();
-		frame.getContentPane().add(panel_1, "name_280286358221424");
+		panel_1.setBackground(new Color(255, 224, 147));
+		frame.getContentPane().add(panel_1, "name_280259102687753");
 		panel_1.setLayout(null);
 		
-		JLabel lblRecommendedSelections = new JLabel("Recommended Selections");
-		lblRecommendedSelections.setBounds(10, 11, 129, 60);
-		panel_1.add(lblRecommendedSelections);
+		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(255, 224, 147));
+		frame.getContentPane().add(panel_2, "name_280286358221424");
+		panel_2.setLayout(null);
 		
-		JLabel lblMains = new JLabel("Mains");
-		lblMains.setBounds(20, 65, 46, 14);
-		panel_1.add(lblMains);
+		/********************PANEL 1 CODE*********************/
+
+		JButton btnRecomm = new JButton("Recommendations");
+		btnRecomm.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnRecomm.setMnemonic('R');
+		btnRecomm.setFont(new Font("Open Sans", Font.BOLD, 40));
+		btnRecomm.setBackground(UIManager.getColor("Button.darkShadow"));
+		btnRecomm.setBounds(105, 149, 390, 60);
+		panel_1.add(btnRecomm);
 		
-		JLabel lblSides = new JLabel("Sides");
-		lblSides.setBounds(149, 65, 46, 14);
-		panel_1.add(lblSides);
+		btnRecomm.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panel_1.setVisible(false);
+				panel_2.setVisible(true);
+				
+			}
+		});
 		
-		JLabel lblDesserts = new JLabel("Desserts");
-		lblDesserts.setBounds(350, 65, 46, 14);
-		panel_1.add(lblDesserts);
+		/********************PANEL 2 CODE*********************/
 		
-		JLabel lblNewLabel = new JLabel("Drinks");
-		lblNewLabel.setBounds(238, 65, 46, 14);
-		panel_1.add(lblNewLabel);
+		JLabel lblRSelections = new JLabel("Recommended Selections");
+		lblRSelections.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRSelections.setFont(new Font("Open Sans", Font.BOLD | Font.ITALIC, 35));
+		lblRSelections.setBounds(65, 19, 490, 60);
+		panel_2.add(lblRSelections);
+		
+		TextArea textArea = new TextArea();
+		textArea.setBounds(65, 101, 490, 227);
+		panel_2.add(textArea);
+		
+		
+		/*try
+		{
+			ResultSet res;
+			Statement stmt;
+			Class.forName("com.mysql.jdbc.Driver");
+			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
+			stmt = conn.createStatement();
+			res = stmt.executeQuery("Select * from fast_food.product");
+			while(res.next())
+			{
+				panel_2.add(rs.getString(1));
+			}
+		}
+			catch (Exception x2)
+			{
+				System.out.print(x2);
+				JOptionPane.showMessageDialog(null, "Error");
+			}*/
+		
 	}
 }
