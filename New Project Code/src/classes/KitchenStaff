@@ -29,6 +29,7 @@ import javax.swing.JCheckBox;
 import java.awt.Button;
 import javax.swing.JScrollPane;
 import java.awt.Font;
+import javax.swing.border.BevelBorder;
 
 public class KitchenStaff {
 	Connection conn = null;
@@ -66,16 +67,18 @@ public class KitchenStaff {
 	private void initialize() {
 		frame = new JFrame();
 		//frame.setBounds(100, 100, 659, 385);
-		frame.setBounds(100, 100, 950, 550);
+		frame.setBounds(100, 100, 925, 550);
 		frame.getContentPane().setBackground(new Color(115, 168, 100));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
 ///////////////////// ORDER STATUS COMBO BOX ////////////////////////////////////////////////	
 		JLabel StatusLabel = new JLabel("Order Status");
+		StatusLabel.setBounds(494, 426, 112, 43);
 		StatusLabel.setForeground(new Color(0, 0, 0));
 		StatusLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		JComboBox<String> OrderStatus = new JComboBox<String>();
+		OrderStatus.setBounds(656, 432, 243, 30);
 		OrderStatus.setForeground(new Color(0, 0, 0));
 		OrderStatus.setBackground(new Color(255, 255, 102));
 		OrderStatus.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -98,9 +101,11 @@ public class KitchenStaff {
 
 ///////////////// ORDER NUMBER COMBO BOX /////////////////////////////////////////////////////	
 		JLabel NumberLabel = new JLabel("Order Number");
+		NumberLabel.setBounds(49, 426, 136, 43);
 		NumberLabel.setForeground(new Color(0, 0, 0));
 		NumberLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		JComboBox<String> OrderNum = new JComboBox();
+		OrderNum.setBounds(203, 432, 151, 31);
 		OrderNum.setForeground(new Color(0, 0, 0));
 		OrderNum.setBackground(new Color(255, 255, 102));
 		OrderNum.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -155,6 +160,7 @@ public class KitchenStaff {
 
 //////////////////////////// SET STATUS BUTTON //////////////////////////////////////////////////////		
 		JButton SetStatus = new JButton("Set Status");
+		SetStatus.setBounds(734, 235, 126, 125);
 		SetStatus.setForeground(new Color(0, 0, 0));
 		SetStatus.setBackground(new Color(255, 255, 102));
 		SetStatus.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -182,6 +188,7 @@ public class KitchenStaff {
 		});
 /////////////////////////////////// Load Table Button ////////////////////////////////////////////////////////	
 		JButton LoadOrderButton = new JButton("Load Orders");
+		LoadOrderButton.setBounds(161, 239, 140, 117);
 		LoadOrderButton.setForeground(new Color(0, 0, 0));
 		LoadOrderButton.setBackground(new Color(255, 255, 102));
 		LoadOrderButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -204,14 +211,17 @@ public class KitchenStaff {
 			}
 		});
 		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(0, 11, 910, 147);
 ////////////////////////////// DISPLAY ORDER ITEM //////////////////////////////////////////////////////////		
 		JButton DisplayOrderItem = new JButton("Display Order Criteria");
+		DisplayOrderItem.setBounds(409, 239, 232, 117);
 		DisplayOrderItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					Class.forName("com.mysql.jdbc.Driver");
 					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
-					String query = "Select * from fast_food.order_item WHERE Order_Number = ?";
+					String query = "Select Order_Number,Product_Code,Quantity,Total_Price,Name FROM fast_food.order_item, fast_food.product WHERE order_item.Product_Code = Product_Code WHERE Order_Number = ?";
+
 					PreparedStatement pst = conn.prepareStatement(query);
 		        	pst.setString(1, (String)OrderNum.getSelectedItem());
 		        	if(OrderNum.getSelectedItem() == "Select Order")
@@ -233,54 +243,10 @@ public class KitchenStaff {
 		DisplayOrderItem.setForeground(Color.BLACK);
 		DisplayOrderItem.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		DisplayOrderItem.setBackground(new Color(255, 255, 102));
-//////////////////////////////GROUP LAYOUT////////////////////////////////////////////////////////////////
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(20)
-							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 910, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(161)
-							.addComponent(LoadOrderButton, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-							.addGap(108)
-							.addComponent(DisplayOrderItem)
-							.addGap(126)
-							.addComponent(SetStatus, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(49)
-					.addComponent(NumberLabel, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
-					.addGap(140)
-					.addComponent(StatusLabel, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-					.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, 243, GroupLayout.PREFERRED_SIZE)
-					.addGap(41))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
-					.addGap(77)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(LoadOrderButton, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
-						.addComponent(SetStatus, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-						.addComponent(DisplayOrderItem, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE))
-					.addGap(66)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(NumberLabel, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
-						.addComponent(OrderNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(StatusLabel, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
-						.addComponent(OrderStatus, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-					.addGap(236))
-		);
 
 		table = new JTable();
+		table.setRowHeight(20);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		scrollPane_1.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -292,6 +258,14 @@ public class KitchenStaff {
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(89);
 		table.getColumnModel().getColumn(5).setPreferredWidth(79);
-		frame.getContentPane().setLayout(groupLayout);
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().add(scrollPane_1);
+		frame.getContentPane().add(LoadOrderButton);
+		frame.getContentPane().add(DisplayOrderItem);
+		frame.getContentPane().add(SetStatus);
+		frame.getContentPane().add(NumberLabel);
+		frame.getContentPane().add(OrderNum);
+		frame.getContentPane().add(StatusLabel);
+		frame.getContentPane().add(OrderStatus);
 	}
 }
