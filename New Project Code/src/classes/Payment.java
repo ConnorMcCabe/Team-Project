@@ -1,4 +1,4 @@
-package classes;
+package Resturaunt;
 
 import java.awt.EventQueue;
 
@@ -376,21 +376,26 @@ public class Payment extends JFrame {
 			        	        // throw an exception from here
 			        	    }
 					        
-			        	    String s = "Select * from fast_food.order_item WHERE 'Order_Number' = ?";
+			        	    String s = "select fast_food.order_item.Order_Number, Name, Quantity, Total_Price, Order_Status, TimeDate from fast_food.order, order_item, product where fast_food.order.Order_Number = order_item.Order_Number && order_item.Product_Code = product.Product_Code && fast_food.Order.Order_Number = ?";
 				        	PreparedStatement pst = conn.prepareStatement(s);
 				        	pst.setInt(1, orderNum1);
 				        	java.sql.ResultSet rst=pst.executeQuery();
-				        	PrintWriter out = new PrintWriter("Recipt"+orderNum+".txt");
+				        	PrintWriter out = new PrintWriter("Recipt"+orderNum1+".txt");
 				        	
+				        	out.println("****************************************");
+				        	out.println("***************The Chippy***************");
+				        	out.println("****************************************");
 				        	out.println("Kitchen Staff Recipt");
-				        	out.println("Order Number: "+orderNum1);
-				        	
+				        	out.print(rst.getInt("Order_Number"));
+				        	out.println(rst.getTimestamp("TimeDate"));
+				        	out.println("Product Code *  Product Name  *  Quantity  *  Total Price");
 				        	while(rst.next()) 
 				        	{
-				        		out.println(rst.getInt("Order_Number"));
+				        		//out.println(rst.getInt("Order_Number"));
 				        		out.println(rst.getInt("Product_Code"));
-				        		out.println(rst.getInt("Quantity"));
-				        		out.println(rst.getDouble("Total_Price"));
+				        		out.print(rst.getString("Product_Name"));
+				        		out.print(rst.getInt("Quantity"));
+				        		out.print(rst.getDouble("Total_Price"));
 							
 							 
 				        	}
