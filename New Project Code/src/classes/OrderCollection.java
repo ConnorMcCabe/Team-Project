@@ -8,7 +8,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
-import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.DefaultComboBoxModel;
@@ -68,44 +67,48 @@ public class OrderCollection {
 		frame.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 11, 910, 147);
+		scrollPane.setBounds(10, 11, 914, 147);
 		frame.getContentPane().add(scrollPane);
 		
 		/******************* ORDER STATUS LABEL AND COMBO BOX ********************/
 		
-		JLabel lblOrderStatus = new JLabel("Order Status");
-		lblOrderStatus.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblOrderStatus.setBounds(496, 263, 170, 35);
-		frame.getContentPane().add(lblOrderStatus);
-
-		JComboBox<String> orderStatusBox = new JComboBox<String>();
-		orderStatusBox.setModel(new DefaultComboBoxModel(new String[] {"Ready", "Not ready"}));
-		orderStatusBox.setForeground(new Color(0,0,0));
-		orderStatusBox.setBackground(new Color(255, 255, 102));
-		orderStatusBox.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		orderStatusBox.setBounds(676, 266, 168, 30);
-		try
-		{
-			java.sql.ResultSet rs;
-			java.sql.Statement st;
-			Class.forName("com.mysql.jdbc.Driver");
-			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/fast_Food","root","password");
-			st = conn.createStatement();
-			String s = "Select Order_Status from fast_food.order;";
-			rs = st.executeQuery(s);
-		}
-		catch (Exception x2)
-		{
-			System.out.print(x2);
-			JOptionPane.showMessageDialog(null, "Error");
-		}
-		
-		frame.getContentPane().add(orderStatusBox);
+//		JLabel lblOrderStatus = new JLabel("Order Status");
+//		lblOrderStatus.setFont(new Font("Tahoma", Font.PLAIN, 20));
+//		lblOrderStatus.setBounds(496, 263, 170, 35);
+//		frame.getContentPane().add(lblOrderStatus);
+//
+//		JComboBox<String> orderStatusBox = new JComboBox<String>();
+//		orderStatusBox.setModel(new DefaultComboBoxModel(new String[] {"Ready", "Not ready"}));
+//		orderStatusBox.setForeground(new Color(0,0,0));
+//		orderStatusBox.setBackground(new Color(255, 255, 255));
+//		orderStatusBox.setFont(new Font("Tahoma", Font.PLAIN, 18));
+//		orderStatusBox.setBounds(676, 266, 168, 30);
+//		try
+//		{
+//			java.sql.ResultSet rs;
+//			java.sql.Statement st;
+//			Class.forName("com.mysql.jdbc.Driver");
+//			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/fast_Food","root","password");
+//			st = conn.createStatement();
+//			String s = "Select Order_Status from fast_food.order;";
+//			rs = st.executeQuery(s);
+//		}
+//		catch (Exception x2)
+//		{
+//			System.out.print(x2);
+//			
+//			JOptionPane.showMessageDialog(null, "Error");
+//		}
+//		
+//		frame.getContentPane().add(orderStatusBox);
 		
 		table_1 = new JTable();
 		scrollPane.setViewportView(table_1);
 		table_1.setModel(new DefaultTableModel(
 			new Object[][] {
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
 				{null, null, null},
 				{null, null, null},
 			},
@@ -114,21 +117,40 @@ public class OrderCollection {
 			}
 		));
 		
+		/*********************** REFRESH BUTTON **************************/
 		JButton refreshBtn = new JButton("Refresh");
+		refreshBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+					String query="Select order_number, order_status, TimeDate from Fast_Food.order where Order_Status = 'Not Ready'";
+
+					PreparedStatement pst = conn.prepareStatement(query);
+					ResultSet rs = pst.executeQuery();
+					table_1.setModel(DbUtils.resultSetToTableModel(rs));
+
+					pst.close();
+					rs.close();				
+				}
+				catch(Exception e2) {
+					e2.printStackTrace();
+				}
+				
+			}
+		});
 		refreshBtn.setForeground(new Color(0, 0, 0));
-		refreshBtn.setBackground(new Color(255, 255, 102));
+		refreshBtn.setBackground(Color.WHITE);
 		refreshBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		refreshBtn.setBounds(10, 477, 120, 23);
-		frame.getContentPane().add(refreshBtn);
-		
-		
-		
+		frame.getContentPane().add(refreshBtn);		
 
 		
 		/******************** ORDER NUMBER LABEL AND COMBO BOX ********************/
 		
 		JLabel lblOrderNumber = new JLabel("Order Number ");
 		lblOrderNumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblOrderNumber.setForeground(new Color(0, 0, 0));
 		lblOrderNumber.setBounds(10, 266, 120, 30);
 		frame.getContentPane().add(lblOrderNumber);
 		
@@ -163,7 +185,7 @@ public class OrderCollection {
 		    	try {
 		    	Class.forName("com.mysql.jdbc.Driver");
 				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
-		        	String s = "Select * from fast_food.order WHERE Order_Number = ?";
+		        	String s = "Select order_number, order_status, TimeDate from fast_food.order WHERE Order_Number = ?";
 
 		        	if(orderNumBox.getSelectedItem() != "Select Order")
 		        	{		        				        	
@@ -174,11 +196,11 @@ public class OrderCollection {
 		        	} 
 		        	else
 		        	{		
-		        		String se ="Select * from fast_food.order";
-		        		PreparedStatement pst = conn.prepareStatement(se);
-			        	java.sql.ResultSet rs=pst.executeQuery();
+		        		String se ="Select order_number, order_status, TimeDate from fast_food.order";
+		        		PreparedStatement pdStmt = conn.prepareStatement(se);
+			        	java.sql.ResultSet rs=pdStmt.executeQuery();
 			        	table_1.setModel(DbUtils.resultSetToTableModel(rs));	        		
-		        	pst.close();}
+		        	pdStmt.close();}
 					}
 		    		catch (SQLException | ClassNotFoundException eO1) 
 		    		{		
@@ -188,35 +210,42 @@ public class OrderCollection {
 		});
 		frame.getContentPane().add(orderNumBox);
 		
-		JButton setStatusBtn = new JButton("Set Order Status");
-		setStatusBtn.addActionListener(new ActionListener() {
+		/*************************** COLLECTED STATUS BUTTON *******************************/
+		
+		JButton collectBtn = new JButton("Collected");
+		collectBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					String s = "UPDATE fast_food.order SET Order_Status = ? where Order_Number=?";
+					Class.forName("com.mysql.jdbc.Driver");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+					String s = "UPDATE fast_food.order SET Order_Status = 'Collected' where order_number = ?";
 					PreparedStatement ppdStmt = conn.prepareStatement(s);
-					ppdStmt.setString(1, (String)orderStatusBox.getSelectedItem());
-					ppdStmt.setString(2, (String)orderNumBox.getSelectedItem());
+					ppdStmt.setString(1, (String)orderNumBox.getSelectedItem());
+					ppdStmt.execute();
+					
+					
+					/*
 					if(orderNumBox.getSelectedItem() == "Select Order")
 		        	{
 		        		JOptionPane.showMessageDialog(null, "You may not have selected a number, please try again!","Invalid Selection", JOptionPane.INFORMATION_MESSAGE);
 		        	}
 		        	else {
-		        	ppdStmt.setString(2, (String)orderNumBox.getSelectedItem());
 					int rs=ppdStmt.executeUpdate();
 					ppdStmt = conn.prepareStatement(s);
 					rs = ppdStmt.executeUpdate();
 					ppdStmt.close();}
+				} */
 				}
-				catch(SQLException e1) {
-					System.out.print("");
+				catch(SQLException | ClassNotFoundException e1) {
+					System.out.print(e1);
 				}
 			}
 		});
-		setStatusBtn.setForeground(new Color(0, 0, 0));
-		setStatusBtn.setBackground(new Color(255, 255, 102)); 
-		setStatusBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		setStatusBtn.setBounds(496, 334, 202, 68);
-		frame.getContentPane().add(setStatusBtn);
+		collectBtn.setForeground(new Color(0, 0, 0));
+		collectBtn.setBackground(Color.WHITE); 
+		collectBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		collectBtn.setBounds(568, 257, 199, 49);
+		frame.getContentPane().add(collectBtn);
 				
 		
 	}
