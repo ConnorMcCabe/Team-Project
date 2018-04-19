@@ -67,7 +67,7 @@ public class OrderCollection {
 		frame.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 914, 147);
+		scrollPane.setBounds(10, 11, 914, 358);
 		frame.getContentPane().add(scrollPane);
 		
 		/******************* ORDER STATUS LABEL AND COMBO BOX ********************/
@@ -126,7 +126,7 @@ public class OrderCollection {
 				try{
 					Class.forName("com.mysql.jdbc.Driver");
 					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
-					String query="Select order_number, order_status, TimeDate from Fast_Food.order where Order_Status = 'Not Ready'";
+					String query="Select order_number, order_status, TimeDate from Fast_Food.order where Order_Status = 'Ready'";
 
 					PreparedStatement pst = conn.prepareStatement(query);
 					ResultSet rs = pst.executeQuery();
@@ -246,10 +246,11 @@ public class OrderCollection {
 		collectBtn.setForeground(new Color(0, 0, 0));
 		collectBtn.setBackground(Color.WHITE); 
 		collectBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		collectBtn.setBounds(600, 380, 200, 50);
+		collectBtn.setBounds(499, 390, 200, 50);
 		frame.getContentPane().add(collectBtn);
 				
 		
 	}
 }
+
 
