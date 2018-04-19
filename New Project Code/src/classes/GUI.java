@@ -109,6 +109,8 @@ public class GUI {
 		
 		JTextArea DescriptionBox = new JTextArea();
 		DescriptionBox.setLineWrap(true);
+		DescriptionBox.setWrapStyleWord(true);
+
 
 		DescriptionBox.setFont(new Font("Open Sans", Font.PLAIN, 25));
 		DescriptionBox.setText("");
@@ -118,6 +120,8 @@ public class GUI {
 		
 		JTextArea AllergenBox = new JTextArea();
 		AllergenBox.setLineWrap(true);
+		AllergenBox.setWrapStyleWord(true);
+
 
 		AllergenBox.setFont(new Font("Open Sans", Font.PLAIN, 25));
 		AllergenBox.setText("");

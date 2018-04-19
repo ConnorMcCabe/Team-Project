@@ -196,10 +196,14 @@ public class Manager extends JFrame {
 		add_alergy.setBounds(1011, 289, 129, 39);
 		panel_Add.add(add_alergy);
 		
+		//CODE THAT ONLY ALLOWS INTEGERS TO BE INTERTERED NO CHARACTERS 
+		
 		add_codeIn = new JTextField();
-		add_codeIn.addKeyListener(new KeyAdapter() {
+		add_codeIn.addKeyListener(new KeyAdapter() 
+		{
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e) 
+			{
 				
 				char vchar = e.getKeyChar();
 				if(!(Character.isDigit(vchar)) 
@@ -233,6 +237,7 @@ public class Manager extends JFrame {
 		add_sectionIn.setBounds(334, 305, 262, 43);
 		panel_Add.add(add_sectionIn);
 		
+		//JLABEL SET TO DEFAULT LOGO
 		JLabel imagelabel = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
 		imagelabel.setBounds(125, 461, 471, 359);
 		panel_Add.add(imagelabel);
@@ -242,6 +247,7 @@ public class Manager extends JFrame {
 		panel_Add.add(add_descripIn);
 		add_descripIn.setFont(new Font("Open Sans", Font.PLAIN, 25));
 		add_descripIn.setLineWrap(true);
+		add_descripIn.setWrapStyleWord(true);
 		
 
 		JTextArea add_alergyIn = new JTextArea();
@@ -249,38 +255,42 @@ public class Manager extends JFrame {
 		panel_Add.add(add_alergyIn);
 		add_alergyIn.setFont(new Font("Open Sans", Font.PLAIN, 25));
 		add_alergyIn.setLineWrap(true);
+		add_alergyIn.setWrapStyleWord(true);
 
-	 
-		
-		
+		//CODE TO GET AN IMAGE TO ADD IT TO A PRODUCT 
 		JButton Browse = new JButton("Browse");
 		Browse.setFont(new Font("Open Sans", Font.BOLD, 25));
 		Browse.setBackground(Color.WHITE);
-		Browse.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				JFileChooser fileChooser = new JFileChooser();
+		Browse.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				 //LETS THE ADMIN CHOOSE IMAGE THAT IS STORED ON THERE PC
+				 JFileChooser fileChooser = new JFileChooser();
 		         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
 		         FileNameExtensionFilter filter = new FileNameExtensionFilter("*.IMAGE", "jpg","gif","png");
 		         fileChooser.addChoosableFileFilter(filter);
 		         int result = fileChooser.showSaveDialog(null);
-		         if(result == JFileChooser.APPROVE_OPTION){
-		             File selectedFile = fileChooser.getSelectedFile();
-		             String path = selectedFile.getAbsolutePath();
-		             ImageIcon image = new ImageIcon(path);
+		         
+		         //ONCE IMAGE IS SELECTED ITS BEING STORED IN JLABEL THAT IS THEN SCALED IN TEH SIXE OF THE JLABEL 
+		         if(result == JFileChooser.APPROVE_OPTION)
+		         {
+		        	 	File selectedFile = fileChooser.getSelectedFile();
+		        	 	String path = selectedFile.getAbsolutePath();
+		        	 	ImageIcon image = new ImageIcon(path);
 	                    Image im = image.getImage();
 	                    Image myImg = im.getScaledInstance(imagelabel.getWidth(), imagelabel.getHeight(),Image.SCALE_SMOOTH);
 	                    ImageIcon newImage = new ImageIcon(myImg);
 	                    imagelabel.setIcon(newImage);
 	                    selectImage = path;
-		              }
+		         }
 			}
 		});
 		Browse.setBounds(334, 376, 262, 43);
 		panel_Add.add(Browse);
 		
-		//AL
-		//
+		//CODE THAT IS ADDING THE PRODUCT TO THE DATBASE ALONG WITH THE IMAGE 
+		
 		JButton add_OK = new JButton("OK");
 		add_OK.setBorderPainted(false);
 		add_OK.setContentAreaFilled(false);
@@ -306,6 +316,7 @@ public class Manager extends JFrame {
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement(); 
 			        
+			        //ERROR HANDLING 
 			        if(e.getSource() == add_OK && add_codeIn.getText().equals("")|| add_nameIn.getText().equals("") || add_priceIn.getText().equals(""))
 			        {
 			        	 JOptionPane.showMessageDialog(null, "Allergy and Description can only be blank","Please Try again", JOptionPane.ERROR_MESSAGE);
@@ -314,7 +325,8 @@ public class Manager extends JFrame {
 			       
 			        
 			        String text = (String)add_sectionIn.getSelectedItem();
-			       	        
+			       	
+			        //ADDING IT TO THE DATABASE
 			        if(code1 != null)
 			        {
 			        	
@@ -335,7 +347,7 @@ public class Manager extends JFrame {
 			        	ps.execute();
 			        
 				
-			        	
+			        	//CHECKING TO SEE IF THE PRODUCT WAS ADDED 
 			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT Product_Code, Name, Price, Description, Section, Alergy FROM product where Product_Code = ?"))
 			        			{
 			        				stmt.setString(1, code1);
@@ -398,7 +410,8 @@ public class Manager extends JFrame {
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setBorderPainted(false);
 		btnCancel.setContentAreaFilled(false);
-
+		
+		//SETTING FIELD TO NULL IF ADMIN CANCELS ADDING TEH PRODUCT 
 		btnCancel.setFont(new Font("Open Sans", Font.BOLD, 30));
 		btnCancel.addActionListener(new ActionListener() 
 		{
@@ -407,12 +420,12 @@ public class Manager extends JFrame {
 				panel_Add.setVisible(false);
 				panelChoose.setVisible(true);
 				add_codeIn.setText(null);
-				  add_nameIn.setText(null);
-				  add_priceIn.setText(null);
-				  add_descripIn.setText(null);
-				  //add_sectionIn.setText(null);
-				  add_alergyIn.setText(null);
-					 imagelabel.setIcon(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
+				add_nameIn.setText(null);
+				add_priceIn.setText(null);
+				add_descripIn.setText(null);
+				//add_sectionIn.setText(null);
+				add_alergyIn.setText(null);
+				imagelabel.setIcon(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
 
 			
 			}
@@ -487,7 +500,7 @@ public class Manager extends JFrame {
 
 
 		
-		//AL
+		//CODE TO SIGN IN
 		// 
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -521,7 +534,7 @@ public class Manager extends JFrame {
 			        char[] passwd = enterPassword.getPassword();
 			        String password1 = new String(passwd);
 			        
-			        
+			        //CHECKING TO SEE IF TEH DATA PROVIDED IS IN THE DATABSE AND IF SO CAN LOG IN
 			        if(passwd != null)
 			        {
 			        	String pass = new String(passwd);
@@ -1206,12 +1219,15 @@ public class Manager extends JFrame {
 		update_descripIn.setBounds(1010, 183, 330, 143);
 		panel_update.add(update_descripIn);
 		update_descripIn.setLineWrap(true);
+		update_descripIn.setWrapStyleWord(true);
 
 		
 		JTextArea update_alergyIn = new JTextArea();
 		update_alergyIn.setFont(new Font("Open Sans", Font.PLAIN, 25));
 		update_alergyIn.setBounds(1010, 389, 330, 143);
 		panel_update.add(update_alergyIn);
+		update_alergyIn.setLineWrap(true);
+		update_alergyIn.setWrapStyleWord(true);
 		
 		JLabel image_update = new JLabel(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
 		image_update.setBounds(345, 505, 487, 330);
@@ -1238,6 +1254,7 @@ public class Manager extends JFrame {
 	                    ImageIcon newImage = new ImageIcon(myImg);
 	                    image_update.setIcon(newImage);
 	                    selectImage1 = path;
+	                   
 				
 			}
 			}});
@@ -1263,17 +1280,17 @@ public class Manager extends JFrame {
 					 String descrip3 = update_descripIn.getText();
 					 String section3 = sec.getText();
 					 String alergy3 = update_alergyIn.getText();
-			        	InputStream inputImage = new FileInputStream(new File(selectImage1));
+			         InputStream inputImage = new FileInputStream(new File(selectImage1));
 
-						 image_update.setIcon(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
+				     image_update.setIcon(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
 
 					//CODE TO VERFIY THE EMAIL ADDRESS AND PASSWORD FROM THE DATABASE 
 					Class.forName("com.mysql.jdbc.Driver");
 			        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
 			        statement=conn.createStatement(); 
 			       	        
-			        if(code3 != null)
-			        {
+			         if(code3 != null && inputImage != null)
+			         {
 
 			        	String code = new String(code3);
 			        	String query1 ="UPDATE Product SET Product_Code=?, Name=?, Price=?, Description=?, Section=?, Alergy=?, Image=? WHERE Product_Code= ?";
@@ -1304,16 +1321,16 @@ public class Manager extends JFrame {
 			     			           JOptionPane.showMessageDialog(null, "Product was Updated","Product Updated", JOptionPane.INFORMATION_MESSAGE);
 			     			           panel_update.setVisible(false);
 			     			           panelChoose.setVisible(true);
-			     			          panelChoose.updateUI();
+			     			           panelChoose.updateUI();
 			     					   panel_Add.updateUI();
 			     					   panel_remove.updateUI();
 			     					   panel_update.updateUI();
-			     					  update_codeIn.setText(null);
-			     					 update_nameIn.setText(null);
-			     					 update_priceIn.setText(null);
-			     					 update_descripIn.setText(null);
-			     					 sec.setText(null);
-			     					 update_alergyIn.setText(null);
+			     					   update_codeIn.setText(null);
+			     					   update_nameIn.setText(null);
+			     					   update_priceIn.setText(null);
+			     					   update_descripIn.setText(null);
+			     					   sec.setText(null);
+			     					   update_alergyIn.setText(null);
 			     			           
 			        				}
 			        				
@@ -1323,13 +1340,15 @@ public class Manager extends JFrame {
 
 			        				}
 			        			}
+			        	
+			        	
 
 			        	
 			        	ps.close();
 			        	 conn.close();			        }
 				}catch(Exception ee) 
 				{
-					 JOptionPane.showMessageDialog(null, "Cannot be left blank, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
+					 JOptionPane.showMessageDialog(null, "Must Update the Image, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
 
 					System.out.println(ee);
 
