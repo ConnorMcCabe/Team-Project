@@ -1,4 +1,4 @@
-package classes; 
+package classes;
 
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -169,7 +169,7 @@ public class OrderCollection {
 			Class.forName("com.mysql.jdbc.Driver");
 			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
 			st = conn.createStatement();
-			String s = "Select Order_Number from fast_food.order;";
+			String s = "Select Order_Number from fast_food.order WHERE order_status = 'Ready';";
 			rs = st.executeQuery(s);
 			while(rs.next())
 			{
@@ -252,3 +252,4 @@ public class OrderCollection {
 		
 	}
 }
+
