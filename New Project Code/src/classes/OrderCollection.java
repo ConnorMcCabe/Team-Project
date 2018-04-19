@@ -1,4 +1,4 @@
-package classes;
+package classes; 
 
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -103,6 +103,8 @@ public class OrderCollection {
 //		frame.getContentPane().add(orderStatusBox);
 		
 		table_1 = new JTable();
+		table_1.setRowHeight(35);
+		table_1.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		scrollPane.setViewportView(table_1);
 		table_1.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -151,7 +153,7 @@ public class OrderCollection {
 		JLabel lblOrderNumber = new JLabel("Order Number ");
 		lblOrderNumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblOrderNumber.setForeground(new Color(0, 0, 0));
-		lblOrderNumber.setBounds(10, 266, 120, 30);
+		lblOrderNumber.setBounds(10, 400, 120, 30);
 		frame.getContentPane().add(lblOrderNumber);
 		
 		JComboBox<String> orderNumBox = new JComboBox();
@@ -159,7 +161,7 @@ public class OrderCollection {
 		orderNumBox.setForeground(new Color(0, 0, 0));
 		orderNumBox.setBackground(new Color(255, 255, 255));
 		orderNumBox.setModel(new DefaultComboBoxModel(new String[] {"Select Order number"}));
-		orderNumBox.setBounds(140, 266, 216, 30);
+		orderNumBox.setBounds(166, 400, 216, 30);
 		try
 		{
 			java.sql.ResultSet rs;
@@ -244,7 +246,7 @@ public class OrderCollection {
 		collectBtn.setForeground(new Color(0, 0, 0));
 		collectBtn.setBackground(Color.WHITE); 
 		collectBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		collectBtn.setBounds(568, 257, 199, 49);
+		collectBtn.setBounds(600, 380, 200, 50);
 		frame.getContentPane().add(collectBtn);
 				
 		
