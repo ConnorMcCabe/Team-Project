@@ -58,7 +58,7 @@ public class KitchenStaff {
 	 */
 	public KitchenStaff() {
 		initialize();
-		conn = ConnectionDB.connectDB();
+		//conn = ConnectionDB.connectDB();
 	}
 
 	/**
@@ -67,18 +67,18 @@ public class KitchenStaff {
 	private void initialize() {
 		frame = new JFrame();
 		//frame.setBounds(100, 100, 659, 385);
-		frame.setBounds(100, 100, 925, 550);
+		frame.setBounds(100, 100, 1360, 613);
 		frame.getContentPane().setBackground(new Color(255, 244, 147));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
 ///////////////////// ORDER STATUS COMBO BOX ////////////////////////////////////////////////	
 		JLabel StatusLabel = new JLabel("Order Status");
-		StatusLabel.setBounds(494, 426, 112, 43);
+		StatusLabel.setBounds(941, 488, 112, 43);
 		StatusLabel.setForeground(new Color(0, 0, 0));
 		StatusLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		JComboBox<String> OrderStatus = new JComboBox<String>();
-		OrderStatus.setBounds(656, 432, 243, 30);
+		OrderStatus.setBounds(1076, 494, 243, 30);
 		OrderStatus.setForeground(new Color(0, 0, 0));
 		OrderStatus.setBackground(Color.WHITE);
 		OrderStatus.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -88,7 +88,7 @@ public class KitchenStaff {
 			java.sql.ResultSet rs;
 			java.sql.Statement st;
 			Class.forName("com.mysql.jdbc.Driver");
-			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
 			st = conn.createStatement();
 			String s = "Select Order_Status from fast_food.order;";
 			rs = st.executeQuery(s);
@@ -101,11 +101,11 @@ public class KitchenStaff {
 
 ///////////////// ORDER NUMBER COMBO BOX /////////////////////////////////////////////////////	
 		JLabel NumberLabel = new JLabel("Order Number");
-		NumberLabel.setBounds(49, 426, 136, 43);
+		NumberLabel.setBounds(44, 488, 136, 43);
 		NumberLabel.setForeground(new Color(0, 0, 0));
 		NumberLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		JComboBox<String> OrderNum = new JComboBox();
-		OrderNum.setBounds(203, 432, 151, 31);
+		OrderNum.setBounds(190, 494, 151, 31);
 		OrderNum.setForeground(new Color(0, 0, 0));
 		OrderNum.setBackground(new Color(255, 255, 255));
 		OrderNum.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -115,9 +115,9 @@ public class KitchenStaff {
 			java.sql.ResultSet rs;
 			java.sql.Statement st;
 			Class.forName("com.mysql.jdbc.Driver");
-			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
 			st = conn.createStatement();
-			String s = "Select Order_Number from fast_food.order;";
+			String s = "Select Order_Number from fast_food.order where order_status = 'Not Ready';";
 			rs = st.executeQuery(s);
 			while(rs.next())
 			{
@@ -134,7 +134,7 @@ public class KitchenStaff {
 		    public void actionPerformed(ActionEvent arg0) {
 		    	try {
 		    	Class.forName("com.mysql.jdbc.Driver");
-				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
 		        	String s = "Select * from fast_food.order WHERE Order_Number = ?";
 
 		        	if(OrderNum.getSelectedItem() != "Select Order")
@@ -146,7 +146,7 @@ public class KitchenStaff {
 		        	} 
 		        	else
 		        	{		
-		        		String se ="Select * from fast_food.order";
+		        		String se ="Select * from fast_food.order where order_status = 'Not Ready'";
 		        		PreparedStatement pst = conn.prepareStatement(se);
 			        	java.sql.ResultSet rs=pst.executeQuery();
 			        	table.setModel(DbUtils.resultSetToTableModel(rs));	        		
@@ -157,19 +157,22 @@ public class KitchenStaff {
 					}					
 		        }
 		    });
-
 //////////////////////////// SET STATUS BUTTON //////////////////////////////////////////////////////		
 		JButton SetStatus = new JButton("Set Status");
-		SetStatus.setBounds(734, 235, 126, 125);
+		SetStatus.setBounds(1021, 310, 198, 125);
 		SetStatus.setForeground(new Color(0, 0, 0));
 		SetStatus.setBackground(Color.WHITE);
 		SetStatus.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		SetStatus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
+					
 					String s = "UPDATE Fast_Food.order SET Order_Status = ? where Order_Number=?";
 					PreparedStatement pst = conn.prepareStatement(s);
 					pst.setString(1, (String)OrderStatus.getSelectedItem());
+					
 					pst.setString(2, (String)OrderNum.getSelectedItem());
 					if(OrderNum.getSelectedItem() == "Select Order")
 		        	{
@@ -183,12 +186,15 @@ public class KitchenStaff {
 					pst.close();}
 				}catch(SQLException e1) {
 					System.out.print("");
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
 /////////////////////////////////// Load Table Button ////////////////////////////////////////////////////////	
 		JButton LoadOrderButton = new JButton("View All Orders");
-		LoadOrderButton.setBounds(84, 239, 217, 117);
+		LoadOrderButton.setBounds(81, 314, 217, 117);
 		LoadOrderButton.setForeground(new Color(0, 0, 0));
 		LoadOrderButton.setBackground(Color.WHITE);
 		LoadOrderButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -196,7 +202,7 @@ public class KitchenStaff {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					Class.forName("com.mysql.jdbc.Driver");
-					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
 					String query="Select * from Fast_Food.order where Order_Status = 'Not Ready'";
 
 					PreparedStatement pst = conn.prepareStatement(query);
@@ -211,18 +217,18 @@ public class KitchenStaff {
 			}
 		});
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(0, 11, 910, 147);
+		scrollPane_1.setBounds(10, 11, 1330, 277);
 ////////////////////////////// DISPLAY ORDER ITEM //////////////////////////////////////////////////////////		
 		JButton DisplayOrderItem = new JButton("View Order Details");
-		DisplayOrderItem.setBounds(409, 239, 232, 117);
+		DisplayOrderItem.setBounds(524, 314, 232, 117);
 		DisplayOrderItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					Class.forName("com.mysql.jdbc.Driver");
-					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
-
-					String query = "SELECT fast_food.order_item.Order_Number, Name, Quantity, Order_Status, TimeDate FROM fast_food.order, order_item, product where fast_food.order.Order_Number = ? && order_item.Product_Code = product.Product_Code";
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
 					
+				   String query = "select fast_food.order_item.Order_Number, Name, Quantity, Total_Price, Order_Status, TimeDate from fast_food.order, order_item, product where fast_food.order.Order_Number = order_item.Order_Number && order_item.Product_Code = product.Product_Code && fast_food.order.Order_Number = ?;";
+
 					PreparedStatement pst = conn.prepareStatement(query);
 		        	pst.setString(1, (String)OrderNum.getSelectedItem());
 		        	if(OrderNum.getSelectedItem() == "Select Order")
@@ -246,8 +252,8 @@ public class KitchenStaff {
 		DisplayOrderItem.setBackground(Color.WHITE);
 
 		table = new JTable();
-		table.setRowHeight(20);
-		table.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		table.setRowHeight(35);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane_1.setViewportView(table);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
