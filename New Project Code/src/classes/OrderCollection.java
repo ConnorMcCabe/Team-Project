@@ -1,3 +1,6 @@
+/* 
+Arthur Ibeh
+*/
 package classes;
 
 import java.awt.EventQueue;
