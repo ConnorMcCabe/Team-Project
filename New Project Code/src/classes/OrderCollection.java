@@ -61,46 +61,17 @@ public class OrderCollection {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 950, 550);
+		frame.setBounds(100, 100, 950, 597);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(new Color(255, 244, 147));
 		frame.getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 914, 358);
+		scrollPane.setBounds(10, 11, 914, 351);
 		frame.getContentPane().add(scrollPane);
 		
 		/******************* ORDER STATUS LABEL AND COMBO BOX ********************/
-		
-//		JLabel lblOrderStatus = new JLabel("Order Status");
-//		lblOrderStatus.setFont(new Font("Tahoma", Font.PLAIN, 20));
-//		lblOrderStatus.setBounds(496, 263, 170, 35);
-//		frame.getContentPane().add(lblOrderStatus);
-//
-//		JComboBox<String> orderStatusBox = new JComboBox<String>();
-//		orderStatusBox.setModel(new DefaultComboBoxModel(new String[] {"Ready", "Not ready"}));
-//		orderStatusBox.setForeground(new Color(0,0,0));
-//		orderStatusBox.setBackground(new Color(255, 255, 255));
-//		orderStatusBox.setFont(new Font("Tahoma", Font.PLAIN, 18));
-//		orderStatusBox.setBounds(676, 266, 168, 30);
-//		try
-//		{
-//			java.sql.ResultSet rs;
-//			java.sql.Statement st;
-//			Class.forName("com.mysql.jdbc.Driver");
-//			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/fast_Food","root","password");
-//			st = conn.createStatement();
-//			String s = "Select Order_Status from fast_food.order;";
-//			rs = st.executeQuery(s);
-//		}
-//		catch (Exception x2)
-//		{
-//			System.out.print(x2);
-//			
-//			JOptionPane.showMessageDialog(null, "Error");
-//		}
-//		
-//		frame.getContentPane().add(orderStatusBox);
+
 		
 		table_1 = new JTable();
 		table_1.setRowHeight(35);
@@ -117,7 +88,25 @@ public class OrderCollection {
 			new String[] {
 				"Order No.", "Order Status", "Time"
 			}
+			
+			
 		));
+		try {
+			
+		
+		Class.forName("com.mysql.jdbc.Driver");
+		java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
+		String query="Select order_number, order_status, TimeDate from Fast_Food.order where Order_Status = 'Ready'";
+
+		PreparedStatement pst = conn.prepareStatement(query);
+		ResultSet rs = pst.executeQuery();
+		table_1.setModel(DbUtils.resultSetToTableModel(rs));
+		
+		}catch(Exception e)
+		{
+			System.out.print(e);
+		}
+		
 		
 		/*********************** REFRESH BUTTON **************************/
 		JButton refreshBtn = new JButton("Refresh");
@@ -125,7 +114,7 @@ public class OrderCollection {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					Class.forName("com.mysql.jdbc.Driver");
-					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
 					String query="Select order_number, order_status, TimeDate from Fast_Food.order where Order_Status = 'Ready'";
 
 					PreparedStatement pst = conn.prepareStatement(query);
@@ -143,31 +132,31 @@ public class OrderCollection {
 		});
 		refreshBtn.setForeground(new Color(0, 0, 0));
 		refreshBtn.setBackground(Color.WHITE);
-		refreshBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		refreshBtn.setBounds(10, 477, 120, 23);
+		refreshBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
+		refreshBtn.setBounds(400, 489, 140, 37);
 		frame.getContentPane().add(refreshBtn);		
 
 		
 		/******************** ORDER NUMBER LABEL AND COMBO BOX ********************/
 		
-		JLabel lblOrderNumber = new JLabel("Order Number ");
-		lblOrderNumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		JLabel lblOrderNumber = new JLabel("Order Number:");
+		lblOrderNumber.setFont(new Font("Ebrima", Font.PLAIN, 25));
 		lblOrderNumber.setForeground(new Color(0, 0, 0));
-		lblOrderNumber.setBounds(10, 400, 120, 30);
+		lblOrderNumber.setBounds(10, 400, 190, 30);
 		frame.getContentPane().add(lblOrderNumber);
 		
 		JComboBox<String> orderNumBox = new JComboBox();
-		orderNumBox.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		orderNumBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		orderNumBox.setForeground(new Color(0, 0, 0));
 		orderNumBox.setBackground(new Color(255, 255, 255));
 		orderNumBox.setModel(new DefaultComboBoxModel(new String[] {"Select Order number"}));
-		orderNumBox.setBounds(166, 400, 216, 30);
+		orderNumBox.setBounds(212, 393, 216, 50);
 		try
 		{
 			java.sql.ResultSet rs;
 			java.sql.Statement st;
 			Class.forName("com.mysql.jdbc.Driver");
-			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
 			st = conn.createStatement();
 			String s = "Select Order_Number from fast_food.order WHERE order_status = 'Ready';";
 			rs = st.executeQuery(s);
@@ -186,7 +175,7 @@ public class OrderCollection {
 			public void actionPerformed(ActionEvent arg0) {
 		    	try {
 		    	Class.forName("com.mysql.jdbc.Driver");
-				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+				java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
 		        	String s = "Select order_number, order_status, TimeDate from fast_food.order WHERE Order_Number = ?";
 
 		        	if(orderNumBox.getSelectedItem() != "Select Order")
@@ -219,24 +208,13 @@ public class OrderCollection {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Class.forName("com.mysql.jdbc.Driver");
-					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food","root","password");
+					java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
 					String s = "UPDATE fast_food.order SET Order_Status = 'Collected' where order_number = ?";
 					PreparedStatement ppdStmt = conn.prepareStatement(s);
 					ppdStmt.setString(1, (String)orderNumBox.getSelectedItem());
 					ppdStmt.execute();
 					
 					
-					/*
-					if(orderNumBox.getSelectedItem() == "Select Order")
-		        	{
-		        		JOptionPane.showMessageDialog(null, "You may not have selected a number, please try again!","Invalid Selection", JOptionPane.INFORMATION_MESSAGE);
-		        	}
-		        	else {
-					int rs=ppdStmt.executeUpdate();
-					ppdStmt = conn.prepareStatement(s);
-					rs = ppdStmt.executeUpdate();
-					ppdStmt.close();}
-				} */
 				}
 				catch(SQLException | ClassNotFoundException e1) {
 					System.out.print(e1);
@@ -246,7 +224,7 @@ public class OrderCollection {
 		collectBtn.setForeground(new Color(0, 0, 0));
 		collectBtn.setBackground(Color.WHITE); 
 		collectBtn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		collectBtn.setBounds(499, 390, 200, 50);
+		collectBtn.setBounds(572, 394, 200, 50);
 		frame.getContentPane().add(collectBtn);
 				
 		
