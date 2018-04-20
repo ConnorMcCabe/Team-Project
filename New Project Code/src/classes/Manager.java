@@ -388,7 +388,13 @@ public class Manager extends JFrame {
 				}catch(Exception ee) 
 				{
 					 JOptionPane.showMessageDialog(null, "Try again","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
-
+					 add_codeIn.setText(null);
+					  add_nameIn.setText(null);
+					  add_priceIn.setText(null);
+					  add_descripIn.setText(null);
+					  //add_sectionIn.setText(null);
+					  add_alergyIn.setText(null);
+					 imagelabel.setIcon(new ImageIcon("C:\\Users\\Administrator\\Desktop\\New Project Code\\src\\logo.JPG"));
 					System.out.println(ee);
 
 				}
@@ -812,40 +818,28 @@ public class Manager extends JFrame {
 			        	ps.setString(2, name2);
 			     
 			        	//ResultSet rs;
-			        	ps.execute();
+			        	int check = ps.executeUpdate();
 			        	
-			        	try(PreparedStatement stmt = conn.prepareStatement("SELECT * FROM product where Product_Code = ? AND Name=?"))
-			        			{
-			        				stmt.setString(1, code3);
-			        				stmt.setString(2, name2);
-
-			        			   ResultSet rs =stmt.executeQuery();
-			        				
-			        				if(rs.next())
-			        				{
-			        				
-			    			        	  JOptionPane.showMessageDialog(null, "Product was not deleted","Please Try again", JOptionPane.ERROR_MESSAGE);
-			    			        	  //JOptionPane.showMessageDialog(null, "Product Deleted from Menu","Product Deleted", JOptionPane.INFORMATION_MESSAGE);
-				     			          //  panel_remove.setVisible(false);
-				     			          //  panelChoose.setVisible(true);
-			        				}
-			        				
-			        				else
-			        				{
-			    			        	  //JOptionPane.showMessageDialog(null, "Product was not deleted","Please Try again", JOptionPane.ERROR_MESSAGE);
-
-			    			        	    JOptionPane.showMessageDialog(null, "Product Deleted from Menu","Product Deleted", JOptionPane.INFORMATION_MESSAGE);
-				     			        panel_remove.setVisible(false);
-				     			           panelChoose.setVisible(true);
-				     			          panelChoose.updateUI();
-				     					   panel_Add.updateUI();
-				     					   panel_remove.updateUI();
-				     					   panel_update.updateUI();
-				     					  remove_codeIn.setText(null);
-				     					  remove_nameIn.setText(null);
-
-			        				}
-			        			}
+			        	if (check > 0) {
+			        			JOptionPane.showMessageDialog(null, "Product Deleted from Menu","Product Deleted", JOptionPane.INFORMATION_MESSAGE);
+			        			panel_remove.setVisible(false);
+			        			panelChoose.setVisible(true);
+			        			panelChoose.updateUI();
+			        			panel_Add.updateUI();
+			        			panel_remove.updateUI();
+			        			panel_update.updateUI();
+			        			remove_codeIn.setText(null);
+			        			remove_nameIn.setText(null);
+			        		}
+			        	
+			        	else
+			        	{
+		        			JOptionPane.showMessageDialog(null, "Product Does Not Exist","Try Again", JOptionPane.ERROR_MESSAGE);
+		        			remove_codeIn.setText(null);
+		        			remove_nameIn.setText(null);
+			        	}
+			        	
+			        	
 
 			        	
 			        	ps.close();
@@ -1751,7 +1745,7 @@ public class Manager extends JFrame {
 			         String password = user_passwordIn.getText();
 				
 					 // IF NO DATA ENTERERD TO JTEXTFIELD WILL POP UP ERROR
-					 if(e.getSource() == user_OK && email == "" || password == "")
+					 if(e.getSource() == user_OK && email.equals("") || password.equals(""))
 					 {
 
 						 JOptionPane.showMessageDialog(null, "Cannot be left blank, TRY AGAIN","TRY AGAIN", JOptionPane.ERROR_MESSAGE);
