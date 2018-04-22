@@ -27,6 +27,7 @@ import javax.swing.UIManager;
 import org.jcp.xml.dsig.internal.dom.DOMUtils;
 
 import com.sun.glass.events.KeyEvent;
+import com.sun.jmx.snmp.Timestamp;
 
 import net.proteanit.sql.DbUtils;
 
@@ -226,6 +227,7 @@ public class Payment extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
+				frame.dispose();
 				try {
 				Class.forName("com.mysql.jdbc.Driver");
 		        Connection conn = DriverManager.getConnection(url+dbName,userName,passwordDB);
@@ -282,7 +284,7 @@ public class Payment extends JFrame {
 						   
 						   else if(e.getSource() == btnConfirm && cardIn == "Visa" || numberIn.contains("4319"))
 						   {
-								 JOptionPane.showMessageDialog(null, "Thank You", "Enjoy ", JOptionPane.ERROR_MESSAGE);
+								 //JOptionPane.showMessageDialog(null, "Thank You", "Enjoy ", JOptionPane.ERROR_MESSAGE);
 								 payment_cardIn.setSelectedItem("");
 								 payment_numberIn.setText(null);
 								 payment_ccvIn.setText(null);
@@ -303,7 +305,7 @@ public class Payment extends JFrame {
 						   
 						   else if(e.getSource() == btnConfirm && cardIn == "Mastercard" || numberIn.contains("5432"))
 						   {
-								 JOptionPane.showMessageDialog(null, "Thank You", "Enjoy ", JOptionPane.ERROR_MESSAGE);
+								// JOptionPane.showMessageDialog(null, "Thank You", "Enjoy ", JOptionPane.ERROR_MESSAGE);
 								 payment_cardIn.setSelectedItem("");
 								 payment_numberIn.setText(null);
 								 payment_ccvIn.setText(null);
@@ -312,6 +314,28 @@ public class Payment extends JFrame {
 						   }
 						   
 						   else if(e.getSource() == btnConfirm && cardIn == "Mastercard" || !numberIn.contains("5432"))
+						   {
+								 JOptionPane.showMessageDialog(null, "INVALID CARD", "TRY AGAIN ", JOptionPane.ERROR_MESSAGE);
+								 payment_cardIn.setSelectedItem("");
+								 payment_numberIn.setText(null);
+								 payment_ccvIn.setText(null);
+								 payment_monthIn.setSelectedItem("");
+								 payment_yearIn.setSelectedItem("");
+
+						   }
+						   
+						   else if(e.getSource() == btnConfirm && cardIn == "Visa" || numberIn.contains("5432"))
+						   {
+								 JOptionPane.showMessageDialog(null, "INVALID CARD", "TRY AGAIN ", JOptionPane.ERROR_MESSAGE);
+								 payment_cardIn.setSelectedItem("");
+								 payment_numberIn.setText(null);
+								 payment_ccvIn.setText(null);
+								 payment_monthIn.setSelectedItem("");
+								 payment_yearIn.setSelectedItem("");
+
+						   }
+						   
+						   else if(e.getSource() == btnConfirm && cardIn == "Mastercard" || numberIn.contains("4319"))
 						   {
 								 JOptionPane.showMessageDialog(null, "INVALID CARD", "TRY AGAIN ", JOptionPane.ERROR_MESSAGE);
 								 payment_cardIn.setSelectedItem("");
@@ -344,7 +368,9 @@ public class Payment extends JFrame {
 				        	    
 				        		panel_1.setVisible(true);
 				        		panel.setVisible(false);
-						   
+				        		//GUI fm = new GUI();
+								//fm.main(null);
+				        		//fm.dispose();
 							}
 						  
 
@@ -356,7 +382,8 @@ public class Payment extends JFrame {
 					
 					  }
 					  
-					   
+					    int orderNum1=0;
+
 					   try
 					   {
 						   
@@ -367,7 +394,7 @@ public class Payment extends JFrame {
 					        //java.sql.PreparedStatement pst;
 					        
 						    rs = stmt.executeQuery("SELECT LAST_INSERT_ID()");
-						    int orderNum1=0;
+						    //int orderNum1=0;
 			        	    if (rs.next())
 			        	    {
 			        	    	orderNum1 = rs.getInt(1);
@@ -375,29 +402,96 @@ public class Payment extends JFrame {
 			        	    {
 			        	        // throw an exception from here
 			        	    }
+			        	    
+					   }catch(Exception e1)
+			        	    {
+			        	    	
+			        	    }
+					   
+					    Double cost = 0.0;
+					    String time = null;
+					   try
+					   {
+						   Class.forName("com.mysql.jdbc.Driver");
+							java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
+					       
 					        
-			        	    String s = "Select * from fast_food.order_item WHERE 'Order_Number' = ?";
+			        	    String s1 = "Select TimeDate, Total_Cost from fast_food.order WHERE 'Order_Number' = ?";
+			        	   // String s = "select product.Product_Code, Name, Quantity, Total_Price, TimeDate from fast_food.order, order_item, product where fast_food.order.Order_Number = order_item.Order_Number && order_item.Product_Code = product.Product_Code && fast_food.order_item.Order_Number = ?;";
+				        	PreparedStatement pst = conn.prepareStatement(s1);
+				        	pst.setInt(1, orderNum1);
+				        	java.sql.ResultSet rst=pst.executeQuery();
+				        	
+			        		//cost = rst.getDouble("Total_Cost");
+
+				        	
+				        	while(rst.next()) 
+				        	{
+				        		
+				        		cost = rst.getDouble("Total_Cost");
+				        		time = rst.getString("TimeDate");
+				        		
+				        		
+							
+							 
+				        	}
+				        	
+				        	//System.out.print(cost);
+				        	pst.close();
+				        	//out.close();
+							} 
+						   
+
+					   catch(Exception ee) 
+					   {
+						   	System.out.println(ee);
+					  }
+					        
+					   try
+					   {
+						   Class.forName("com.mysql.jdbc.Driver");
+							java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Fast_Food?autoReconnect=true&useSSL=false","root","password");
+					       
+					        
+			        	    String s = "Select Product_Code, Quantity, Total_Price from fast_food.order_item WHERE 'Order_Number' = ?";
+			        	   // String s = "select product.Product_Code, Name, Quantity, Total_Price, TimeDate from fast_food.order, order_item, product where fast_food.order.Order_Number = order_item.Order_Number && order_item.Product_Code = product.Product_Code && fast_food.order_item.Order_Number = ?;";
 				        	PreparedStatement pst = conn.prepareStatement(s);
 				        	pst.setInt(1, orderNum1);
 				        	java.sql.ResultSet rst=pst.executeQuery();
 				        	PrintWriter out = new PrintWriter("Recipt"+orderNum+".txt");
 				        	
-				        	out.println("Kitchen Staff Recipt");
-				        	out.println("Order Number: "+orderNum1);
+				        	out.println("*************** THE CHIPPY **************");
+				        	out.println("*************** Port Road ***************");
+				        	out.println("********** Letterkenny, Donegal *********");
+				        	out.println("************ Tel: 0749154100 ************");
+			        		out.println();
+				        	out.println("Order Number: "+ orderNum);
+				        	out.println("Order Placed: " + time);
+				        	out.println("Product Code       Quantity      Total_Price");
+
 				        	
 				        	while(rst.next()) 
 				        	{
 				        		
-				        		out.print(rst.getInt("Order_Number"));
+				        		//out.print("Order Number " + rst.getInt("Order_Number"));
+				        		
 				        		out.print(rst.getInt("Product_Code"));
-				        		out.print(rst.getInt("Quantity"));
-				        		out.print(rst.getDouble("Total_Price"));
+				        		out.print("                   " + rst.getInt("Quantity"));
+				        		out.print("               €" + rst.getDouble("Total_Price"));
+				        		out.println();
 							
 							 
 				        	}
+							   out.println("Total Cost: €" + cost);
+							   out.println();
+							   out.println("******** Thank you for your order *******");
+							   out.println("**************** Enjoy ******************");
+
+
 				        	pst.close();
 				        	out.close();
 							} 
+					   
 						   
 
 					   catch(Exception ee) 
